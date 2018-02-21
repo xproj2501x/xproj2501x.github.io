@@ -1,0 +1,29 @@
+/*! Card Component Styles */
+
+/* VARIABLES */
+
+.c-card {
+  margin-bottom: $gutter;
+  margin-top: $gutter;
+
+  &__heading{
+    background: $primary-color;
+    box-shadow: $box-shadow-4px;
+    color: $white;
+    font-size: $medium-text;
+    font-weight: $semi-bold-font;
+    padding: $gutter;
+
+    & > .c-button--collapse {
+      border: none;
+      float: right;
+      padding: 0 4px;
+    }
+  }
+
+  &__body{
+    background: $white;
+    box-shadow: $box-shadow-4px;
+    padding: $gutter;
+  }
+}

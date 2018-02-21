@@ -1,0 +1,11 @@
+[class*="c-container"] {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $gutter;
+  padding-right: $gutter;
+  position: relative;
+  max-width: 1280px;
+  vertical-align: top;
+  width: 100%;
+}

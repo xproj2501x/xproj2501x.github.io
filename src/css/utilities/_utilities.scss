@@ -1,0 +1,169 @@
+/*! UI - Main Utility Styles */
+
+/* ==========================================================================
+   Display Utilities
+   ========================================================================== */
+
+.u-display--flex {
+  display: flex;
+}
+
+.u-display--block {
+  display: block;
+}
+
+.u-display--inline {
+  display: inline;
+}
+
+.u-display--inline-block {
+  display: inline-block;
+}
+
+.u-hide {
+  display: none;
+}
+
+@media screen and (max-width: 599px) {
+  .u-hide--phone {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 899px) {
+  .u-hide--tablet {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .u-hide--desktop {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Positioning common
+   ========================================================================== */
+
+.u-align--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.u-margin--none {
+  margin: 0;
+}
+
+.u-margin-top--none {
+  margin-top: 0;
+}
+
+.u-margin-bottom--none {
+  margin-bottom: 0;
+}
+
+.u-padding--none {
+  padding: 0;
+}
+
+.u-padding-top--none {
+  padding-top: 0;
+}
+
+.u-padding-bottom--none {
+  padding-bottom: 0;
+}
+
+
+/* ==========================================================================
+   Flexbox common
+   ========================================================================== */
+
+.u-align-items--center {
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.u-align-self--flex-end {
+  -ms-flex-align: end;
+  align-self: flex-end;
+}
+
+.u-align-self--center {
+  -ms-flex-align: center;
+  align-self: center;
+}
+
+.u-order--reverse {
+  -webkit-flex-wrap: wrap-reverse;
+  -ms-flex-wrap: wrap-reverse;
+  flex-wrap: wrap-reverse;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 599px) {
+  .u-order--reverse-phone {
+    -webkit-flex-wrap: wrap-reverse;
+    -ms-flex-wrap: wrap-reverse;
+    flex-wrap: wrap-reverse;
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .u-order--reverse-tablet {
+    -webkit-flex-wrap: wrap-reverse;
+    -ms-flex-wrap: wrap-reverse;
+    flex-wrap: wrap-reverse;
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+  }
+}
+
+@media (min-width: 900px) {
+  .u-order--reverse-desktop {
+    -webkit-flex-wrap: wrap-reverse;
+    -ms-flex-wrap: wrap-reverse;
+    flex-wrap: wrap-reverse;
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+  }
+}
+
+
+/* ==========================================================================
+   Typography common
+   ========================================================================== */
+
+.u-white-space--no-wrap {
+  white-space: nowrap;
+}
+
+.u-text-align--center {
+  text-align: center;
+}
+
+.u-text-align--right {
+  text-align: right;
+}
+
+.u-text-transform--capitalize {
+  text-transform: capitalize;
+}
+
+.u-text-transform--upper {
+  text-transform: uppercase;
+}
+
+.u-visually-hidden {
+  position: absolute;
+  left: -9999em;
+}

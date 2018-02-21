@@ -1,0 +1,50 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+$gutter: 1.2rem !default;
+
+// breakpoints
+$x-small: 480px !default;
+$small: 600px !default;
+$medium: 840px !default;
+$large: 960px !default;
+$x-large: 1280px !default;
+$xx-large: 1600px !default;
+
+$xs: 480px !default;
+$sm: 600px !default;
+$md: 960px !default;
+$lg: 1024px !default;
+$xl: 1280px !default;
+
+$phone: $xs !default;
+$tablet: $md !default;
+$desktop: $xl !default;
+
+$breakpoints: $x-small, $small, $medium, $large, $x-large, $xx-large !default;
+$breakpoints2: $xs, $sm, $md, $lg, $xl !default;
+
+// fonts
+$primary-font: 'Roboto', 'Open Sans', monospace !default;
+$secondary-font: monospace !default;
+
+// font weights
+$light-font: 300 !default;
+$normal-font: 400 !default
+$semi-bold-font: 600 !default;
+$bold-font: 700 !default;
+$extra-bold-font: 900 !default;
+
+// font sizes
+$small-text: 10px;
+$medium-text: 12px;
+$large-text: 18px;
+$x-large-text: 24px;
+$xx-large-text: 32px;
+
+// animations
+$animation-duration: 0.35s;
+$animation-delay: ($animation-duration / 5);
+$animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1);
+$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1);
+$animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1);

@@ -1,0 +1,39 @@
+.o-debug {
+  flex: 1 1 auto;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+
+  border-left: solid 1px $black;
+  background: $white;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+
+  transform: translateX(100%);
+
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0s;
+  will-change: transform;
+  z-index: 2;
+
+  &--expanded {
+    flex-basis: 40%;
+    pointer-events: all;
+    transform: translateX(0);
+
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0s;
+    will-change: transform;
+  }
+
+  &__button {
+    position: absolute;
+    bottom: (2 * $gutter);
+    right: (2 * $gutter);
+    z-index: 1;
+  }
+}

@@ -1,0 +1,7 @@
+.c-flex-row,
+[class*="c-flex-row--"] {
+  display: flex;
+  flex-flow: row wrap;
+  margin-left: -1.2rem;
+  margin-right: -1.2rem;
+}
