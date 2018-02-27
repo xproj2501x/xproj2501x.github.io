@@ -33272,7 +33272,11 @@ var Template = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'c-container' },
-          _react2.default.createElement(_actionBar2.default, { title: 'heading 1',
+          _react2.default.createElement(_actionBar2.default, { title: _react2.default.createElement(
+              'h2',
+              null,
+              'Title'
+            ),
             leftIcon: 'menu', onLeftIconClick: function onLeftIconClick(event) {
               return _this2.toggleInfoPanel(event);
             },

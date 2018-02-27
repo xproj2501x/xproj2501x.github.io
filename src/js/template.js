@@ -87,7 +87,7 @@ class Template extends React.Component {
       </main>,
       <footer className="o-app__footer">
         <div className="c-container">
-          <ActionBar title="heading 1"
+          <ActionBar title={<h2>Title</h2>}
             leftIcon="menu" onLeftIconClick={(event) => this.toggleInfoPanel(event)}
             rightIcon="search" onRightIconClick={(event) => this.toggleInfoPanel(event)} />
         </div>

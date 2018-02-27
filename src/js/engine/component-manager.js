@@ -46,11 +46,11 @@ class ComponentManager {
 
   }
 
-  getComponent() {
+  destroyComponent() {
 
   }
 
-  removeComponent() {
+  findComponent() {
 
   }
 
