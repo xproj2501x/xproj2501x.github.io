@@ -1,11 +1,10 @@
 let path = require('path');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PATHS = {
-  JS: path.join(__dirname, 'src/js'),
-  TEST_JS: path.join(__dirname, 'test'),
-  CSS: path.join(__dirname, 'src/css'),
-  DIST: path.join(__dirname, 'dist')
+  JS: path.resolve(__dirname, 'src/client/js'),
+  TEST_JS: path.resolve(__dirname, 'test'),
+  CSS: path.resolve(__dirname, 'src/client/css'),
+  DIST: path.resolve(__dirname, 'dist')
 };
 
 module.exports = {
@@ -18,34 +17,28 @@ module.exports = {
     filename: 'site.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          plugins: [
-            'transform-runtime',
-            'transform-decorators-legacy',
-            'transform-class-properties'
-          ],
-          presets: [
-            'es2015',
-            'es2016',
-            'es2017',
-            'stage-0',
-            "react"
-          ]
-        }
+        test: /\.js$/i,
+        exclude: [/node_modules/],
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              'transform-runtime',
+              'transform-decorators-legacy',
+              'transform-class-properties'
+            ],
+            presets: [
+              'env'
+            ]
+          }
+        }]
       },
       {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
+        test: /\.(s*)css$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
-  },
-  plugins:[
-    new ExtractTextPlugin('site.css')
-  ]
+  }
 };
-

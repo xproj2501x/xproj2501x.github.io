@@ -1,0 +1,18 @@
+.o-game-panel {
+  background: $gray-bright;
+  flex: 1 1 auto;
+  height: 100%;
+  overflow: hidden;
+  padding-bottom: $gutter;
+  padding-top: $gutter;
+  z-index: 0;
+  transition: width 300ms linear;
+
+  &__display {
+    border: solid 1px $black;
+    height: calc(100% - 2.4rem);
+    margin-bottom: $gutter;
+    margin-top: $gutter;
+    width: 100%;
+  }
+}
