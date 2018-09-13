@@ -12,39 +12,32 @@
     box-shadow: $box-shadow-6px;
     width: 100%;
     z-index: 2;
+
+    & > .c-container > .c-action-bar > .c-action-bar__left-icon.c-icon {
+
+      //margin: -1.2rem;
+      //padding: 1.2rem;
+
+      &:hover {
+        //background: $gray-dark;
+        //color: $gray-light;
+        cursor: pointer;
+      }
+    }
   }
 
-  &__content {
+  &__main {
     height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
     width: 100%;
     z-index: 1;
   }
 
   &__footer {
+    background: $white;
+    box-shadow: $box-shadow-6px;
     flex: 1 1 auto;
     width: 100%;
-  }
-}
-
-.navbar {
-  transition: width 300ms linear;
-
-  width: 100px;
-  color: white;
-  height: 100%;
-  background-color: black;
-  padding: 20px;
-  z-index: 2;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  &--collapsed {
-    padding: 0;
-    width: 0;
+    z-index: 2;
   }
 }
 
