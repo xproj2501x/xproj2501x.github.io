@@ -1,0 +1,12 @@
+.o-info-panel {
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 0;
+  transition: width 300ms linear;
+
+  &--collapsed {
+    width: 0;
+    padding: 0;
+  }
+}

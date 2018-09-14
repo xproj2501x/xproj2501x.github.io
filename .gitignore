@@ -50,3 +50,4 @@ Temporary Items
 node_modules/**
 npm_*/**
 npm-debug.log
+package-lock.json

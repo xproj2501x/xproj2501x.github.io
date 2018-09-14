@@ -199,10 +199,13 @@ textarea {
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none; }
 
-* {
+*,
+*:before,
+*:after {
   box-sizing: border-box; }
 
 html {
+  box-sizing: border-box;
   font-size: 62.5%; }
 
 html,
@@ -220,9 +223,7 @@ button:disabled {
 
 .c-action-bar {
   align-items: center;
-  display: flex;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem; }
+  display: flex; }
   .c-action-bar__left-icon {
     margin-right: 1.2rem; }
   .c-action-bar__left-icon + .c-action-bar__title {
@@ -527,6 +528,8 @@ button:disabled {
 
 .c-grid--no-spacing {
   margin: 0; }
+  .c-grid--no-spacing > .c-cell {
+    padding: 0; }
 
 [class*="c-cell"] {
   padding: 0 1.2rem;
@@ -1044,33 +1047,47 @@ button:disabled {
     background: #FEFEFE;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
     width: 100%;
-    z-index: 1; }
-  .o-app__content {
+    z-index: 2; }
+    .o-app__header > .c-container > .c-action-bar > .c-action-bar__left-icon.c-icon:hover {
+      cursor: pointer; }
+  .o-app__main {
     height: 100%;
-    width: 100%; }
+    width: 100%;
+    z-index: 1; }
   .o-app__footer {
+    background: #FEFEFE;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
     flex: 1 1 auto;
-    width: 100%; }
+    width: 100%;
+    z-index: 2; }
 
-.o-game-panel {
+.o-content {
   background: #F5F5F5;
   flex: 1 1 auto;
   height: 100%;
   overflow: hidden;
-  padding-bottom: 1.2rem;
-  padding-top: 1.2rem;
-  z-index: 0; }
-  .o-game-panel__display {
-    border: solid 1px #0A0A0A;
-    height: calc(100% - 2.4rem);
-    margin-bottom: 1.2rem;
-    margin-top: 1.2rem;
-    width: 100%; }
+  transition: width 300ms linear; }
+  .o-content > [class*="-panel"] {
+    height: 100%;
+    overflow: hidden;
+    transition: width 300ms linear; }
+    .o-content > [class*="-panel"] > .c-section {
+      padding-left: 1.2rem;
+      padding-right: 1.2rem; }
+  .o-content__left-panel {
+    flex: 1 1 auto; }
+  .o-content__right-panel--collapsed {
+    width: 0; }
 
-.o-info-panel {
+.o-nav {
+  background-color: #212121;
+  color: #E0E0E0;
   height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  z-index: 0; }
-  .o-info-panel--collapsed {
-    display: none; }
+  transition: width 300ms linear;
+  width: 128px; }
+  .o-nav--collapsed {
+    width: 0; }
+  .o-nav__menu {
+    list-style: none;
+    margin: 1.2rem;
+    padding: 0; }

@@ -1,0 +1,24 @@
+.c-action-bar {
+  align-items: center;
+  display: flex;
+
+  &__left-icon {
+    margin-right: $gutter;
+  }
+
+  &__left-icon + &__title {
+    margin-left: $gutter;
+  }
+
+  &__title {
+    flex-grow: 1;
+    margin-right: $gutter;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__right-icon {
+    margin-left: auto;
+  }
+}

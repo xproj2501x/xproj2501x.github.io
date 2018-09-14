@@ -44,12 +44,6 @@ module.exports = {
     // rules page. All rules are listed to make it easier to keep in sync
     // as new ESLint rules are added.
     // http://eslint.org/docs/rules/
-    // - Rules in the `eslint:recommended` ruleset are followed by a comment `// eslint:recommended`
-    // - Rules that are specifically defined in the `google` ruleset are followed by a comment `// google`
-    // - Rules that are not specifically mentioned by the Golden Frog styleguide are listed
-    //   but commented out (so that they do not override a base ruleset).
-    // - Rules that are recommended but contradict the Golden Frog styleguide
-    //   are explicitely set to the Golden Frog styleguide value.
 
     // Possible Errors
     // http://eslint.org/docs/rules/#possible-errors
