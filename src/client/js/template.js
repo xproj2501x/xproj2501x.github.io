@@ -92,7 +92,7 @@ class Template extends React.Component {
           </div>
           <div className="o-content c-cell c-grid c-grid--no-spacing">
             <div className="o-content__left-panel c-cell">
-              <div className="c-section">left</div>
+              <div className="c-section">asdfasdfasdsadfasdasdf</div>
             </div>
             <div className={this.state.infoPanelCollapsed ?
               'o-content__right-panel o-content__right-panel--collapsed c-cell' :

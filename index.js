@@ -1,4 +1,4 @@
-import express from 'express';
+let express = require('express');
 
 const APP = express();
 const HTTP = require('http').Server(APP);

@@ -1,11 +1,11 @@
 {
   "plugins": [
-    "transform-regenerator",
-    "transform-decorators-legacy",
-    "transform-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-regenerator",
+    "@babel/plugin-transform-runtime"
   ],
   "presets": [
-    "env",
-    "react"
+    "@babel/preset-env",
+    "@babel/preset-react"
   ]
 }
