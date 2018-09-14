@@ -1,0 +1,133 @@
+.c-grid {
+  display: table;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  margin: 0 (-$gutter);
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+
+.c-grid--no-spacing {
+  margin: 0;
+
+  &>.c-cell {
+    padding: 0;
+  }
+}
+
+[class*="c-cell"] {
+  padding: 0 $gutter;
+  vertical-align: top;
+}
+
+
+@function calculatePercentage($size, $max) {
+  @return (100% / ($max / $size));
+}
+
+@mixin makeResponsiveGridSize($name, $min, $max: '') {
+  $length: 12;
+
+  @media (min-width: $min) and (max-width: $max - 1) {
+
+    .c-cell {
+
+      &--hidden-#{$name} {
+        display: none !important;
+      }
+
+      @for $idx from 1 through $length {
+
+        &--order-#{$idx}-#{$name} {
+          -webkit-order: $idx;
+          -ms-flex-order: $idx;
+          order: $idx;
+        }
+      }
+    }
+  }
+
+}
+
+@mixin makeGrid() {
+  $max: 12;
+
+  @for $idx from 1 through $max {
+    $width: (100% / ($max / $idx));
+
+    .c-cell {
+
+      &--order-#{$idx} {
+        -webkit-order: $idx;
+        -ms-flex-order: $idx;
+        order: $idx;
+      }
+
+      &--#{$idx}-col {
+        width: $width;
+      }
+
+      @if $idx != 12 {
+        &--offset-#{$idx} {
+          margin-left: calc(#{$width} + #{$gutter});
+        }
+
+        .c-grid--no-spacing>&--offset-#{$idx} {
+          margin-left: $width;
+        }
+      }
+    }
+
+  }
+
+  @include makeResponsiveGridSize('phone', 0, $phone);
+  @include makeResponsiveGridSize('tablet', $phone, $tablet);
+  @include makeResponsiveGridSize('desktop', $tablet, $desktop * 4);
+}
+
+@mixin makeGridBreakpoint($min, $max) {
+  @media (min-width: $min) and (max-width: $max) {
+    @include makeGrid();
+
+  }
+}
+
+@include makeGrid();
+.c-grid.c-grid--no-spacing {
+  margin: 0;
+}
+
+[class*="o-cell"] {
+  vertical-align: top;
+  box-sizing: border-box;
+}
+.c-cell--top {
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start
+}
+
+.c-cell--middle {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center
+}
+
+.c-cell--bottom {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end
+}
+
+.c-cell--stretch {
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  -ms-grid-row-align: stretch;
+  align-self: stretch
+}

@@ -1,0 +1,29 @@
+.o-content {
+  background: $gray-bright;
+  flex: 1 1 auto;
+  height: 100%;
+  overflow: hidden;
+  transition: width 300ms linear;
+
+  & > [class*="-panel"] {
+    height: 100%;
+    overflow: hidden;
+    transition: width 300ms linear;
+
+    & > .c-section {
+      padding-left: 1.2rem;
+      padding-right: 1.2rem;
+    }
+  }
+
+  &__left-panel {
+    flex: 1 1 auto;
+  }
+
+  &__right-panel {
+
+    &--collapsed {
+      width: 0;
+    }
+  }
+}
