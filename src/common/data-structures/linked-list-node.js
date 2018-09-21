@@ -1,8 +1,8 @@
 /**
- * Queue
+ * Linked List Node
  * ===
  *
- * @module queue
+ * @module linkedListNode
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -12,20 +12,29 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
- * Queue
+ * LinkedListNode
  * @class
  */
-class Queue {
+class LinkedListNode {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The data for the node.
    * @private
-   * @type {Array}
+   * @type {object}
    */
   _data;
+
+  /**
+   * The next element in the linked list.
+   * @private
+   * @type {LinkedListNode}
+   */
+  _nextNode;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -33,61 +42,47 @@ class Queue {
   /**
    * @public
    * @readonly
-   *
-   * @return {int} The length of the stack.
+   * @return {object} The data for the node.
    */
-  get length() {
-    return this._data.length;
+  get data() {
+    return this._data;
   }
 
   /**
-   * Queue
-   * @constructor
+   * @public
+   * @readonly
+   * @return {LinkedListNode}
    */
-  constructor() {
-    this._data = [];
+  get nextNode() {
+    return this._next;
+  }
+
+  /**
+   * @public
+   * @param node
+   */
+  set nextNode(node) {
+    this._next = node;
+  }
+
+  /**
+   * LinkedListNode
+   * @constructor
+   * @param {object} data - The data for the node.
+   */
+  constructor(data) {
+    this._data = data;
+    this._nextNode = null;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Enqueues an element at the end of the queue.
-   * @public
-   *
-   * @param {object} element - The element to be enqueued.
-   */
-  enqueue(element) {
-    this._data.push(element);
-  }
 
-  /**
-   * Dequeues an element from the front of the queue.
-   * @public
-   *
-   * @return {object} The dequeued element.
-   */
-  dequeue() {
-    return this._data.shift();
-  }
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Methods
+  //////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * Returns the first element in the queue without removing it.
-   * @public
-   *
-   * @return {object} The first element in the queue.
-   */
-  peek() {
-    return this._data[0];
-  }
-
-  /**
-   * Resets the queue.
-   * @public
-   */
-  clear() {
-    this._data = [];
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -95,15 +90,16 @@ class Queue {
   /**
    * Static factory method.
    * @static
+   * @param {object} data - The data for the node.
    *
-   * @return {Queue} - A new queue object.
+   * @return {LinkedListNode} A new linked list node instance.
    */
-  static createInstance() {
-    return new Queue();
+  static createInstance(data) {
+    return new LinkedListNode(data);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Queue;
+export default LinkedListNode;

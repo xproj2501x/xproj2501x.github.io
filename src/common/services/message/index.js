@@ -26,11 +26,11 @@ class MessageService {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * A collection of message topics and their subscribers.
    * @private
    * @type {object}
    */
-  _subscribers;
-  _queue;
+  _subscriptions;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -41,54 +41,44 @@ class MessageService {
    * @constructor
    */
   constructor() {
-    this._subscribers = {};
-    this._queue = [];
+    this._subscriptions = {};
   }
 
   ////////////////////////////////////////////////////////////////////////////////
   // Public Methods
   ////////////////////////////////////////////////////////////////////////////////
   /**
-   * Adds a subscriber for the subject
-   * @param {string} subject - the subject of the message
-   * @param {function} subscriber - the subscriber to be added
+   * Adds a subscriber for a subject.
+   * @public
+   * @param {string} subject - The subject of the message.
+   * @param {function} subscriber - The subscriber to be added.
    */
   subscribe(subject, subscriber) {
-    if (!(this._subscribers[subject])) {
-      this._subscribers[subject] = [];
+    if (!(subject in this._subscriptions)) {
+      this._subscriptions[subject] = [];
     }
-    const SUBSCRIBERS = this._subscribers[subject];
-
-    SUBSCRIBERS.push(subscriber);
+    this._subscriptions[subject].push(subscriber);
   }
 
   /**
-   * Removes a subscriber for the subject
-   * @param {string} subject - the subject of the message
-   * @param {function} subscriber - the subscriber to be removed
+   * Removes a subscriber for a subject.
+   * @public
+   * @param {string} subject - The subject of the message.
+   * @param {function} subscriber - The subscriber to be removed.
    */
   unsubscribe(subject, subscriber) {
-    if (subject in this._subscribers) {
-      const SUBSCRIBERS = this._subscribers[subject];
-      const INDEX = SUBSCRIBERS.indexOf(subscriber);
-      const VALUE = -1;
+    if (!(subject in this._subscriptions)) return;
+    const INDEX = this._subscriptions[subject].indexOf(subscriber);
 
-      if (INDEX > VALUE) {
-        SUBSCRIBERS.slice(INDEX, 0);
-      }
-    }
-  }
-
-  send(sender, recipient, subject, body) {
-
+    this._subscriptions.splice(INDEX, 1);
   }
 
   /**
-   * Publishes a message to all subscribers
-   * @param {object} message -
+   * Sends a message to all subscribers for the subject.
+   * @param {object} message - The message to be sent.
    */
-  publish(message) {
-    const SUBSCRIBERS = this._subscribers[message.subject];
+  send(message) {
+    const SUBSCRIBERS = this._subscriptions[message.subject] || [];
 
     SUBSCRIBERS.forEach((subscriber) => {
       subscriber(message);
@@ -98,25 +88,16 @@ class MessageService {
   ////////////////////////////////////////////////////////////////////////////////
   // Private Methods
   ////////////////////////////////////////////////////////////////////////////////
-  /**
-   * Verifies that the subscriber exists for the message
-   * @private
-   * @param {string} subject - the subject of the message
-   * @param {string} subscriber - the message subscriber
-   * @return {int}
-   */
-  _hasSubscriber(subject, subscriber) {
-    const SUBSCRIBERS = this._subscribers[subject];
 
-    return SUBSCRIBERS.indexOf(subscriber);
-  }
 
   ////////////////////////////////////////////////////////////////////////////////
   // Static Methods
   ////////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method
-   * @return {MessageService}
+   * Static factory method.
+   * @static
+   *
+   * @return {MessageService} - A new message service instance.
    */
   static create() {
     return new MessageService();

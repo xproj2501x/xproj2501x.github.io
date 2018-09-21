@@ -1,8 +1,8 @@
 /**
- * Stack
+ * Binary Heap
  * ===
  *
- * @module stack
+ * @module binaryHeap
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -12,83 +12,85 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
- * Stack
+ * BinaryHeap
  * @class
  */
-class Stack {
-
+class BinaryHeap {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The contents of the binary heap.
    * @private
-   * @type {array}
+   * @type {Array}
    */
   _data;
+
+  /**
+   * The total number of nodes in the tree.
+   * @private
+   * @type {number}
+   */
+  _size;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @public
-   * @readonly
-   *
-   * @return {int} The length of the stack.
-   */
-  get length() {
-    return this._data.length;
-  }
 
   /**
-   * Stack
+   * BinaryHeap
    * @constructor
    */
   constructor() {
     this._data = [];
+    this._size = 0;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Pushes a new element to the top of the stack.
-   *
-   * @param {object} element - The element to be added.
+   * Inserts a new element into the binary heap.
+   * @public
+   * @param {object} element - The element to be inserted.
    */
-  push(element) {
+  insert(element) {
     this._data.push(element);
+    this._size++;
   }
 
   /**
-   * Pops an element from the top of the stack.
-   *
-   * @return {object} The popped element.
-   */
-  pop() {
-    return this._data.pop();
-  }
-
-  /**
-   * Clears the stack
+   * Clears the binary heap.
+   * @public
    */
   clear() {
+    this._size = 0;
     this._data = [];
   }
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Methods
+  //////////////////////////////////////////////////////////////////////////////
+  _sinkDown() {
+
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method
+   * Static factory method.
    * @static
-   * @return {Stack} - A new stack object.
+   *
+   * @return {BinaryHeap} A new binary heap instance.
    */
   static createInstance() {
-    return new Stack();
+    return new BinaryHeap();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Stack;
+export default BinaryHeap;

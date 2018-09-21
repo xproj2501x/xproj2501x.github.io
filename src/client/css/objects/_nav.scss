@@ -1,6 +1,6 @@
 .o-nav {
   background-color: $gray-dark;
-  color: $gray-light;
+  color: $gray-bright;
   height: 100%;
   transition: width 300ms linear;
   width: 128px;
@@ -11,7 +11,20 @@
 
   &__menu {
     list-style: none;
-    margin: 1.2rem;
+    margin: 0;
     padding: 0;
+
+    &__item {
+      color: $gray-bright;
+      display: block;
+      padding: 1.2rem;
+      text-decoration: none;
+
+      &--selected,
+      &:hover {
+        background: $gray-bright;
+        color: $gray-dark;
+      }
+    }
   }
 }

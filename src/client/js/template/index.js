@@ -75,11 +75,10 @@ class Template extends React.Component {
           <div className="c-action-bar">
             <Icon className="c-action-bar__left-icon c-icon" value="menu" onClick={(event) => this.toggleMenu(event)} />
             <h1 className="c-action-bar__title">Heading</h1>
-            <Icon className="c-action-bar__right-icon c-icon" value="search" onClick={(event) => this.toggleInfoPanel(event)} />
+            <Icon className="c-action-bar__right-icon c-icon" value="search"
+              onClick={(event) => this.toggleInfoPanel(event)} />
           </div>
-          {/*<ActionBar title="heading 1"*/}
-          {/*leftIcon="menu" onLeftIconClick={(event) => this.toggleMenu(event)}*/}
-          {/*rightIcon="search" onRightIconClick={(event) => this.toggleInfoPanel(event)} />*/}
+
         </div>
       </header>,
       <main className="c-container">
@@ -113,8 +112,8 @@ class Template extends React.Component {
       <footer className="o-app__footer">
         <div className="c-container">
           <ActionBar title={<h2>Title</h2>}
-                     leftIcon="menu" onLeftIconClick={(event) => this.toggleInfoPanel(event)}
-                     rightIcon="search" onRightIconClick={(event) => this.toggleInfoPanel(event)} />
+            leftIcon="menu" onLeftIconClick={(event) => this.toggleInfoPanel(event)}
+            rightIcon="search" onRightIconClick={(event) => this.toggleInfoPanel(event)} />
         </div>
       </footer>
     ];
