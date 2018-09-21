@@ -1,0 +1,866 @@
+[
+  {
+    "id": 1,
+    "name": "Amaranth",
+    "cost": 70,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 150,
+      "silver": 187,
+      "gold": 225
+    },
+    "harvest": 7,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserveJar": 4000,
+      "oilMaker": 0
+    }
+  },
+  {
+    "id": 2,
+    "name": "Ancient Fruit",
+    "cost": 550,
+    "seasons": {
+      "spring": 1,
+      "summer": 1,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 550,
+      "silver": 687,
+      "gold": 825
+    },
+    "harvest": 28,
+    "regrow": 7,
+    "yield": 1,
+    "artisan": {
+      "keg": 10000,
+      "preserveJar": 4000,
+      "oilMaker": 0
+    }
+  },
+  {
+    "id": 3,
+    "name": "Artichoke",
+    "cost": 30,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 160,
+      "silver": 200,
+      "gold": 240
+    },
+    "harvest": 8,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserveJar": 4000,
+      "oilMaker": 0
+    }
+  },
+  {
+    "id": 4,
+    "name": "Beet",
+    "cost": 20,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 100,
+      "silver": 125,
+      "gold": 150
+    },
+    "harvest": 6,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserveJar": 4000,
+      "oilMaker": 0
+    }
+  },
+  {
+    "id": 5,
+    "name": "Blue Jazz",
+    "cost": 30,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 50,
+      "silver": 62,
+      "gold": 74
+    },
+    "harvest": 7,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 0,
+      "preserveJar": 0,
+      "oilMaker": 0
+    }
+  },
+  {
+    "id": 6,
+    "name": "Blueberry",
+    "cost": 80,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 50,
+      "silver": 62,
+      "gold": 74
+    },
+    "harvest": 13,
+    "regrow": 4,
+    "yield": 3,
+    "artisan": {
+      "keg": 10000,
+      "preserveJar": 4000,
+      "oilMaker": 0
+    }
+  },
+  {
+    "id":7,
+    "name": "Bok Choy",
+    "cost": 50,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 80,
+      "silver": 100,
+      "gold": 120
+    },
+    "harvest": 4,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":8,
+    "name": "Cauliflower",
+    "cost": 80,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 175,
+      "silver": 218,
+      "gold": 262
+    },
+    "harvest": 12,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":9,
+    "name": "Coffee Bean",
+    "cost": 2500,
+    "seasons": {
+      "spring": 1,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 15,
+      "silver": 18,
+      "gold": 22
+    },
+    "harvest": 10,
+    "regrow": 2,
+    "yield": 4,
+    "artisan": {
+      "keg": 120,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":10,
+    "name": "Corn",
+    "cost": 150,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 50,
+      "silver": 62,
+      "gold": 75
+    },
+    "harvest": 14,
+    "regrow": 4,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 1000
+    }
+  },
+  {
+    "id":11,
+    "name": "Cranberry",
+    "cost": 240,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 75,
+      "silver": 93,
+      "gold": 112
+    },
+    "harvest": 7,
+    "regrow": 5,
+    "yield": 2,
+    "artisan": {
+      "keg": 10000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":12,
+    "name": "Eggplant",
+    "cost": 20,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 60,
+      "silver": 75,
+      "gold": 90
+    },
+    "harvest": 5,
+    "regrow": 5,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":13,
+    "name": "Fairy Rose",
+    "cost": 200,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 290,
+      "silver": 362,
+      "gold": 435
+    },
+    "harvest": 12,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 0,
+      "preserve": 0,
+      "oil": 0
+    }
+  },
+  {
+    "id":14,
+    "name": "Garlic",
+    "cost": 40,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 60,
+      "silver": 75,
+      "gold": 90
+    },
+    "harvest": 4,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":15,
+    "name": "Grape",
+    "cost": 60,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 80,
+      "silver": 100,
+      "gold": 120
+    },
+    "harvest": 10,
+    "regrow": 3,
+    "yield": 1,
+    "artisan": {
+      "keg": 10000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":16,
+    "name": "Green Bean",
+    "cost": 60,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 40,
+      "silver": 50,
+      "gold": 60
+    },
+    "harvest": 10,
+    "regrow": 3,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":17,
+    "name": "Hops",
+    "cost": 60,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 25,
+      "silver": 31,
+      "gold": 37
+    },
+    "harvest": 11,
+    "regrow": 1,
+    "yield": 1,
+    "artisan": {
+      "keg": 2250,
+      "preserve": 0,
+      "oil": 0
+    }
+  },
+  {
+    "id":18,
+    "name": "Hot Pepper",
+    "cost": 40,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 40,
+      "silver": 50,
+      "gold": 60
+    },
+    "harvest": 5,
+    "regrow": 3,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":19,
+    "name": "Kale",
+    "cost": 70,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 110,
+      "silver": 137,
+      "gold": 165
+    },
+    "harvest": 6,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":20,
+    "name": "Melon",
+    "cost": 80,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 250,
+      "silver": 312,
+      "gold": 375
+    },
+    "harvest": 12,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 10000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":21,
+    "name": "Parsnip",
+    "cost": 20,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 35,
+      "silver": 43,
+      "gold": 52
+    },
+    "harvest": 4,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":22,
+    "name": "Poppy",
+    "cost": 100,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 140,
+      "silver": 175,
+      "gold": 210
+    },
+    "harvest": 7,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 0,
+      "preserve": 0,
+      "oil": 0
+    }
+  },
+  {
+    "id":23,
+    "name": "Potato",
+    "cost": 50,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 80,
+      "silver": 100,
+      "gold": 120
+    },
+    "harvest": 6,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":24,
+    "name": "Pumpkin",
+    "cost": 100,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 320,
+      "silver": 400,
+      "gold": 480
+    },
+    "harvest": 13,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 10000,
+      "preserve": 0,
+      "oil": 0
+    }
+  },
+  {
+    "id":25,
+    "name": "Radish",
+    "cost": 40,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 90,
+      "silver": 112,
+      "gold": 135
+    },
+    "harvest": 6,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":26,
+    "name": "Rare Seed",
+    "cost": 1000,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 3000,
+      "silver": 3750,
+      "gold": 4500
+    },
+    "harvest": 24,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":27,
+    "name": "Red Cabbage",
+    "cost": 100,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 260,
+      "silver": 325,
+      "gold": 390
+    },
+    "harvest": 9,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":28,
+    "name": "Rhubarb",
+    "cost": 100,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 220,
+      "silver": 275,
+      "gold": 330
+    },
+    "harvest": 13,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":29,
+    "name": "Starfruit",
+    "cost": 400,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 750,
+      "silver": 937,
+      "gold": 1125
+    },
+    "harvest": 13,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 10000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":30,
+    "name": "Strawberry",
+    "cost": 100,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 120,
+      "silver": 150,
+      "gold": 180
+    },
+    "harvest": 8,
+    "regrow": 4,
+    "yield": 1,
+    "artisan": {
+      "keg": 10000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":31,
+    "name": "Summer Spangle",
+    "cost": 50,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 90,
+      "silver": 112,
+      "gold": 135
+    },
+    "harvest": 8,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 0,
+      "preserve": 0,
+      "oil": 0
+    }
+  },
+  {
+    "id":32,
+    "name": "Sunflower",
+    "cost": 200,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 80,
+      "silver": 100,
+      "gold": 120
+    },
+    "harvest": 8,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 0,
+      "preserve": 0,
+      "oil": 60
+    }
+  },
+  {
+    "id":33,
+    "name": "Tomato",
+    "cost": 50,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 60,
+      "silver": 75,
+      "gold": 90
+    },
+    "harvest": 11,
+    "regrow": 4,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  },
+  {
+    "id":34,
+    "name": "Tulip",
+    "cost": 20,
+    "seasons": {
+      "spring": 1,
+      "summer": 0,
+      "fall": 0,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 30,
+      "silver": 37,
+      "gold": 45
+    },
+    "harvest": 6,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 0,
+      "preserve": 0,
+      "oil": 0
+    }
+  },
+  {
+    "id":35,
+    "name": "Wheat",
+    "cost": 10,
+    "seasons": {
+      "spring": 0,
+      "summer": 1,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 25,
+      "silver": 31,
+      "gold": 37
+    },
+    "harvest": 4,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 1750,
+      "preserve": 0,
+      "oil": 0
+    }
+  },
+  {
+    "id":36,
+    "name": "Yam",
+    "cost": 60,
+    "seasons": {
+      "spring": 0,
+      "summer": 0,
+      "fall": 1,
+      "winter": 0
+    },
+    "salePrice": {
+      "base": 160,
+      "silver": 200,
+      "gold": 240
+    },
+    "harvest": 10,
+    "regrow": 0,
+    "yield": 1,
+    "artisan": {
+      "keg": 6000,
+      "preserve": 4000,
+      "oil": 0
+    }
+  }
+]

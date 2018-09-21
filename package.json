@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "set NODE_ENV=dev && webpack --progress --colors --profile --watch",
-    "start": "babel-node --ignore \"node_modules/,../pck2/node_modules\" index.js"
+    "start": "babel-node --ignore \"node_modules/,../pck2/node_modules\" index.js",
+    "test": "mocha ./test/common/data-structures/*.test.js --recursive --require @babel/register"
   },
   "dependencies": {
     "express": "^4.16.3"

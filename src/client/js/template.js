@@ -9,10 +9,15 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
+import {Link, Switch, Route } from 'react-router-dom';
 import ActionBar from './components/action-bar';
 import Icon from './components/icon';
 import MessageService from '../../common/services/message/index';
-import GameService from '../../games/index';
+import Header from './template/header';
+import Nav from './template/nav';
+import Home from './views/home';
+import GameOfLife from './views/game-of-life';
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -32,8 +37,11 @@ class Template extends React.Component {
    */
   _debug;
 
+  /**
+   * @private
+   * @type {MessageService}
+   */
   _messageService;
-  _gameService;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -45,12 +53,15 @@ class Template extends React.Component {
    */
   constructor(props) {
     super(props);
-    self._debug = this.props.location.search === '?DEBUG';
+    // self._debug = this.props.location.search === '?DEBUG';
+    // console.log(this.props.match.params.id);
 
     this._messageService = MessageService.create();
     this.state = {
+      debugPanelCollapsed: true,
       infoPanelCollapsed: false,
-      navMenuCollapsed: true
+      navMenuCollapsed: true,
+      searchBoxCollapsed: true
     };
   }
 
@@ -61,7 +72,8 @@ class Template extends React.Component {
    *
    */
   componentDidMount() {
-    this._gameService = GameService.create(this._messageService);
+    // this._gameService = GameService.create(this._messageService);
+
   }
 
   /**
@@ -70,46 +82,15 @@ class Template extends React.Component {
    */
   render() {
     return [
-      <header className="o-app__header">
-        <div className="c-container">
-          <div className="c-action-bar">
-            <Icon className="c-action-bar__left-icon c-icon" value="menu" onClick={(event) => this.toggleMenu(event)} />
-            <h1 className="c-action-bar__title">Heading</h1>
-            <Icon className="c-action-bar__right-icon c-icon" value="search"
-              onClick={(event) => this.toggleInfoPanel(event)} />
-          </div>
-        </div>
-      </header>,
+      <Header leftIconClick={(event) => this.toggleMenu(event)}
+        rightIconClick={(event) => this.toggleInfoPanel(event)} />,
       <main className="c-container">
         <div className="o-app__main c-grid c-grid--no-spacing">
-          <div className={this.state.navMenuCollapsed ? 'o-nav o-nav--collapsed c-cell' : 'o-nav c-cell'}>
-            <ul className="o-nav__menu">
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-            </ul>
-          </div>
-          <div className="o-content c-cell c-grid c-grid--no-spacing">
-            <div className="o-content__left-panel c-cell">
-              <div className="c-section">asdfasdfasdsadfasdasdf</div>
-            </div>
-            <div className={this.state.infoPanelCollapsed ?
-              'o-content__right-panel o-content__right-panel--collapsed c-cell' :
-              'o-content_right-panel c-cell--4-col'}>
-              <div className="c-section">
-                <div className="c-action-bar">
-                  <h1 className="c-action-bar__title">Heading</h1>
-                  <Icon className="c-action-bar__right-icon c-icon" value="chevron_right"
-                    onClick={(event) => this.toggleInfoPanel(event)} />
-                </div>
-                <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-                </p>
-              </div>
-            </div>
-          </div>
+          <Nav collapsed={this.state.navMenuCollapsed} />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/game-of-life' component={GameOfLife} />
+          </Switch>
         </div>
       </main>,
       <footer className="o-app__footer">
@@ -132,6 +113,17 @@ class Template extends React.Component {
     event.preventDefault();
     event.stopPropagation();
     this.setState((prev) => ({infoPanelCollapsed: !prev.infoPanelCollapsed}));
+  }
+
+  /**
+   * Toggles a section of the UI.
+   * @private
+   * @param {string} name - The name of the section to toggle.
+   * @param {MouseEvent} event
+   */
+  _toggleSection(name, event) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 }
 

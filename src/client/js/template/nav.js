@@ -1,94 +1,77 @@
 /**
- * Stack
+ * Nav
  * ===
  *
- * @module stack
+ * @module Nav
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Stack
+ * Nav
  * @class
  */
-class Stack {
+class Nav extends React.Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {array}
-   */
-  _data;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @public
-   * @readonly
-   *
-   * @return {int} The length of the stack.
-   */
-  get length() {
-    return this._data.length;
-  }
 
   /**
-   * Stack
+   * Nav
    * @constructor
    */
-  constructor() {
-    this._data = [];
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapsed: props.collapsed
+    };
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Pushes a new element to the top of the stack.
-   *
-   * @param {object} element - The element to be added.
-   */
-  push(element) {
-    this._data.push(element);
+  componentWillReceiveProps(newProps) {
+    if (this.state.collapsed !== newProps.collapsed) {
+      this.setState({collapsed: newProps.collapsed});
+    }
   }
 
   /**
-   * Pops an element from the top of the stack.
    *
-   * @return {object} The popped element.
+   * @return {*[]}
    */
-  pop() {
-    return this._data.pop();
+  render() {
+    return (
+      <div className={this.state.collapsed ? 'o-nav o-nav--collapsed c-cell' : 'o-nav c-cell'}>
+        <ul className="o-nav__menu">
+          <li><Link to='/game-of-life' className="o-nav__menu__item">Game of Life</Link></li>
+          <li className="o-nav__menu__item">2</li>
+          <li className="o-nav__menu__item">3</li>
+          <li className="o-nav__menu__item">4</li>
+        </ul>
+      </div>
+    );
   }
 
-  /**
-   * Clears the stack
-   */
-  clear() {
-    this._data = [];
-  }
   //////////////////////////////////////////////////////////////////////////////
-  // Static Methods
+  // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Static factory method
-   * @static
-   * @return {Stack} - A new stack object.
-   */
-  static createInstance() {
-    return new Stack();
-  }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Stack;
+export default Nav;

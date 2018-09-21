@@ -18,34 +18,50 @@ describe('Stack', () => {
 
   });
 
-  describe('push an element', () => {
-    let stack = new Stack();
-    stack.push(1);
+  describe('#push', () => {
+    const STACK = new Stack();
+
+    STACK.push(1);
 
     it('should have a length of 1', () => {
-      expect(stack.length).to.equal(1);
+      expect(STACK.length).to.equal(1);
     });
   });
 
-  describe('pop an element', () => {
-    let stack = new Stack();
-    stack.push(1);
-    stack.pop();
+  describe('#pop', () => {
+    const STACK = new Stack();
+
+    STACK.push(1);
+    STACK.pop();
 
     it('should have a length of 0', () => {
-      expect(stack.length).to.equal(0);
+      expect(STACK.length).to.equal(0);
+    });
+
+    it('should pop the last element added', () => {
+      STACK.push(1);
+      STACK.push(2);
+      const DATA = STACK.pop();
+
+      expect(STACK.length).to.equal(1);
+      expect(DATA).to.equal(2);
     });
   });
 
-  describe('pop the last element added', () => {
-    let stack = new Stack();
-    stack.push(1);
-    stack.push(2);
-    let data = stack.pop();
+  describe('#peek', () => {
+    const STACK = new Stack();
 
-    it('should pop an element with a value of 2 and have a length of 1', () => {
-      expect(stack.length).to.equal(1);
-      expect(data).to.equal(2);
+  });
+
+  describe('#clear', () => {
+    const STACK = new Stack();
+
+    it('should be empty', () => {
+
     });
+  });
+
+  describe('#createInstance', () => {
+
   });
 });

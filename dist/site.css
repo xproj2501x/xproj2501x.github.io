@@ -1066,11 +1066,11 @@ button:disabled {
   flex: 1 1 auto;
   height: 100%;
   overflow: hidden;
-  transition: width 300ms linear; }
+  transition: width 400ms linear; }
   .o-content > [class*="-panel"] {
     height: 100%;
     overflow: hidden;
-    transition: width 300ms linear; }
+    transition: width 400ms linear; }
     .o-content > [class*="-panel"] > .c-section {
       padding-left: 1.2rem;
       padding-right: 1.2rem; }
@@ -1081,7 +1081,7 @@ button:disabled {
 
 .o-nav {
   background-color: #212121;
-  color: #E0E0E0;
+  color: #F5F5F5;
   height: 100%;
   transition: width 300ms linear;
   width: 128px; }
@@ -1089,5 +1089,13 @@ button:disabled {
     width: 0; }
   .o-nav__menu {
     list-style: none;
-    margin: 1.2rem;
+    margin: 0;
     padding: 0; }
+    .o-nav__menu__item {
+      color: #F5F5F5;
+      display: block;
+      padding: 1.2rem;
+      text-decoration: none; }
+      .o-nav__menu__item--selected, .o-nav__menu__item:hover {
+        background: #F5F5F5;
+        color: #212121; }
