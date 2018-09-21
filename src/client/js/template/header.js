@@ -1,94 +1,65 @@
 /**
- * Stack
+ * Header
  * ===
  *
- * @module stack
+ * @module header
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import React from 'react';
+import {Link} from 'react-router-dom';
+import Icon from '../components/icon';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Stack
+ * Header
  * @class
  */
-class Stack {
+class Header extends React.Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {array}
-   */
-  _data;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @public
-   * @readonly
-   *
-   * @return {int} The length of the stack.
-   */
-  get length() {
-    return this._data.length;
-  }
 
   /**
-   * Stack
+   * Header
    * @constructor
    */
-  constructor() {
-    this._data = [];
+  constructor(props) {
+    super(props);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Pushes a new element to the top of the stack.
    *
-   * @param {object} element - The element to be added.
+   * @return {*[]}
    */
-  push(element) {
-    this._data.push(element);
-  }
-
-  /**
-   * Pops an element from the top of the stack.
-   *
-   * @return {object} The popped element.
-   */
-  pop() {
-    return this._data.pop();
-  }
-
-  /**
-   * Clears the stack
-   */
-  clear() {
-    this._data = [];
-  }
-  //////////////////////////////////////////////////////////////////////////////
-  // Static Methods
-  //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Static factory method
-   * @static
-   * @return {Stack} - A new stack object.
-   */
-  static createInstance() {
-    return new Stack();
+  render() {
+    return (
+      <header className="o-app__header">
+        <div className="c-container">
+          <div className="c-action-bar">
+            <Icon className="c-action-bar__left-icon c-icon" value="menu" onClick={this.props.leftIconClick} />
+            <Link to="/"><h1 className="c-action-bar__title">Heading</h1></Link>
+            <Icon className="c-action-bar__right-icon c-icon" value="search" onClick={this.props.rightIconClick} />
+          </div>
+        </div>
+      </header>
+    );
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Stack;
+export default Header;

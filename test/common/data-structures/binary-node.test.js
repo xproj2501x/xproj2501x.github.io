@@ -1,42 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Queue from '../../../src/common/data-structures/queue';
+import {expect} from 'chai';
+import BinaryNode from '../../../src/common/data-structures/binary-node';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const CHAI = require('chai');
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Test
 ////////////////////////////////////////////////////////////////////////////////
-describe('Queue', () => {
-  describe('#ctor', () => {
+describe('BinaryNode', () => {
 
-  });
-
-  describe('#enqueue', () => {
-    const QUEUE = new Queue();
-  });
-
-  describe('#dequeue', () => {
-    const QUEUE = new Queue();
-
-  });
-
-  describe('#peek', () => {
-    const QUEUE = new Queue();
-
-  });
-
-  describe('#clear', () => {
-    const QUEUE = new Queue();
-
-  });
-
-  describe('#createInstance', () => {
-    const QUEUE = new Queue();
-
-  });
 });
