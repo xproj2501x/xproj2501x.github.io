@@ -446,27 +446,8 @@ button:disabled {
     .c-drawer--right:not(.c-drawer--active) {
       transform: translateX(100%); }
 
-/*! Form Component Styles */
-/* VARIABLES */
-:root {
-  /* ... */ }
-
-/* STYLES */
-/***
-  title: Form
-  section: Components
-  description: These components are commonly used in forms
-  example: |
-
-***/
-.c-form {
-  margin-bottom: 4px;
-  padding-top: 16px; }
-
-.form-group {
-  position: relative; }
-
-.form-control {
+.c-input > [class*="__text"],
+.c-input > [class*="__select"] {
   background: transparent;
   border-bottom: 1px solid #E0E0E0;
   border-left: none;
@@ -480,38 +461,11 @@ button:disabled {
   line-height: 1.846153846;
   transition: border-color ease-in-out .25s, box-shadow ease-in-out .25s;
   width: 100%; }
-
-.form-control:focus {
-  border-color: #212121;
-  box-shadow: none;
-  outline: 0; }
-
-.form-control ~ label {
-  bottom: 0;
-  font-size: 10px;
-  font-weight: 400;
-  left: 0;
-  margin-bottom: 0;
-  pointer-events: none;
-  position: absolute;
-  transition: 0.2s ease all;
-  opacity: 0.5;
-  top: 0; }
-
-.form-control:focus ~ label {
-  color: #212121;
-  opacity: 1; }
-
-.form-control.floating-label ~ label {
-  top: 19px;
-  font-size: 16px; }
-
-.form-control.floating-label:focus ~ label,
-.form-control.floating-label:active ~ label {
-  color: #212121;
-  opacity: 1;
-  top: 0;
-  font-size: 12px; }
+  .c-input > [class*="__text"]:focus,
+  .c-input > [class*="__select"]:focus {
+    border-color: #212121;
+    box-shadow: none;
+    outline: 0; }
 
 .c-grid {
   display: table;
@@ -1051,6 +1005,8 @@ button:disabled {
     .o-app__header > .c-container > .c-action-bar > .c-action-bar__left-icon.c-icon:hover {
       cursor: pointer; }
   .o-app__main {
+    display: flex;
+    flex-flow: row nowrap;
     height: 100%;
     width: 100%;
     z-index: 1; }

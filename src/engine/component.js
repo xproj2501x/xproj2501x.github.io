@@ -95,7 +95,7 @@ class Component {
    * @param {object} state - The initial state of the component.
    * @return {Component}
    */
-  static create(id, state) { // eslint-disable-line id-length
+  static createInstance(id, state) { // eslint-disable-line id-length
     return new Component(id, state);
   }
 }

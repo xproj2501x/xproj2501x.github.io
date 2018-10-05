@@ -1,24 +1,24 @@
 /**
- * Home
+ * Position Component
  * ===
  *
- * @module home
+ * @module positionComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import React from 'react';
-import TwoColumn from '../template/two-column';
+import Component from '../../../engine/component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Home
+ * PositionComponent
  * @class
+ * @extends Component
  */
-class Home extends React.Component {
+class PositionComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -29,33 +29,37 @@ class Home extends React.Component {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Home
+   * PositionComponent
    * @constructor
+   * @param {string} id - The identifier for the parent entity.
+   * @param {object} state - The initial state of the component.
    */
-  constructor(props) {
-    super(props);
-
+  constructor(id, state) { // eslint-disable-line id-length
+    super(id, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
 
-  /**
-   *
-   * @return {*[]}
-   */
-  render() {
-    return (
-      <div>
-        home
-      </div>
-    );
-  }
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Static Methods
+  //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Static factory method
+   * @static
+   * @param {string} id - The identifier for the parent entity.
+   * @param {object} state - The initial state of the grow component.
+   *
+   * @return {PositionComponent}
+   */
+  static create(id, state) { // eslint-disable-line id-length
+    return new PositionComponent(id, state);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Home;
+export default PositionComponent;

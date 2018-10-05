@@ -1,8 +1,8 @@
 /**
- * Content Area
+ * Two Colum
  * ===
  *
- * @module contentArea
+ * @module twoColum
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -15,10 +15,10 @@ import Icon from '../components/icon';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * ContentArea
+ * TwoColum
  * @class
  */
-class ContentArea extends React.Component {
+class TwoColumn extends React.Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -49,7 +49,7 @@ class ContentArea extends React.Component {
    */
   render() {
     return (
-      <div className="o-content c-cell c-grid c-grid--no-spacing">
+      <div className="o-content c-cell c-grid">
         <div className="o-content__left-panel c-cell">
           <div className="c-section">{this.props.left}</div>
         </div>
@@ -79,4 +79,4 @@ class ContentArea extends React.Component {
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default ContentArea;
+export default TwoColumn;
