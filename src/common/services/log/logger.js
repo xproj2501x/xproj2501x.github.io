@@ -75,7 +75,7 @@ class Logger {
    * @param {string} message - The message to be written.
    */
   writeLogMessage(message) {
-    this._log.write(this._context, LEVEL.LOG, message);
+    this._log.writeMessage(this._context, LEVEL.LOG, message);
   }
 
   /**
@@ -84,7 +84,7 @@ class Logger {
    * @param {string} message - The message to be written.
    */
   writeDebugMessage(message) {
-    this._log.write(this._context, LEVEL.DEBUG, message);
+    this._log.writeMessage(this._context, LEVEL.DEBUG, message);
   }
 
   /**
@@ -93,7 +93,7 @@ class Logger {
    * @param {string} message - The message to be written.
    */
   writeWarningMessage(message) {
-    this._log.write(this._context, LEVEL.WARN, message);
+    this._log.writeMessage(this._context, LEVEL.WARN, message);
   }
 
   /**
@@ -102,7 +102,7 @@ class Logger {
    * @param {string} message - The message to be written.
    */
   writeInfoMessage(message) {
-    this._log.write(this._context, LEVEL.INFO, message);
+    this._log.writeMessage(this._context, LEVEL.INFO, message);
   }
 
   /**
@@ -111,7 +111,7 @@ class Logger {
    * @param {string} message - The message to be written.
    */
   writeErrorMessage(message) {
-    this._log.write(this._context, LEVEL.ERROR, message);
+    this._log.writeMessage(this._context, LEVEL.ERROR, message);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

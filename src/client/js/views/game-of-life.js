@@ -9,7 +9,7 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
-import ContentArea from '../template/content-area';
+import TwoColumn from '../template/two-column';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -47,7 +47,7 @@ class GameOfLife extends React.Component {
    */
   render() {
     return (
-      <ContentArea
+      <TwoColumn
         left={<div>left</div>}
         right={<div>right</div>}
       />

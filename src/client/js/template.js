@@ -9,14 +9,14 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
-import {Link, Switch, Route } from 'react-router-dom';
+import {Switch, Route } from 'react-router-dom';
 import ActionBar from './components/action-bar';
-import Icon from './components/icon';
 import MessageService from '../../common/services/message/index';
 import Header from './template/header';
 import Nav from './template/nav';
 import Home from './views/home';
 import GameOfLife from './views/game-of-life';
+import StardewValley from './views/stardew-valley';
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,20 +84,21 @@ class Template extends React.Component {
     return [
       <Header leftIconClick={(event) => this.toggleMenu(event)}
         rightIconClick={(event) => this.toggleInfoPanel(event)} />,
-      <main className="c-container">
-        <div className="o-app__main c-grid c-grid--no-spacing">
-          <Nav collapsed={this.state.navMenuCollapsed} />
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/game-of-life' component={GameOfLife} />
-          </Switch>
-        </div>
+      <main className="o-app__main c-container">
+        <Nav collapsed={this.state.navMenuCollapsed} />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/game-of-life' component={GameOfLife} />
+          <Route path='/stardew-valley' component={StardewValley} />
+        </Switch>
       </main>,
       <footer className="o-app__footer">
         <div className="c-container">
-          <ActionBar title={<h2>Title</h2>}
-            leftIcon="menu" onLeftIconClick={(event) => this.toggleInfoPanel(event)}
-            rightIcon="search" onRightIconClick={(event) => this.toggleInfoPanel(event)} />
+          <div className="c-action-bar">
+            <span className="c-action-bar__left-icon c-icon">menu</span>
+            <a href="/"><h2 className="c-action-bar__title">Heading</h2></a>
+            <span className="c-action-bar__right-icon c-icon">search</span>
+          </div>
         </div>
       </footer>
     ];

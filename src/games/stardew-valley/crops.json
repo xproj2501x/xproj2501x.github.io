@@ -9,11 +9,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 150,
-      "silver": 187,
-      "gold": 225
-    },
+    "price": 150,
     "harvest": 7,
     "regrow": 0,
     "yield": 1,
@@ -33,11 +29,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 550,
-      "silver": 687,
-      "gold": 825
-    },
+    "price": 550,
     "harvest": 28,
     "regrow": 7,
     "yield": 1,
@@ -57,11 +49,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 160,
-      "silver": 200,
-      "gold": 240
-    },
+    "price": 160,
     "harvest": 8,
     "regrow": 0,
     "yield": 1,
@@ -81,11 +69,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 100,
-      "silver": 125,
-      "gold": 150
-    },
+    "price": 100,
     "harvest": 6,
     "regrow": 0,
     "yield": 1,
@@ -105,11 +89,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 50,
-      "silver": 62,
-      "gold": 74
-    },
+    "price": 50,
     "harvest": 7,
     "regrow": 0,
     "yield": 1,
@@ -129,11 +109,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 50,
-      "silver": 62,
-      "gold": 74
-    },
+    "price": 50,
     "harvest": 13,
     "regrow": 4,
     "yield": 3,
@@ -153,11 +129,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 80,
-      "silver": 100,
-      "gold": 120
-    },
+    "price":  80,
     "harvest": 4,
     "regrow": 0,
     "yield": 1,
@@ -177,11 +149,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 175,
-      "silver": 218,
-      "gold": 262
-    },
+    "price":  175,
     "harvest": 12,
     "regrow": 0,
     "yield": 1,
@@ -201,11 +169,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 15,
-      "silver": 18,
-      "gold": 22
-    },
+    "price":  15,
     "harvest": 10,
     "regrow": 2,
     "yield": 4,
@@ -225,11 +189,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 50,
-      "silver": 62,
-      "gold": 75
-    },
+    "price": 50,
     "harvest": 14,
     "regrow": 4,
     "yield": 1,
@@ -249,11 +209,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 75,
-      "silver": 93,
-      "gold": 112
-    },
+    "price": 75,
     "harvest": 7,
     "regrow": 5,
     "yield": 2,
@@ -273,11 +229,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 60,
-      "silver": 75,
-      "gold": 90
-    },
+    "price": 60,
     "harvest": 5,
     "regrow": 5,
     "yield": 1,
@@ -297,11 +249,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 290,
-      "silver": 362,
-      "gold": 435
-    },
+    "price": 290,
     "harvest": 12,
     "regrow": 0,
     "yield": 1,
@@ -321,11 +269,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 60,
-      "silver": 75,
-      "gold": 90
-    },
+    "price": 60,
     "harvest": 4,
     "regrow": 0,
     "yield": 1,
@@ -345,11 +289,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 80,
-      "silver": 100,
-      "gold": 120
-    },
+    "price": 80,
     "harvest": 10,
     "regrow": 3,
     "yield": 1,
@@ -369,11 +309,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 40,
-      "silver": 50,
-      "gold": 60
-    },
+    "price": 40,
     "harvest": 10,
     "regrow": 3,
     "yield": 1,
@@ -393,11 +329,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 25,
-      "silver": 31,
-      "gold": 37
-    },
+    "price": 25,
     "harvest": 11,
     "regrow": 1,
     "yield": 1,
@@ -417,11 +349,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 40,
-      "silver": 50,
-      "gold": 60
-    },
+    "price": 40,
     "harvest": 5,
     "regrow": 3,
     "yield": 1,
@@ -441,11 +369,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 110,
-      "silver": 137,
-      "gold": 165
-    },
+    "price": 110,
     "harvest": 6,
     "regrow": 0,
     "yield": 1,
@@ -465,11 +389,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 250,
-      "silver": 312,
-      "gold": 375
-    },
+    "price": 250,
     "harvest": 12,
     "regrow": 0,
     "yield": 1,
@@ -489,11 +409,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 35,
-      "silver": 43,
-      "gold": 52
-    },
+    "price": 35,
     "harvest": 4,
     "regrow": 0,
     "yield": 1,
@@ -513,11 +429,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 140,
-      "silver": 175,
-      "gold": 210
-    },
+    "price": 140,
     "harvest": 7,
     "regrow": 0,
     "yield": 1,
@@ -537,11 +449,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 80,
-      "silver": 100,
-      "gold": 120
-    },
+    "price": 80,
     "harvest": 6,
     "regrow": 0,
     "yield": 1,
@@ -561,11 +469,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 320,
-      "silver": 400,
-      "gold": 480
-    },
+    "price": 320,
     "harvest": 13,
     "regrow": 0,
     "yield": 1,
@@ -585,11 +489,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 90,
-      "silver": 112,
-      "gold": 135
-    },
+    "price": 90,
     "harvest": 6,
     "regrow": 0,
     "yield": 1,
@@ -609,11 +509,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 3000,
-      "silver": 3750,
-      "gold": 4500
-    },
+    "price": 3000,
     "harvest": 24,
     "regrow": 0,
     "yield": 1,
@@ -633,11 +529,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 260,
-      "silver": 325,
-      "gold": 390
-    },
+    "price": 260,
     "harvest": 9,
     "regrow": 0,
     "yield": 1,
@@ -657,11 +549,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 220,
-      "silver": 275,
-      "gold": 330
-    },
+    "price": 220,
     "harvest": 13,
     "regrow": 0,
     "yield": 1,
@@ -681,11 +569,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 750,
-      "silver": 937,
-      "gold": 1125
-    },
+    "price": 750,
     "harvest": 13,
     "regrow": 0,
     "yield": 1,
@@ -705,11 +589,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 120,
-      "silver": 150,
-      "gold": 180
-    },
+    "price": 120,
     "harvest": 8,
     "regrow": 4,
     "yield": 1,
@@ -729,11 +609,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 90,
-      "silver": 112,
-      "gold": 135
-    },
+    "price": 90,
     "harvest": 8,
     "regrow": 0,
     "yield": 1,
@@ -753,11 +629,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 80,
-      "silver": 100,
-      "gold": 120
-    },
+    "price": 80,
     "harvest": 8,
     "regrow": 0,
     "yield": 1,
@@ -777,11 +649,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 60,
-      "silver": 75,
-      "gold": 90
-    },
+    "price": 60,
     "harvest": 11,
     "regrow": 4,
     "yield": 1,
@@ -801,11 +669,7 @@
       "fall": 0,
       "winter": 0
     },
-    "salePrice": {
-      "base": 30,
-      "silver": 37,
-      "gold": 45
-    },
+    "price": 30,
     "harvest": 6,
     "regrow": 0,
     "yield": 1,
@@ -825,11 +689,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 25,
-      "silver": 31,
-      "gold": 37
-    },
+    "price": 25,
     "harvest": 4,
     "regrow": 0,
     "yield": 1,
@@ -849,11 +709,7 @@
       "fall": 1,
       "winter": 0
     },
-    "salePrice": {
-      "base": 160,
-      "silver": 200,
-      "gold": 240
-    },
+    "price": 160,
     "harvest": 10,
     "regrow": 0,
     "yield": 1,
