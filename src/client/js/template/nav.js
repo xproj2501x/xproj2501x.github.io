@@ -54,12 +54,10 @@ class Nav extends React.Component {
    */
   render() {
     return (
-      <div className={this.state.collapsed ? 'o-nav o-nav--collapsed c-cell' : 'o-nav c-cell'}>
+      <div className={this.state.collapsed ? 'o-nav o-nav--collapsed' : 'o-nav'}>
         <ul className="o-nav__menu">
           <li><Link to='/game-of-life' className="o-nav__menu__item">Game of Life</Link></li>
-          <li className="o-nav__menu__item">2</li>
-          <li className="o-nav__menu__item">3</li>
-          <li className="o-nav__menu__item">4</li>
+          <li><Link to='/stardew-valley' className="o-nav__menu__item">Stardew Valley</Link></li>
         </ul>
       </div>
     );

@@ -50,7 +50,7 @@ class MessageService {
   /**
    * Adds a subscriber for a subject.
    * @public
-   * @param {string} subject - The subject of the message.
+   * @param {number} subject - The subject of the message.
    * @param {function} subscriber - The subscriber to be added.
    */
   subscribe(subject, subscriber) {
@@ -63,7 +63,7 @@ class MessageService {
   /**
    * Removes a subscriber for a subject.
    * @public
-   * @param {string} subject - The subject of the message.
+   * @param {number} subject - The subject of the message.
    * @param {function} subscriber - The subscriber to be removed.
    */
   unsubscribe(subject, subscriber) {
@@ -75,10 +75,11 @@ class MessageService {
 
   /**
    * Sends a message to all subscribers for the subject.
+   * @param {number} subject - The subject of the message.
    * @param {object} message - The message to be sent.
    */
-  send(message) {
-    const SUBSCRIBERS = this._subscriptions[message.subject] || [];
+  send(subject, message) {
+    const SUBSCRIBERS = this._subscriptions[subject] || [];
 
     SUBSCRIBERS.forEach((subscriber) => {
       subscriber(message);
@@ -99,7 +100,7 @@ class MessageService {
    *
    * @return {MessageService} - A new message service instance.
    */
-  static create() {
+  static createInstance() {
     return new MessageService();
   }
 }

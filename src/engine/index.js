@@ -8,6 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import {FRAME_DURATION, MAX_FRAME_SKIP} from './constants';
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -21,7 +26,29 @@ class Engine {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  _messageService;
+
+  /**
+   * @private
+   * @type {Boolean}
+   */
+  _isRunning;
+
+  /**
+   * @private
+   * @type {int}
+   */
+  _time;
+
+  /**
+   * @private
+   * @type {int}
+   */
+  _lastTick;
+
+  /**
+   * @private
+   */
+  _frameId;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -30,26 +57,79 @@ class Engine {
   /**
    * Engine
    * @constructor
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    */
-  constructor(messageService, settings) {
+  constructor(logService, messageService) {
+    this._isRunning = false;
+    this._time = 0;
+    this._logger = logService.registerLogger('Engine');
     this._messageService = messageService;
-    this._assemblageManager = settings.assemblageManager;
-    this._systemManager = settings.systemManager;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-
+  /**
+   * Starts the engine for the simulation.
+   * @public
+   */
   start() {
-
+    this._isRunning = true;
+    this._lastTick = Date.now();
+    this._logger.info(`Engine started`);
+    this._frameId = requestAnimationFrame(() => {
+      this._tick();
+    });
   }
 
+  /**
+   * Stops the engine.
+   */
   stop() {
-
+    this._isRunning = false;
+    cancelAnimationFrame(this._frameId);
   }
 
-  pause() {
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Methods
+  //////////////////////////////////////////////////////////////////////////////
+  /**
+   *
+   * @private
+   */
+  _tick() {
+    // Needs to call the render loop and draw the next frame every time
+    // If there is not input then the update loop needs to handle only animation / display systems
+    // If there is input then all systems should update
+    if (this._isRunning) {
+      const CURRENT_TIME = window.performance.now();
+      let delta = CURRENT_TIME - this._lastTick;
+
+      delta = delta > MAX_FRAME_SKIP ? MAX_FRAME_SKIP : delta;
+      if (delta >= FRAME_DURATION) {
+        this._update(delta);
+        this._render(delta);
+        this._lastTick = CURRENT_TIME;
+      }
+      this._frameId = requestAnimationFrame(() => {
+        this._tick();
+      });
+    }
+  }
+
+  /**
+   *
+   * @param {number} delta
+   * @private
+   */
+  _update(delta) {
+    while (delta >= FRAME_DURATION) {
+      delta -= FRAME_DURATION;
+    }
+  }
+
+  _render(interpolation) {
 
   }
 
@@ -57,12 +137,15 @@ class Engine {
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method
+   * Static factory method.
    * @static
-   * @return {Engine}
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService -
+   *
+   * @return {Engine} - A new engine instance.
    */
-  static create(messageService, config) {
-    return new Engine(messageService, config);
+  static create(logService, messageService) {
+    return new Engine(logService, messageService);
   }
 }
 
