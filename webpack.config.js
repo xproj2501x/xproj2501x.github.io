@@ -33,8 +33,7 @@ module.exports = {
               '@babel/plugin-transform-runtime'
             ],
             presets: [
-              '@babel/env',
-              '@babel/react'
+              '@babel/env'
             ]
           }
         }
