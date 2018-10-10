@@ -1,48 +1,101 @@
 .o-app {
   background: $gray-bright;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column;
   height: 100%;
-  margin: 0 auto;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
+  width: 100%;
 
-  &__header {
-    flex: 1 1 auto;
-    background: $white;
-    box-shadow: $box-shadow-6px;
-    width: 100%;
-    z-index: 2;
+}
 
-    & > .c-container > .c-action-bar > .c-action-bar__left-icon.c-icon {
+.o-header {
+  align-items: center;
+  background: $white;
+  box-shadow: $box-shadow-6px;
+  display: flex;
+  flex: 0 0 auto;
+  padding: $gutter;
+  width: 100%;
+  z-index: 2;
 
-      //margin: -1.2rem;
-      //padding: 1.2rem;
+  & > &__left-icon {
+    margin-right: $gutter;
+  }
 
-      &:hover {
-        //background: $gray-dark;
-        //color: $gray-light;
-        cursor: pointer;
+  & > &__title {
+    flex-grow: 1;
+    margin-right: $gutter;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  & > &__right-icon {
+    margin-left: $gutter;
+  }
+}
+
+.o-main {
+  display: flex;
+  flex-flow: row nowrap;
+  flex: 1 1 100%;
+  width: 100%;
+
+  > .o-nav {
+    background-color: $gray-dark;
+    color: $gray-bright;
+    flex: 0 0 256px;
+    height: 100%;
+    transition: flex 300ms linear;
+
+    &--collapsed {
+      flex: 0;
+    }
+
+    &__menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      &__item {
+        color: $gray-bright;
+        display: block;
+        padding: 1.2rem;
+        text-decoration: none;
+
+        &--selected,
+        &:hover {
+          background: $gray-bright;
+          color: $gray-dark;
+        }
       }
     }
   }
 
-  &__main {
-    display: flex;
-    flex-flow: row nowrap;
+  > .o-canvas-panel {
+    flex: 1 0 auto;
     height: 100%;
-    width: 100%;
-    z-index: 1;
+    overflow: hidden;
+    padding: $gutter;
+    transition: flex 300ms linear;
+
+    > .o-canvas-wrapper {
+      border: solid 1px $black;
+      height: 100%;
+      width: 100%;
+    }
   }
 
-  &__footer {
-    background: $white;
-    box-shadow: $box-shadow-6px;
-    flex: 1 1 auto;
-    width: 100%;
-    z-index: 2;
+  > .o-info-panel {
+    flex: 0 0 25%;
+    height: 100%;
+    padding: $gutter;
+    transition: flex 300ms linear;
+
+    &--collapsed {
+      flex: 0;
+    }
   }
-}
-
-@media screen and (max-width: $breakpoint--phone - 1) {
-
 }
