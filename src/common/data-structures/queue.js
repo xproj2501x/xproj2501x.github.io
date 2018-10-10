@@ -31,10 +31,11 @@ class Queue {
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * Get _data.length
    * @public
    * @readonly
    *
-   * @return {int} The length of the stack.
+   * @return {number} The length of the queue.
    */
   get length() {
     return this._data.length;
@@ -54,7 +55,6 @@ class Queue {
   /**
    * Enqueues an element at the end of the queue.
    * @public
-   *
    * @param {object} element - The element to be enqueued.
    */
   enqueue(element) {
@@ -64,7 +64,6 @@ class Queue {
   /**
    * Dequeues an element from the front of the queue.
    * @public
-   *
    * @return {object} The dequeued element.
    */
   dequeue() {
@@ -74,7 +73,6 @@ class Queue {
   /**
    * Returns the first element in the queue without removing it.
    * @public
-   *
    * @return {object} The first element in the queue.
    */
   peek() {
@@ -98,7 +96,7 @@ class Queue {
    *
    * @return {Queue} - A new queue object.
    */
-  static createInstance() {
+  static createInstanceInstance() {
     return new Queue();
   }
 }

@@ -98,6 +98,39 @@ eval("/* WEBPACK VAR INJECTION */(function(global) {\n\n__webpack_require__(/*! 
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/classCallCheck.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("function _classCallCheck(instance, Constructor) {\n  if (!(instance instanceof Constructor)) {\n    throw new TypeError(\"Cannot call a class as a function\");\n  }\n}\n\nmodule.exports = _classCallCheck;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/classCallCheck.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/createClass.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("function _defineProperties(target, props) {\n  for (var i = 0; i < props.length; i++) {\n    var descriptor = props[i];\n    descriptor.enumerable = descriptor.enumerable || false;\n    descriptor.configurable = true;\n    if (\"value\" in descriptor) descriptor.writable = true;\n    Object.defineProperty(target, descriptor.key, descriptor);\n  }\n}\n\nfunction _createClass(Constructor, protoProps, staticProps) {\n  if (protoProps) _defineProperties(Constructor.prototype, protoProps);\n  if (staticProps) _defineProperties(Constructor, staticProps);\n  return Constructor;\n}\n\nmodule.exports = _createClass;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/createClass.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("function _defineProperty(obj, key, value) {\n  if (key in obj) {\n    Object.defineProperty(obj, key, {\n      value: value,\n      enumerable: true,\n      configurable: true,\n      writable: true\n    });\n  } else {\n    obj[key] = value;\n  }\n\n  return obj;\n}\n\nmodule.exports = _defineProperty;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/defineProperty.js?");
+
+/***/ }),
+
 /***/ "./node_modules/core-js/es6/index.js":
 /*!*******************************************!*\
   !*** ./node_modules/core-js/es6/index.js ***!
@@ -3210,14 +3243,38 @@ eval("var g;\r\n\r\n// This works in non-strict mode\r\ng = (function() {\r\n\tr
 
 /***/ }),
 
+/***/ "./src/client/css/_site.scss":
+/*!***********************************!*\
+  !*** ./src/client/css/_site.scss ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("// removed by extract-text-webpack-plugin\n\n//# sourceURL=webpack:///./src/client/css/_site.scss?");
+
+/***/ }),
+
+/***/ "./src/client/js/display.js":
+/*!**********************************!*\
+  !*** ./src/client/js/display.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ \"./node_modules/@babel/runtime/helpers/createClass.js\");\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ \"./node_modules/@babel/runtime/helpers/defineProperty.js\");\n/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n/**\n * Display\n * ===\n *\n * @module display\n */\n////////////////////////////////////////////////////////////////////////////////\n// Imports\n////////////////////////////////////////////////////////////////////////////////\n////////////////////////////////////////////////////////////////////////////////\n// Class\n////////////////////////////////////////////////////////////////////////////////\n\n/**\n * Display\n * @class\n */\nvar Display =\n/*#__PURE__*/\nfunction () {\n  //////////////////////////////////////////////////////////////////////////////\n  // Private Properties\n  //////////////////////////////////////////////////////////////////////////////\n\n  /**\n   * @private\n   * @type {HTMLElement}\n   */\n\n  /**\n   * @private\n   * @type {HTMLElement}\n   */\n\n  /**\n   * @private\n   * @type {CanvasRenderingContext2D}\n   */\n  //////////////////////////////////////////////////////////////////////////////\n  // Public Properties\n  //////////////////////////////////////////////////////////////////////////////\n\n  /**\n   * Display\n   * @constructor\n   * @param {HTMLElement} container - The parent container for the display.\n   */\n  function Display(container) {\n    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Display);\n\n    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()(this, \"_container\", void 0);\n\n    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()(this, \"_canvas\", void 0);\n\n    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()(this, \"_context\", void 0);\n\n    this._container = container;\n    this._canvas = document.createElement('canvas');\n    this._context = this._canvas.getContext('2d');\n\n    this._container.appendChild(this._canvas);\n\n    this._refresh();\n  } //////////////////////////////////////////////////////////////////////////////\n  // Public Methods\n  //////////////////////////////////////////////////////////////////////////////\n\n  /**\n   * Draws a collection of sprites on the canvas.\n   * @param {Array} sprites - A collection of sprite objects.\n   */\n\n\n  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Display, [{\n    key: \"render\",\n    value: function render(sprites) {\n      this._refresh();\n\n      this._context.save();\n\n      this._context.restore();\n    } //////////////////////////////////////////////////////////////////////////////\n    // Private Methods\n    //////////////////////////////////////////////////////////////////////////////\n\n    /**\n     * Clears the canvas and resets the dimensions to the current width and height of the container.\n     * @private\n     */\n\n  }, {\n    key: \"_refresh\",\n    value: function _refresh() {\n      this._context.clearRect(0, 0, this._canvas.height, this._canvas.width);\n\n      this._canvas.height = this._container.clientHeight;\n      this._canvas.width = this._container.clientWidth;\n    } //////////////////////////////////////////////////////////////////////////////\n    // Static Methods\n    //////////////////////////////////////////////////////////////////////////////\n\n    /**\n     * Static factory method\n     * @static\n     * @param {string} containerId - The id for the container element.\n     *\n     * @return {Display} A new display instance.\n     */\n\n  }], [{\n    key: \"createInstance\",\n    value: function createInstance(containerId) {\n      var CONTAINER = document.getElementById(containerId);\n      return new Display(CONTAINER);\n    }\n  }]);\n\n  return Display;\n}(); ////////////////////////////////////////////////////////////////////////////////\n// Exports\n////////////////////////////////////////////////////////////////////////////////\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Display);\n\n//# sourceURL=webpack:///./src/client/js/display.js?");
+
+/***/ }),
+
 /***/ "./src/client/js/index.js":
 /*!********************************!*\
   !*** ./src/client/js/index.js ***!
   \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("////////////////////////////////////////////////////////////////////////////////\n// Imports\n////////////////////////////////////////////////////////////////////////////////\nconsole.log('success');\n\n//# sourceURL=webpack:///./src/client/js/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ \"./node_modules/@babel/runtime/helpers/createClass.js\");\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ \"./node_modules/@babel/runtime/helpers/defineProperty.js\");\n/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _css_site_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../css/_site.scss */ \"./src/client/css/_site.scss\");\n/* harmony import */ var _css_site_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_css_site_scss__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _display__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./display */ \"./src/client/js/display.js\");\n\n\n\n////////////////////////////////////////////////////////////////////////////////\n// Imports\n////////////////////////////////////////////////////////////////////////////////\n\n ////////////////////////////////////////////////////////////////////////////////\n// Definitions\n////////////////////////////////////////////////////////////////////////////////\n////////////////////////////////////////////////////////////////////////////////\n// Class\n////////////////////////////////////////////////////////////////////////////////\n\nvar App =\n/*#__PURE__*/\nfunction () {\n  //////////////////////////////////////////////////////////////////////////////\n  // Private Properties\n  //////////////////////////////////////////////////////////////////////////////\n\n  /**\n   * The HTML element for the navigation menu.\n   * @private\n   * @type {HTMLElement}\n   */\n\n  /**\n   * The HTML element for the canvas panel.\n   * @private\n   * @type {HTMLElement}\n   */\n\n  /**\n   * The HTML element for the info panel.\n   * @private\n   * @type {HTMLElement}\n   */\n  //////////////////////////////////////////////////////////////////////////////\n  // Public Properties\n  //////////////////////////////////////////////////////////////////////////////\n  function App() {\n    var _this = this;\n\n    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, App);\n\n    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()(this, \"_navMenu\", void 0);\n\n    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()(this, \"_canvasPanel\", void 0);\n\n    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()(this, \"_infoPanel\", void 0);\n\n    var MENU_BUTTON = document.getElementById('menuButton');\n    var INFO_BUTTON = document.getElementById('infoButton');\n    var LINKS = document.getElementsByClassName('o-nav__menu__item');\n    this._navMenu = document.getElementById('navMenu');\n    this._infoPanel = document.getElementById('infoPanel');\n    MENU_BUTTON.addEventListener('click', function (event) {\n      _this.toggleMenu(event);\n    });\n    INFO_BUTTON.addEventListener('click', function (event) {\n      _this.toggleInfoPanel(event);\n    });\n\n    for (var KEY in LINKS) {\n      if (LINKS.hasOwnProperty(KEY)) {\n        LINKS[KEY].addEventListener('click', function (event) {\n          var PATH_NAME = event.target.innerText.toLowerCase();\n          window.history.pushState({}, PATH_NAME, window.location.origin + '/' + PATH_NAME);\n          console.log(\"push: \".concat(window.location.href));\n        });\n      }\n    }\n\n    window.onpopstate = function () {\n      console.log(\"pop: \".concat(window.location.href));\n    };\n  } //////////////////////////////////////////////////////////////////////////////\n  // Public Methods\n  //////////////////////////////////////////////////////////////////////////////\n\n\n  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(App, [{\n    key: \"toggleMenu\",\n    value: function toggleMenu(event) {\n      this._navMenu.classList.toggle('o-nav--collapsed');\n    }\n  }, {\n    key: \"toggleInfoPanel\",\n    value: function toggleInfoPanel(event) {\n      this._infoPanel.classList.toggle('o-info-panel--collapsed');\n    } //////////////////////////////////////////////////////////////////////////////\n    // Private Methods\n    //////////////////////////////////////////////////////////////////////////////\n    //////////////////////////////////////////////////////////////////////////////\n    // Static Methods\n    //////////////////////////////////////////////////////////////////////////////\n\n    /**\n     * Static factory method.\n     * @static\n     *\n     * @return {App} A new app instance.\n     */\n\n  }], [{\n    key: \"createInstance\",\n    value: function createInstance() {\n      return new App();\n    }\n  }]);\n\n  return App;\n}();\n\nwindow.addEventListener('load', function (event) {\n  var DISPLAY = _display__WEBPACK_IMPORTED_MODULE_4__[\"default\"].createInstance('canvas-wrapper');\n  var APP = App.createInstance();\n});\n\n//# sourceURL=webpack:///./src/client/js/index.js?");
 
 /***/ }),
 
