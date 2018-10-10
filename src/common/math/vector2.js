@@ -27,39 +27,45 @@ class Vector2 {
    * @protected
    * @type {number}
    */
-  _x;
+  _xCoordinate;
 
   /**
    * The y coordinate for the vector.
    * @protected
    * @type {number}
    */
-  _y;
+  _yCoordinate;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The x coordinate for the vector.
+   * Get this._xCoordinate
+   * @public
    * @readonly
+   *
    * @return {number}
    */
-  get x() {
-    return this._x;
+  get xCoordinate() {
+    return this._xCoordinate;
   }
 
   /**
-   * The y coordinate for the vector.
+   * Get this._yCoordinate
+   * @public
    * @readonly
+   *
    * @return {number}
    */
-  get y() {
-    return this._y;
+  get yCoordinate() {
+    return this._yCoordinate;
   }
 
   /**
    * The magnitude of the vector
+   * @public
    * @readonly
+   *
    * @return {number}
    */
   get magnitude() {
@@ -69,59 +75,69 @@ class Vector2 {
   /**
    * Vector2
    * @constructor
-   * @param {number} x - The x coordinate for the vector.
-   * @param {number} y - The y coordinate for the vector.
+   * @param {number} xCoordinate - The x coordinate for the vector.
+   * @param {number} yCoordinate - The y coordinate for the vector.
    */
-  constructor(x, y) {
-    this._x = x;
-    this._y = y;
+  constructor(xCoordinate, yCoordinate) {
+    this._xCoordinate = xCoordinate;
+    this._yCoordinate = yCoordinate;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   *
+   * Adds a vector2 object to this.
+   * @public
    * @param {Vector2} vector - The vector to add.
-   * @return {Vector2}
+   *
+   * @return {Vector2} A new vector2 instance.
    */
   add(vector) {
-    return Vector2.createInstance(this._x + vector.x, this._y + vector.y);
+    return Vector2.createInstance(this._xCoordinate + vector.xCoordinate, this._yCoordinate + vector.yCoordinate);
   }
 
   /**
-   *
+   * Subtracts a vector2 object from this.
+   * @public
    * @param {Vector2} vector - The vector to subtract.
-   * @return {Vector2}
+   *
+   * @return {Vector2} A new vector2 instance.
    */
   subtract(vector) {
-    return Vector2.createInstance(this._x - vector.x, this._y - vector.y);
+    return Vector2.createInstance(this._xCoordinate - vector.xCoordinate, this._yCoordinate - vector.yCoordinate);
   }
 
   /**
-   *
+   * Multiplies the vector by a scalar value.
+   * @public
    * @param {number} scalar - The scalar to multiply.
+   *
    * @return {Vector2}
    */
   multiply(scalar) {
-    return Vector2.create(this._x * scalar, this._y * scalar);
+    return Vector2.create(this._xCoordinate * scalar, this._yCoordinate * scalar);
   }
 
   /**
-   *
+   * Divides the vector by a scalar value.
+   * @public
    * @param {number} scalar - The scalar to divide.
-   * @return {Vector2}
+   *
+   * @return {Vector2} A new vector2 instance.
    */
   divide(scalar) {
-    return Vector2.createInstance(this._x / scalar, this._y / scalar);
+    return Vector2.createInstance(this._xCoordinate / scalar, this._yCoordinate / scalar);
   }
 
   /**
-   * Creates a new copy of the vector.
-   * @return {Vector2}
+   * Creates a copy of the vector.
+   * @public
+   *
+   * @return {Vector2} A new vector2 instance.
    */
   copy() {
-    return Vector2.createInstance(this._x, this._y);
+    return Vector2.createInstance(this._xCoordinate, this._yCoordinate);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -130,13 +146,13 @@ class Vector2 {
   /**
    * Static factory method
    * @static
-   * @param {number} x - The x coordinate for the vector.
-   * @param {number} y - The y coordinate for the vector.
+   * @param {number} xCoordinate - The x coordinate for the vector.
+   * @param {number} yCoordinate - The y coordinate for the vector.
    *
-   * @return {Vector2}
+   * @return {Vector2} A new vector2 instance.
    */
-  static createInstance(x, y) {
-    return new Vector2(x, y);
+  static createInstance(xCoordinate, yCoordinate) {
+    return new Vector2(xCoordinate, yCoordinate);
   }
 }
 

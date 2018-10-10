@@ -6,7 +6,8 @@
   "scripts": {
     "build": "set NODE_ENV=dev && webpack --progress --colors --profile --watch",
     "start": "babel-node --ignore \"node_modules/,../pck2/node_modules\" index.js",
-    "test": "mocha ./test/common/data-structures/*.test.js --recursive --require @babel/register"
+    "test": "mocha ./test/common/data-structures/*.test.js --recursive --require @babel/register",
+    "lint": "eslint --ignore-path .eslintignore --max-warnings 100 --format compact src/**/*.js"
   },
   "dependencies": {
     "express": "^4.16.3"

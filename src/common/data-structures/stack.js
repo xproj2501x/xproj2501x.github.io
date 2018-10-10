@@ -23,7 +23,7 @@ class Stack {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * @private
-   * @type {array}
+   * @type {Array}
    */
   _data;
 
@@ -31,10 +31,11 @@ class Stack {
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * Get _data.length
    * @public
    * @readonly
    *
-   * @return {int} The length of the stack.
+   * @return {number} The length of the stack.
    */
   get length() {
     return this._data.length;
@@ -53,7 +54,6 @@ class Stack {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Pushes a new element to the top of the stack.
-   *
    * @param {object} element - The element to be added.
    */
   push(element) {
@@ -81,7 +81,8 @@ class Stack {
   /**
    * Static factory method
    * @static
-   * @return {Stack} - A new stack object.
+   *
+   * @return {Stack} A new stack object.
    */
   static createInstance() {
     return new Stack();
