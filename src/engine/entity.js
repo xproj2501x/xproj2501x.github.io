@@ -1,8 +1,8 @@
 /**
- * System Manager
+ * Entity
  * ===
  *
- * @module systemManager
+ * @module entity
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,48 +17,37 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * SystemManager
+ * Entity
  * @class
  */
-class SystemManager {
+class Entity {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Collection of systems registered for the simulation.
+   * The id of the entity.
    * @private
-   * @type {Array}
+   * @type {number}
    */
-  _systems;
+  _id;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * SystemManager
+   * Entity
    * @constructor
-   * @param {Array} systems
    */
-  constructor(systems) {
-    this._systems = systems;
+  constructor(id) {
+    this._id = id;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Calls the update method for each registered system.
-   * @public
-   * @param {number} delta - The time elapsed since the last call to update.
-   */
-  update(delta) {
-    this._systems.forEach((system) => {
-      system.update();
-    });
-  }
-
+  
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -69,21 +58,15 @@ class SystemManager {
 
   /**
    * Static factory method.
-   * @param {Array} systems -
    *
-   * @return {SystemManager} - A new system manager instance.
+   * @return {Entity} - A new entity instance.
    */
-  static createInstance(systems) {
-    const SYSTEMS = [];
-
-    systems.forEach((system) => {
-      SYSTEMS.push(system.createInstance());
-    });
-    return new SystemManager(SYSTEMS);
+  static createInstance() {
+    return new Entity();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default SystemManager;
+export default Entity;

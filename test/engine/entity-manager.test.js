@@ -2,7 +2,7 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import {expect} from 'chai';
-import SystemManager from '../../src/engine/system-manager';
+import EntityManager from '../../src/engine/entity-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -12,8 +12,12 @@ import SystemManager from '../../src/engine/system-manager';
 ////////////////////////////////////////////////////////////////////////////////
 // Test
 ////////////////////////////////////////////////////////////////////////////////
-describe('SystemManager', () => {
-  describe('#update', () => {
+describe('EntityManager', () => {
+  describe('#createEntity', () => {
+
+  });
+
+  describe('#destroyEntity', () => {
 
   });
 });
