@@ -26,7 +26,7 @@ class SystemManager {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Collection of systems registered for the simulation.
+   * A collection of systems used by the simulation.
    * @private
    * @type {Array}
    */
@@ -69,6 +69,7 @@ class SystemManager {
 
   /**
    * Static factory method.
+   * @static
    * @param {Array} systems -
    *
    * @return {SystemManager} - A new system manager instance.

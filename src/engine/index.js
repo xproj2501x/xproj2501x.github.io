@@ -130,7 +130,6 @@ class Engine {
   /**
    * Static factory method.
    * @static
-   *
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService -
    *

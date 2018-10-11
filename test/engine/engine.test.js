@@ -20,4 +20,8 @@ describe('Engine', () => {
   describe('#stop', () => {
 
   });
+
+  describe('#createInstance', () => {
+
+  });
 });
