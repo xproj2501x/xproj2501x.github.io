@@ -16,4 +16,8 @@ describe('SystemManager', () => {
   describe('#update', () => {
 
   });
+
+  describe('#createInstance', () => {
+
+  });
 });

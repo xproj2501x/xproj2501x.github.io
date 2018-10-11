@@ -14,4 +14,7 @@ import Component from '../../src/engine/component';
 ////////////////////////////////////////////////////////////////////////////////
 describe('Component', () => {
 
+    describe('#update', () => {
+
+    });
 });

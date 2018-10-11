@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import {InvalidComponentState} from './exceptions';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -39,6 +40,13 @@ class Component {
    */
   _type;
 
+  /**
+   * The state of the component
+   * @private
+   * @type {object}
+   */
+  _state;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
@@ -47,14 +55,31 @@ class Component {
    * Component
    * @constructor
    * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
    */
-  constructor(id) {
+  constructor(id, type, state) {
     this._id = id;
+    this._type = type;
+    this._state = state;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Updates the state of the component.
+   * @public
+   * @param {object} state - The new state of the component.
+   */
+  update(state) {
+    for (const KEY in state) {
+      if (!this._state.hasOwnProperty(KEY)) {
+        throw new InvalidComponentState(`Error: Invalid property ${KEY} for component type ${this._type}`);
+      }
+    }
+    this._state = Object.assign({}, this._state, state);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -66,12 +91,18 @@ class Component {
 
   /**
    * Static factory method.
+   * @static
    * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
    *
    * @return {Component} - A new component instance.
    */
-  static createInstance(id) {
-    return new Component(id);
+  static createInstance(id, type, state) {
+    if (!id) throw new Error(`Error: The entity id cannot be null`);
+    if (!type) throw new Error(`Error: The component type cannot be null`);
+    if (!state) throw new Error(`Error: The component state cannot be null`);
+    return new Component(id, type, state);
   }
 }
 

@@ -41,7 +41,13 @@ class EntityLimitExceeded extends ExtendableError { }
  */
 class EntityNotFound extends ExtendableError {}
 
+/**
+ * @class
+ * @extends ExtendableError
+ */
+class InvalidComponentState extends ExtendableError {}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {AssemblageNotFound, ComponentNotFound, EntityLimitExceeded, EntityNotFound};
+export {AssemblageNotFound, ComponentNotFound, EntityLimitExceeded, EntityNotFound, InvalidComponentState};
