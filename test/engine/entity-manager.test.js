@@ -20,4 +20,8 @@ describe('EntityManager', () => {
   describe('#destroyEntity', () => {
 
   });
+
+  describe('#createInstance', () => {
+
+  });
 });

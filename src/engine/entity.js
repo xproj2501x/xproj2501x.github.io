@@ -32,6 +32,13 @@ class Entity {
    */
   _id;
 
+  /**
+   * A collection of components attached to the entity.
+   * @private
+   * @type {Array}
+   */
+  _components;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
@@ -47,7 +54,23 @@ class Entity {
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  
+  /**
+   * Attaches a component to the entity.
+   * @public
+   */
+  attachComponent() {
+
+  }
+
+  /**
+   * Detaches a component from the entity.
+   * @public
+   * @param {number} type - The type of component to detach from the entity.
+   */
+  detachComponent(type) {
+
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -58,11 +81,14 @@ class Entity {
 
   /**
    * Static factory method.
+   * @static
+   * @param {number} id - The id of the entity.
    *
    * @return {Entity} - A new entity instance.
    */
-  static createInstance() {
-    return new Entity();
+  static createInstance(id) {
+    if (!id && id !== 0) throw new Error(`Error: entity id cannot be null`);
+    return new Entity(id);
   }
 }
 

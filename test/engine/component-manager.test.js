@@ -13,5 +13,7 @@ import ComponentManager from '../../src/engine/component-manager';
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('ComponentManager', () => {
+  describe('#createInstance', () => {
 
+  });
 });

@@ -13,5 +13,15 @@ import Entity from '../../src/engine/entity';
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('Entity', () => {
+  describe('#attachComponent', () => {
 
+  });
+
+  describe('#detachComponent', () => {
+
+  });
+
+  describe('#createInstance', () => {
+
+  });
 });
