@@ -1,8 +1,8 @@
 /**
- * System Manager
+ * System
  * ===
  *
- * @module systemManager
+ * @module system
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,48 +17,36 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * SystemManager
+ * System
  * @class
  */
-class SystemManager {
+class System {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Collection of systems registered for the simulation.
-   * @private
-   * @type {Array}
-   */
-  _systems;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * SystemManager
+   * System
    * @constructor
-   * @param {Array} systems
    */
-  constructor(systems) {
-    this._systems = systems;
+  constructor() {
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Calls the update method for each registered system.
    * @public
-   * @param {number} delta - The time elapsed since the last call to update.
    */
-  update(delta) {
-    this._systems.forEach((system) => {
-      system.update();
-    });
-  }
+  update() {
 
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -69,21 +57,15 @@ class SystemManager {
 
   /**
    * Static factory method.
-   * @param {Array} systems -
    *
-   * @return {SystemManager} - A new system manager instance.
+   * @return {System} - A new system instance.
    */
-  static createInstance(systems) {
-    const SYSTEMS = [];
-
-    systems.forEach((system) => {
-      SYSTEMS.push(system.createInstance());
-    });
-    return new SystemManager(SYSTEMS);
+  static createInstance() {
+    return new System();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default SystemManager;
+export default System;
