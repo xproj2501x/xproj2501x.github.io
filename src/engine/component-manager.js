@@ -1,8 +1,8 @@
 /**
- * System Manager
+ * ComponentManager
  * ===
  *
- * @module systemManager
+ * @module componentManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,47 +17,30 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * SystemManager
+ * ComponentManager
  * @class
  */
-class SystemManager {
+class ComponentManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Collection of systems registered for the simulation.
-   * @private
-   * @type {Array}
-   */
-  _systems;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * SystemManager
+   * ComponentManager
    * @constructor
-   * @param {Array} systems
    */
-  constructor(systems) {
-    this._systems = systems;
+  constructor() {
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Calls the update method for each registered system.
-   * @public
-   * @param {number} delta - The time elapsed since the last call to update.
-   */
-  update(delta) {
-    this._systems.forEach((system) => {
-      system.update();
-    });
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -69,21 +52,15 @@ class SystemManager {
 
   /**
    * Static factory method.
-   * @param {Array} systems -
    *
-   * @return {SystemManager} - A new system manager instance.
+   * @return {ComponentManager} - A new component manager instance.
    */
-  static createInstance(systems) {
-    const SYSTEMS = [];
-
-    systems.forEach((system) => {
-      SYSTEMS.push(system.createInstance());
-    });
-    return new SystemManager(SYSTEMS);
+  static createInstance() {
+    return new ComponentManager();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default SystemManager;
+export default ComponentManager;

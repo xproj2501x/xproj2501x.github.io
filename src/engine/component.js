@@ -1,8 +1,8 @@
 /**
- * System Manager
+ * Component
  * ===
  *
- * @module systemManager
+ * @module component
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,47 +17,44 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * SystemManager
+ * Component
  * @class
  */
-class SystemManager {
+class Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Collection of systems registered for the simulation.
+   * The id of the parent entity.
    * @private
-   * @type {Array}
+   * @type {number}
    */
-  _systems;
+  _id;
+
+  /**
+   * The type of the component
+   * @private
+   * @type {number}
+   */
+  _type;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * SystemManager
+   * Component
    * @constructor
-   * @param {Array} systems
+   * @param {number} id - The id of the parent entity.
    */
-  constructor(systems) {
-    this._systems = systems;
+  constructor(id) {
+    this._id = id;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Calls the update method for each registered system.
-   * @public
-   * @param {number} delta - The time elapsed since the last call to update.
-   */
-  update(delta) {
-    this._systems.forEach((system) => {
-      system.update();
-    });
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -69,21 +66,16 @@ class SystemManager {
 
   /**
    * Static factory method.
-   * @param {Array} systems -
+   * @param {number} id - The id of the parent entity.
    *
-   * @return {SystemManager} - A new system manager instance.
+   * @return {Component} - A new component instance.
    */
-  static createInstance(systems) {
-    const SYSTEMS = [];
-
-    systems.forEach((system) => {
-      SYSTEMS.push(system.createInstance());
-    });
-    return new SystemManager(SYSTEMS);
+  static createInstance(id) {
+    return new Component(id);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default SystemManager;
+export default Component;

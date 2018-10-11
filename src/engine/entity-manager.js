@@ -1,13 +1,15 @@
 /**
- * System Manager
+ * EntityManager
  * ===
  *
- * @module systemManager
+ * @module entityManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import {ENTITY_LIMIT} from './constants';
+import {EntityNotFound} from './exceptions';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -17,46 +19,54 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * SystemManager
+ * EntityManager
  * @class
  */
-class SystemManager {
+class EntityManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Collection of systems registered for the simulation.
+   * A collection of generated entities.
    * @private
    * @type {Array}
    */
-  _systems;
+  _entities;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * SystemManager
+   * EntityManager
    * @constructor
-   * @param {Array} systems
    */
-  constructor(systems) {
-    this._systems = systems;
+  constructor() {
+    this._entities = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Calls the update method for each registered system.
+   * Creates a new entity.
    * @public
-   * @param {number} delta - The time elapsed since the last call to update.
+   *
+   * @return {number} The id of the new entity.
    */
-  update(delta) {
-    this._systems.forEach((system) => {
-      system.update();
-    });
+  createEntity() {
+
+  }
+
+  /**
+   * Destroys an entity with a matching id.
+   * @public
+   * @param {number} id - The id of the entity.
+   * @throws {EntityNotFound}
+   */
+  destroyEntity(id) {
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -69,21 +79,15 @@ class SystemManager {
 
   /**
    * Static factory method.
-   * @param {Array} systems -
    *
-   * @return {SystemManager} - A new system manager instance.
+   * @return {EntityManager} - A new entity manager instance.
    */
-  static createInstance(systems) {
-    const SYSTEMS = [];
-
-    systems.forEach((system) => {
-      SYSTEMS.push(system.createInstance());
-    });
-    return new SystemManager(SYSTEMS);
+  static createInstance() {
+    return new EntityManager();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default SystemManager;
+export default EntityManager;
