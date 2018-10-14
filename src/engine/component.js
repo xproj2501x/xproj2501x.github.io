@@ -71,6 +71,8 @@ class Component {
    * Updates the state of the component.
    * @public
    * @param {object} state - The new state of the component.
+   *
+   * @throws {InvalidComponentState}
    */
   update(state) {
     for (const KEY in state) {
@@ -94,14 +96,21 @@ class Component {
    * @static
    * @param {number} id - The id of the parent entity.
    * @param {number} type - The type of the component.
+   * @param {object} template - The template for the component.
    * @param {object} state - The state of the component.
    *
+   * @throws {InvalidComponentState}
    * @return {Component} - A new component instance.
    */
-  static createInstance(id, type, state) {
+  static createInstance(id, type, template, state) {
     if (!id) throw new Error(`Error: The entity id cannot be null`);
     if (!type) throw new Error(`Error: The component type cannot be null`);
     if (!state) throw new Error(`Error: The component state cannot be null`);
+    for (const KEY in template) {
+      if (!state.hasOwnProperty(KEY)) {
+        throw new InvalidComponentState(`Error: Invalid property ${KEY} for component type ${type}.`);
+      }
+    }
     return new Component(id, type, state);
   }
 }

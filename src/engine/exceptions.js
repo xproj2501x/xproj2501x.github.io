@@ -21,11 +21,25 @@ import ExtendableError from '../common/utilities/extendable-error';
 class AssemblageNotFound extends ExtendableError {}
 
 /**
+ * ComponentAlreadyExists
+ * @class
+ * @extends ExtendableError
+ */
+class ComponentAlreadyExists extends ExtendableError {}
+
+/**
  * ComponentNotFound
  * @class
  * @extends ExtendableError
  */
 class ComponentNotFound extends ExtendableError {}
+
+/**
+ * ComponentTemplateNotFound
+ * @class
+ * @extends ExtendableError
+ */
+class ComponentTemplateNotFound extends ExtendableError {}
 
 /**
  * EntityLimitExceeded
@@ -50,4 +64,5 @@ class InvalidComponentState extends ExtendableError {}
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {AssemblageNotFound, ComponentNotFound, EntityLimitExceeded, EntityNotFound, InvalidComponentState};
+export {AssemblageNotFound, ComponentAlreadyExists, ComponentNotFound, ComponentTemplateNotFound, EntityLimitExceeded,
+  EntityNotFound, InvalidComponentState};
