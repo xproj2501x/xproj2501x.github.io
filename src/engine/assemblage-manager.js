@@ -1,8 +1,8 @@
 /**
- * ComponentManager
+ * Assemblage Manager
  * ===
  *
- * @module componentManager
+ * @module assemblageManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,10 +20,10 @@ import Component from './component';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * ComponentManager
+ * AssemblageManager
  * @class
  */
-class ComponentManager {
+class AssemblageManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -41,54 +41,29 @@ class ComponentManager {
    */
   _templates;
 
-  /**
-   * @private
-   * @type {Array}
-   */
-  _components;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * ComponentManager
+   * AssemblageManager
    * @constructor
-   * @param {Array} templates - The component templates for the simulation.
    */
   constructor(messageService, templates) {
     this._messageService = messageService;
     this._templates = templates;
-    this._components = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  onCreateComponent(command) {
-    this._createComponent(command.id, command.type, command.state);
-    this._messageService.send(MESSAGE.COMPONENT_CREATED, command);
+  onCreateAssemblage(command) {
+
   }
 
-  onDestroyComponent(command) {
-    this._destroyComponent(command.id, command.type, command.state);
-    this._messageService.send(MESSAGE.COMPONENT_DESTROYED, command);
-  }
+  onComponentCreated(event) {
 
-  onUpdateComponent(command) {
-    this._updateComponent(command.id, command.type, command.state);
-    this._messageService.send(MESSAGE.COMPONENT_UPDATED, command);
-  }
-
-  onEntityDestroyed(event) {
-    for (let idx = 0; idx < this._components.length; idx++) {
-      try {
-        this._destroyComponent(idx, event.id);
-      }
-      catch (error) {
-        continue;
-      }
-    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -140,15 +115,15 @@ class ComponentManager {
    * @param {MessageService} messageService - The message service for the simulation.
    * @param {Array} templates - The component templates for the simulation.
    *
-   * @return {ComponentManager} - A new component manager instance.
+   * @return {AssemblageManager} - A new component manager instance.
    */
   static createInstance(messageService, templates) {
     templates = templates || [];
-    return new ComponentManager(messageService, templates);
+    return new AssemblageManager(messageService, templates);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default ComponentManager;
+export default AssemblageManager;

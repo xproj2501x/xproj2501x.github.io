@@ -9,6 +9,8 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import {FRAME_DURATION, MAX_FRAME_SKIP} from './constants';
+import EntityManager from './entity-manager';
+import ComponentManager from './component-manager';
 import SystemManager from './system-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,6 +29,18 @@ class Engine {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * The message service for the simulation.
+   * @private
+   * @type {MessageService}
+   */
+  _messageService;
+
+  _entityManager;
+
+  _componentManager;
+
+  _systemManager;
 
   /**
    * @private
@@ -58,8 +72,14 @@ class Engine {
   /**
    * Engine
    * @constructor
+   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {object} managers - Manager services for the simulation.
    */
-  constructor() {
+  constructor(messageService, managers) {
+    this._messageService = messageService;
+    this._entityManager = managers.entityManager;
+    this._componentManager = managers.componentManager;
+    this._systemManager = managers.systemManager;
     this._isRunning = false;
     this._time = 0;
   }
@@ -99,7 +119,7 @@ class Engine {
     // If there is not input then the update loop needs to handle only animation / display systems
     // If there is input then all systems should update
     if (this._isRunning) {
-      const CURRENT_TIME = window.performance.now();
+      const CURRENT_TIME = Date.now();
       let delta = CURRENT_TIME - this._lastTick;
 
       delta = delta > MAX_FRAME_SKIP ? MAX_FRAME_SKIP : delta;
@@ -116,6 +136,7 @@ class Engine {
 
   _update(delta) {
     while (delta >= FRAME_DURATION) {
+      this._systemManager.update(delta);
       delta -= FRAME_DURATION;
     }
   }
@@ -135,8 +156,14 @@ class Engine {
    *
    * @return {Engine} - A new engine instance.
    */
-  static createInstance(logService, messageService) {
-    return new Engine(logService, messageService);
+  static createInstance(messageService, configuration) {
+    const MANAGERS = {
+      entityManager: EntityManager.createInstance(messageService),
+      componentManager: ComponentManager.createInstance(messageService, configuration.componentTemplates),
+      systemManager: SystemManager.createInstance(messageService, configuration.systems)
+    };
+
+    return new Engine(messageService, MANAGERS);
   }
 }
 

@@ -41,7 +41,7 @@ class MessageService {
    * @constructor
    */
   constructor() {
-    this._subscriptions = {};
+    this._subscriptions = [];
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ class MessageService {
    * @param {function} subscriber - The subscriber to be added.
    */
   subscribe(subject, subscriber) {
-    if (!(subject in this._subscriptions)) {
+    if (!this._subscriptions[subject]) {
       this._subscriptions[subject] = [];
     }
     this._subscriptions[subject].push(subscriber);
