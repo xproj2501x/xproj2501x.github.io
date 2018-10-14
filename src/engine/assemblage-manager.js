@@ -62,6 +62,10 @@ class AssemblageManager {
 
   }
 
+  onEntityCreated(event) {
+
+  }
+
   onComponentCreated(event) {
 
   }
@@ -69,38 +73,12 @@ class AssemblageManager {
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Creates a new component.
-   * @private
-   * @param {number} id - The entity id.
-   * @param {number} type - The component type.
-   * @param {object} state - The initial state of the component.
-   *
-   */
-  _createComponent(id, type, state) {
-    if (this._components[type][id]) {
-      throw ComponentAlreadyExists(`Error: Component type ${type} already attached to entity ${id}.`);
-    }
-    const TEMPLATE = this._getTemplate(type);
-    const COMPONENT = Component.createInstance(id, type, TEMPLATE, state);
+  _createAssemblage(values) {
+    this._currentAssemblage = values;
 
-    this._components[type][id] = COMPONENT;
   }
+  _attachComponentsToAssemblage() {
 
-  _destroyComponent(id, type, state) {
-    if (this._components[type][id]) {
-      throw ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
-    }
-    this._components[type][id] = null;
-  }
-
-  _updateComponent(id, type, state) {
-    if (this._components[type][id]) {
-      throw ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
-    }
-    const COMPONENT = this._components[type][id];
-
-    COMPONENT.update(state);
   }
 
   _getTemplate(type) {
