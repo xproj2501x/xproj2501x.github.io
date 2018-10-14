@@ -55,7 +55,7 @@ class SystemManager {
    */
   update(delta) {
     this._systems.forEach((system) => {
-      system.update();
+      system.update(delta);
     });
   }
 
@@ -70,15 +70,16 @@ class SystemManager {
   /**
    * Static factory method.
    * @static
+   * @param {MessageService} messageService - The message service for the simulation.
    * @param {Array} systems -
    *
    * @return {SystemManager} - A new system manager instance.
    */
-  static createInstance(systems) {
+  static createInstance(messageService, systems) {
     const SYSTEMS = [];
 
     systems.forEach((system) => {
-      SYSTEMS.push(system.createInstance());
+      SYSTEMS.push(system.createInstance(messageService));
     });
     return new SystemManager(SYSTEMS);
   }

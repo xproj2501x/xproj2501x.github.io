@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 import '../css/_site.scss';
 import Display from './display';
+import GameOfLife from '../../games/game-of-life';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -50,6 +51,8 @@ class App {
     this._infoPanel = document.getElementById('infoPanel');
     MENU_BUTTON.addEventListener('click', (event) => {this.toggleMenu(event)});
     INFO_BUTTON.addEventListener('click', (event) => {this.toggleInfoPanel(event)});
+
+    // TODO: Should be in a router class
     for (const KEY in LINKS) {
       if (LINKS.hasOwnProperty(KEY)) {
         LINKS[KEY].addEventListener('click', (event) => {
@@ -63,12 +66,21 @@ class App {
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
-
+    this.start();
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /*
+
+   */
+  start() {
+    const GAME_OF_LIFE = GameOfLife.createInstance();
+
+    GAME_OF_LIFE.start();
+  }
+
   toggleMenu(event) {
     this._navMenu.classList.toggle('o-nav--collapsed');
   }
