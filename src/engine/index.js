@@ -11,6 +11,7 @@
 import {FRAME_DURATION, MAX_FRAME_SKIP} from './constants';
 import EntityManager from './entity-manager';
 import ComponentManager from './component-manager';
+import AssemblageManager from './assemblage-manager';
 import SystemManager from './system-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,11 +37,30 @@ class Engine {
    */
   _messageService;
 
+  /**
+   * The entity manager for the simulation.
+   * @private
+   * @type {EntityManager}
+   */
   _entityManager;
 
+  /**
+   * @private
+   * @type {ComponentManager}
+   */
   _componentManager;
 
+  /**
+   * @private
+   * @type {SystemManager}
+   */
   _systemManager;
+
+  /**
+   * @private
+   * @type {AssemblageManager}
+   */
+  _assemblageManager;
 
   /**
    * @private
@@ -79,6 +99,7 @@ class Engine {
     this._messageService = messageService;
     this._entityManager = managers.entityManager;
     this._componentManager = managers.componentManager;
+    this._assemblageManager = managers.assemblageManager
     this._systemManager = managers.systemManager;
     this._isRunning = false;
     this._time = 0;
@@ -151,8 +172,8 @@ class Engine {
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService -
+   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {object} configuration -
    *
    * @return {Engine} - A new engine instance.
    */
@@ -160,6 +181,7 @@ class Engine {
     const MANAGERS = {
       entityManager: EntityManager.createInstance(messageService),
       componentManager: ComponentManager.createInstance(messageService, configuration.componentTemplates),
+      assemblageManager: AssemblageManager.createInstance(messageService, configuration.assemblageTemplates),
       systemManager: SystemManager.createInstance(messageService, configuration.systems)
     };
 

@@ -63,7 +63,7 @@ class EntityManager {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Message handler for create entity command.
-   * @param {object} command - The command message.
+   * @param {object} command - The create entity command message.
    */
   onCreateEntity(command) {
     const ID = this._createEntity();
@@ -73,10 +73,13 @@ class EntityManager {
 
   /**
    * Message handler for create entity command.
-   * @param {object} command - The command message.
+   * @param {object} command - The destroy entity command message.
    */
   onDestroyEntity(command) {
+    const ID = command.id;
 
+    this._destroyEntity(ID);
+    this._messageService.send(MESSAGE.ENTITY_DESTROYED, {id: ID});
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -90,7 +93,7 @@ class EntityManager {
    */
   _createEntity() {
     this._nextId++;
-    if (this._nextId >= MAX_ENTITIES) throw new EntityLimitExceeded(`Error: entity limit ${MAX_ENTITIES} reached.`);
+    if (this._nextId >= MAX_ENTITIES) throw new EntityLimitExceeded(`Error: Entity limit ${MAX_ENTITIES} reached.`);
     const ENTITY = Entity.createInstance(this._nextId);
 
     this._entities[this._nextId] = ENTITY;
@@ -105,7 +108,8 @@ class EntityManager {
    * @throws {EntityNotFound}
    */
   _destroyEntity(id) {
-
+    if (!this._entities[id]) throw new EntityNotFound(`Error: Entity id ${id} does not exist.`);
+    this._entities[id] = null;
   }
 
   //////////////////////////////////////////////////////////////////////////////

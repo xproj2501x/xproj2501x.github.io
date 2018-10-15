@@ -36,14 +36,15 @@ class ComponentManager {
   _messageService;
 
   /**
+   * A collection of component templates for the simulation.
    * @private
-   * @type {Array}
+   * @type {object}
    */
   _templates;
 
   /**
    * @private
-   * @type {Array}
+   * @type {object}
    */
   _components;
 
@@ -54,6 +55,7 @@ class ComponentManager {
   /**
    * ComponentManager
    * @constructor
+   * @param {MessageService} messageService - The message service for the simulation.
    * @param {Array} templates - The component templates for the simulation.
    */
   constructor(messageService, templates) {
@@ -65,21 +67,37 @@ class ComponentManager {
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Message handler for the create component command.
+   * @param {object} command - The create component command message.
+   */
   onCreateComponent(command) {
     this._createComponent(command.id, command.type, command.state);
     this._messageService.send(MESSAGE.COMPONENT_CREATED, command);
   }
 
+  /**
+   * Message handler for the destroy component command.
+   * @param {object} command - The destroy component command message.
+   */
   onDestroyComponent(command) {
-    this._destroyComponent(command.id, command.type, command.state);
+    this._destroyComponent(command.id, command.type);
     this._messageService.send(MESSAGE.COMPONENT_DESTROYED, command);
   }
 
+  /**
+   * Message handler for the update component command.
+   * @param {object} command - The update component command message.
+   */
   onUpdateComponent(command) {
     this._updateComponent(command.id, command.type, command.state);
     this._messageService.send(MESSAGE.COMPONENT_UPDATED, command);
   }
 
+  /**
+   * Message handler for the entity destroyed event.
+   * @param {object} event - The entity destroyed event message.
+   */
   onEntityDestroyed(event) {
     for (let idx = 0; idx < this._components.length; idx++) {
       try {
@@ -101,6 +119,7 @@ class ComponentManager {
    * @param {number} type - The component type.
    * @param {object} state - The initial state of the component.
    *
+   * @throws {ComponentAlreadyExists}
    */
   _createComponent(id, type, state) {
     if (this._components[type][id]) {
@@ -112,13 +131,30 @@ class ComponentManager {
     this._components[type][id] = COMPONENT;
   }
 
-  _destroyComponent(id, type, state) {
+  /**
+   * Destroys a component with a matching id.
+   * @private
+   * @param {number} id - The entity id.
+   * @param {number} type - The component type.
+   *
+   * @throws {ComponentNotFound}
+   */
+  _destroyComponent(id, type) {
     if (this._components[type][id]) {
       throw ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
     }
     this._components[type][id] = null;
   }
 
+  /**
+   * Updates the state of a component with a matching id.
+   * @private
+   * @param {number} id - The entity id.
+   * @param {number} type - The component type.
+   * @param {object} state - The new state of the component.
+   *
+   * @throws {ComponentNotFound}
+   */
   _updateComponent(id, type, state) {
     if (this._components[type][id]) {
       throw ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
@@ -128,8 +164,17 @@ class ComponentManager {
     COMPONENT.update(state);
   }
 
+  /**
+   * Gets the template for the specified component type.
+   * @private
+   * @param {number} type - The type of component.
+   *
+   * @return {object} The component template.
+   * @throws {ComponentTemplateNotFound}
+   */
   _getTemplate(type) {
     if (!this._templates[type]) throw ComponentTemplateNotFound(`Error: Component template ${type} not found.`);
+    return this._templates[type];
   }
 
   //////////////////////////////////////////////////////////////////////////////
