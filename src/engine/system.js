@@ -46,7 +46,7 @@ class System {
   /**
    * System
    * @constructor
-   * @param {MessageService} messageService
+   * @param {MessageService} messageService - The message service for the simulation.
    */
   constructor(messageService) {
     this._messageService = messageService;
@@ -60,6 +60,7 @@ class System {
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * Update routine for the system.
    * @public
    * @abstract
    * @param {number} delta - The time elapsed since the last update.
@@ -69,6 +70,7 @@ class System {
   }
 
   /**
+   * Message handler for the on assemblage created event.
    * @public
    * @abstract
    * @param {object} event - The on assemblage created event message.
@@ -78,6 +80,7 @@ class System {
   }
 
   /**
+   * Message handler for the on component created event.
    * @public
    * @abstract
    * @param {object} event - The on component created event message.
@@ -87,6 +90,7 @@ class System {
   }
 
   /**
+   * Message handler for the on component destroyed event.
    * @public
    * @abstract
    * @param {object} event - The on component destroyed event message.
@@ -96,6 +100,7 @@ class System {
   }
 
   /**
+   * Message handler for the on component updated event.
    * @public
    * @abstract
    * @param {object} event - The on component updated event message.
