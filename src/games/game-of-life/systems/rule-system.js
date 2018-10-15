@@ -10,6 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 import System from '../../../engine/system';
 import {COMPONENT_TYPE} from '../components';
+import {ASSEMBLAGE_TYPE} from '../assemblages';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -88,12 +89,30 @@ class RuleSystem extends System {
     this._cleanCells();
   }
 
+  /**
+   * Message handler for the assemblage created event.
+   * @param {object} event - The assemblage created event message.
+   */
+  onAssemblageCreated(event) {
+    if (event.type === ASSEMBLAGE_TYPE.CELL) {
+
+    }
+  }
+
+  /**
+   * Message handler for the component created event.
+   * @param {object} event - The component created event message.
+   */
   onComponentCreated(event) {
     if (event.type === COMPONENT_TYPE.POSITION || event.type === COMPONENT_TYPE.RULE) {
       this._updateAssemblage(event.id, event.type, event.state);
     }
   }
 
+  /**
+   * Message handler for the component updated event.
+   * @param {object} event - The component updated event message.
+   */
   onComponentUpdated(event) {
     if (event.id in this._assemblages) {
       if (event.type === COMPONENT_TYPE.POSITION || event.type === COMPONENT_TYPE.RULE) {
@@ -160,12 +179,14 @@ class RuleSystem extends System {
     }
     return INDEX;
   }
+
   _cleanCells() {
     this._dirtyCells.forEach((cell) => {
 
     });
     this._dirtyCells = [];
   }
+
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
