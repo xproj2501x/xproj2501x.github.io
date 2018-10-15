@@ -140,6 +140,7 @@ class RuleSystem extends System {
       this._cells[POSITION.x + (POSITION.y * GRID_SIZE)] = assemblage;
     });
   }
+
   _checkNeighbors(position) {
     const NEIGHBORS = [];
 
@@ -193,7 +194,7 @@ class RuleSystem extends System {
   /**
    * Static factory method.
    * @static
-   * @param {MessaageService} messageService - The message service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    *
    * @return {RuleSystem} A new game of life instance.
    */
