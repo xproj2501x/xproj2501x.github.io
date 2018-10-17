@@ -102,6 +102,15 @@ class ComponentManager {
   }
 
   /**
+   * @public
+   * @param {string} id
+   * @param {string} type
+   */
+  findComponent(id, type) {
+
+  }
+
+  /**
    * Updates the state of a component with a matching id.
    * @public
    * @param {number} id - The entity id.
@@ -122,6 +131,7 @@ class ComponentManager {
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+
 
   /**
    * Gets the template for the specified component type.

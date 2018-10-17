@@ -29,14 +29,14 @@ class Component {
   /**
    * The id of the parent entity.
    * @private
-   * @type {number}
+   * @type {string}
    */
   _id;
 
   /**
    * The type of the component
    * @private
-   * @type {number}
+   * @type {string}
    */
   _type;
 
@@ -50,12 +50,31 @@ class Component {
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Get _id
+   * @public
+   * @readonly
+   * @return {string}
+   */
+  get id() {
+    return this._id;
+  }
+
+  /**
+   * Get _state
+   * @public
+   * @readonly
+   * @return {object}
+   */
+  get state() {
+    return Object.assign({}, this._state);
+  }
 
   /**
    * Component
    * @constructor
-   * @param {number} id - The id of the parent entity.
-   * @param {number} type - The type of the component.
+   * @param {string} id - The id of the parent entity.
+   * @param {string} type - The type of the component.
    * @param {object} state - The state of the component.
    */
   constructor(id, type, state) {
@@ -94,23 +113,17 @@ class Component {
   /**
    * Static factory method.
    * @static
-   * @param {number} id - The id of the parent entity.
-   * @param {number} type - The type of the component.
-   * @param {object} template - The template for the component.
+   * @param {string} id - The id of the parent entity.
+   * @param {string} type - The type of the component.
    * @param {object} state - The state of the component.
    *
    * @throws {InvalidComponentState}
    * @return {Component} - A new component instance.
    */
-  static createInstance(id, type, template, state) {
+  static createInstance(id, type, state) {
     if (!id) throw new Error(`Error: The entity id cannot be null`);
     if (!type) throw new Error(`Error: The component type cannot be null`);
     if (!state) throw new Error(`Error: The component state cannot be null`);
-    for (const KEY in template) {
-      if (!state.hasOwnProperty(KEY)) {
-        throw new InvalidComponentState(`Error: Invalid property ${KEY} for component type ${type}.`);
-      }
-    }
     return new Component(id, type, state);
   }
 }
