@@ -8,9 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMMAND, EVENT, MAX_ENTITIES, MESSAGE} from './constants';
-import {AssemblageAlreadyExists, AssemblageNotFound, AssemblageTemplateNotFound} from './exceptions';
+import {COMMAND, EVENT, MESSAGE} from './constants';
+import {AssemblageAlreadyExists, AssemblageNotFound, InvalidAssemblageType} from './exceptions';
 import Assemblage from './assemblage';
+import UUID from '../common/utilities/uuid';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -28,6 +29,8 @@ class AssemblageManager {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  _logger;
+
   /**
    * The message service for the simulation.
    * @private
@@ -67,11 +70,6 @@ class AssemblageManager {
     this._templates = templates;
     this._assemblages = {};
     this._messageService.subscribe(COMMAND.CREATE_ASSEMBLAGE, (command) => this.onCreateAssemblage(command));
-    this._messageService.subscribe(MESSAGE.ENTITY_CREATED, (event) => this.onEntityCreated(event));
-    this._messageService.subscribe(MESSAGE.ENTITY_DESTROYED, (event) => this.onEntityDestroyed(event));
-    this._messageService.subscribe(MESSAGE.COMPONENT_CREATED, (event) => this.onComponentCreated(event));
-    this._messageService.subscribe(MESSAGE.COMPONENT_DESTROYED, (event) => this.onComponentDestroyed(event));
-    this._messageService.subscribe(MESSAGE.COMPONENT_UPDATED, (event) => this.onComponentUpdated(event));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -82,54 +80,19 @@ class AssemblageManager {
    * @param {object} command - The create assemblage command message.
    */
   onCreateAssemblage(command) {
-    this._createAssemblage(command.type, command.settings);
+    if (command.id) {
+
+    }
+    const ID = command.id || UUID.create();
+
+    // Find entity if it exists, otherwise create a new one
+    this._createAssemblage(ID, command.type);
+    this._messageService.send(MESSAGE.CREATE_ENTITY, {id: ID});
+    command.components.forEach((component) => {
+      this._messageService.send(MESSAGE.CREATE_COMPONENT, {id: ID, type: component.type, state: component.state});
+    });
   }
 
-  /**
-   * Message handler for the entity created event.
-   * @public
-   * @param {object} event - The entity created event message.
-   */
-  onEntityCreated(event) {
-    this._createAssemblage(event.id);
-  }
-
-  /**
-   * Message handler for the entity destroyed event.
-   * @public
-   * @param {object} event - The entity destroyed event message.
-   */
-  onEntityDestroyed(event) {
-    this._destroyAssemblage(event.id);
-  }
-
-
-  /**
-   * Message handler for the component created event.
-   * @public
-   * @param {object} event - The component created event message.
-   */
-  onComponentCreated(event) {
-    this._attachComponentToAssemblage(event.id, event.type, event.state);
-  }
-
-  /**
-   * Message handler for the component destroyed event.
-   * @public
-   * @param {object} event - The component destroyed event message.
-   */
-  onComponentDestroyed(event) {
-    this._detachComponentFromAssemblage(event.id, event.type);
-  }
-
-  /**
-   * Message handler for the component updated event.
-   * @public
-   * @param {object} event - The component updated event message.
-   */
-  onComponentUpdated(event) {
-    this._updateComponentForAssemblage(event.id, event.type, event.state);
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -137,35 +100,50 @@ class AssemblageManager {
   /**
    * Creates a new assemblage of the specified type.
    * @private
-   * @param {number} id - The id of the parent entity.
+   * @param {string} id - The id of the parent entity (Default: null).
+   * @param {string} type - The type of the assemblage.
    *
+   * @throws {InvalidAssemblageType}
    * @throws {AssemblageAlreadyExists}
    */
-  _createAssemblage(type, components) {
-    const ID = this._entityManager.createEntity();
-    const ASSEMBLAGE = Assemblage.create(ID, type);
-
-    this._assemblages[type] = this._assemblages[type] || {};
-    if (this._assemblages[type][ID]) {
-      throw new AssemblageAlreadyExists(`Error: Assemblage type ${type} already exists for entity id ${ID}.`);
+  _createAssemblage(id, type) {
+    if (!this._assemblages[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
+    if (this._assemblages[type][id]) {
+      throw new AssemblageAlreadyExists(`Error: Assemblage type ${type} already exists for entity ${id}.`);
     }
-    components.forEach((component) => {
-      this._componentManager.createComponent(ID, component.type, component.state);
-      ASSEMBLAGE.attachComponent(component.type, component.state);
-    });
-    return ASSEMBLAGE;
+    const TEMPLATE = this._getTemplate(type);
+    const ASSEMBLAGE = TEMPLATE.createInstance(id);
+
+    this._assemblages[type][id] = ASSEMBLAGE;
   }
 
   /**
-   * Destroys an assemblage with a matching id and type.
+   * Destroys an assemblage with a matching id.
    * @private
    * @param {number} id - The id of the parent entity.
    *
+   * @throws {InvalidAssemblageType}
    * @throws {AssemblageNotFound}
    */
   _destroyAssemblage(id, type) {
-    if (!this._assemblages[id]) throw new AssemblageNotFound(`Error: Assemblage id ${id} does not exist.`);
+    if (!this._assemblages[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
+    if (!this._assemblages[type][id]) {
+      throw new AssemblageNotFound(`Error: Assemblage type ${type} does not exist for entity ${id}.`);
+    }
     this._assemblages[id] = null;
+  }
+
+  /**
+   * Returns an assemblage with a matching entity id and type
+   * @private
+   * @param {string} id - The id of the parent entity.
+   * @param {string} type - The type of the assemblage.
+   *
+   * @throws {InvalidAssemblageType}
+   * @return {Assemblage}
+   */
+  _findAssemblage(id, type) {
+    if (!this._assemblages[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
   }
 
   /**
@@ -210,13 +188,13 @@ class AssemblageManager {
   /**
    * Gets the template for the specified assemblage type.
    * @private
-   * @param {number} type - The type of assemblage.
+   * @param {string} type - The type of assemblage.
    *
    * @return {object} The assemblage template.
    * @throws {AssemblageTemplateNotFound}
    */
   _getTemplate(type) {
-    if (!this._templates[type]) throw AssemblageTemplateNotFound(`Error: Assemblage template ${type} not found.`);
+    if (!this._templates[type]) throw InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
     return this._templates[type];
   }
 

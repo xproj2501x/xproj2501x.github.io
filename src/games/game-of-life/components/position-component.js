@@ -1,81 +1,55 @@
 /**
- * Assemblage
+ * Position Component
  * ===
  *
- * @module assemblage
+ * @module positionComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import Component from '../../../engine/component';
+import {InvalidComponentState} from '../../../engine/exceptions';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const KEYS = {
+  x: 'number',
+  y: 'number'
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Assemblage
+ * PositionComponent
  * @class
  */
-class Assemblage {
+class PositionComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * The id of the parent entity.
-   * @private
-   * @type {string}
-   */
-  _id;
-
-  /**
-   * A collection of components attached to the assemblage.
-   * @private
-   * @type {object}
-   */
-  _components;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Get _id
-   * @public
-   * @readonly
-   * @return {string}
-   */
-  get id() {
-    return this._id;
-  }
 
   /**
-   * Assemblage
+   * PositionComponent
    * @constructor
-   * @param {string} id - The id of the parent entity.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
    */
-  constructor(id) {
-    this._id = id;
-    this._components = {};
+  constructor(id, type, state) {
+    super(id, type, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  attachComponent(type, state) {
-
-  }
-
-  detachComponent(type) {
-
-  }
-
-  updateComponent(type, state) {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -84,18 +58,37 @@ class Assemblage {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
-   * @param {string} id - The id of the parent entity.
+   * @static
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
    *
-   * @return {Assemblage} - A new assemblage instance.
+   * @throws {InvalidComponentState}
+   * @return {PositionComponent} - A new component instance.
    */
-  static createInstance(id) {
-    return new Assemblage(id);
+  static createInstance(id, type, state) {
+    for (const KEY in KEYS) {
+      if (!state.hasOwnProperty(KEY)) {
+        throw new InvalidComponentState(`Error: Invalid state, key ${KEY} not found for component type ${type}.`);
+      }
+    }
+    for (const KEY in state) {
+      if (!KEYS.hasOwnProperty(KEY)) {
+        throw new InvalidComponentState(`Error: Invalid state, key ${KEY} is not valid for component type ${type}.`);
+      }
+      if (typeof state[KEY] !== KEYS[KEY]) {
+        throw new InvalidComponentState(
+          `Error: Invalid state, key ${KEY} for component type ${type} should be of type ${KEYS[KEY]}.`);
+      }
+    }
+    return new PositionComponent(id, type, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Assemblage;
+export default PositionComponent;

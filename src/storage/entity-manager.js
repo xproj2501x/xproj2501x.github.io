@@ -8,9 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MESSAGE, MAX_ENTITIES} from './constants';
+import {MAX_ENTITIES} from './constants';
 import {EntityLimitExceeded, EntityNotFound} from './exceptions';
 import Entity from './entity';
+import UUID from '../common/utilities/uuid';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -29,15 +30,9 @@ class EntityManager {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * @private
-   * @type {number}
-   */
-  _nextId;
-
-  /**
    * A collection of generated entities.
    * @private
-   * @type {Array}
+   * @type {object}
    */
   _entities;
 
@@ -48,11 +43,9 @@ class EntityManager {
   /**
    * EntityManager
    * @constructor
-   * @param {MessageService} messageService - The message service for the simulation.
    */
-  constructor(messageService) {
-    this._nextId = -1;
-    this._entities = new Array(MAX_ENTITIES).fill(null);
+  constructor() {
+    this._entities = {};
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -62,27 +55,40 @@ class EntityManager {
    * Creates a new entity.
    * @public
    *
-   * @return {number} The id of the new entity.
+   * @return {string} The id of the new entity.
    */
   createEntity() {
-    this._nextId++;
-    if (this._nextId >= MAX_ENTITIES) throw new EntityLimitExceeded(`Error: Entity limit ${MAX_ENTITIES} reached.`);
-    const ENTITY = Entity.createInstance(this._nextId);
+    if (Object.keys(this._entities).length >= MAX_ENTITIES) {
+      throw new EntityLimitExceeded(`Error: Entity limit ${MAX_ENTITIES} reached.`);
+    }
+    const ID = UUID.create();
+    const ENTITY = Entity.createInstance(ID);
 
-    this._entities[this._nextId] = ENTITY;
-    return this._nextId;
+    this._entities[ID] = ENTITY;
+    return ID;
   }
 
   /**
    * Destroys an entity with a matching id.
    * @public
-   * @param {number} id - The id of the entity.
+   * @param {string} id - The id of the entity.
    *
    * @throws {EntityNotFound}
    */
   destroyEntity(id) {
     if (!this._entities[id]) throw new EntityNotFound(`Error: Entity id ${id} does not exist.`);
     this._entities[id] = null;
+  }
+
+  /**
+   * Finds an entity with a matching id.
+   * @public
+   * @param {string} id - The id of the entity.
+   *
+   * @return {boolean}
+   */
+  findEntity(id) {
+    return (id in this._entities);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -94,12 +100,11 @@ class EntityManager {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
-   * @param {MessageService} messageService - The message service for the simulation.
    *
    * @return {EntityManager} - A new entity manager instance.
    */
-  static createInstance(messageService) {
-    return new EntityManager(messageService);
+  static createInstance() {
+    return new EntityManager();
   }
 }
 
