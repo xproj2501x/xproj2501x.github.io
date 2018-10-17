@@ -4,10 +4,12 @@
 import '../css/_site.scss';
 import Display from './display';
 import GameOfLife from '../../games/game-of-life';
+import LogService from '../../common/services/log';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const LOG_SERVICE = LogService.createInstance(0);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -76,9 +78,9 @@ class App {
 
    */
   start() {
-    const GAME_OF_LIFE = GameOfLife.createInstance();
-
-    GAME_OF_LIFE.start();
+    // const GAME_OF_LIFE = GameOfLife.createInstance();
+    //
+    // GAME_OF_LIFE.start();
   }
 
   toggleMenu(event) {
@@ -110,6 +112,4 @@ class App {
 window.addEventListener('load', (event) => {
   const DISPLAY = Display.createInstance('canvas-wrapper');
   const APP = App.createInstance();
-
-
 });

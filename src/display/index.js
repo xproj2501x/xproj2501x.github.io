@@ -1,15 +1,13 @@
 /**
- * Log Service
+ * Display Manager
  * ===
  *
- * @module logService
+ * @module displayManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -19,70 +17,95 @@ import Logger from './logger';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * DisplayManager
  * @class
  */
-class LogService {
+class DisplayManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
    * @private
-   * @type {Log}
+   * @type {Logger}s
    */
-  _log;
+  _logger;
 
   /**
    * @private
+   * @type {MessageService}
+   */
+  _messageService;
+
+  /**
+   * @private
+   * @type {HTMLElement}
+   */
+  _container;
+
+  /**
+   * A collection of screens owned by the display mananger.
+   * @private
    * @type {object}
    */
-  _loggers;
+  _screens;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * LogService
+   * DisplayManager
    * @constructor
-   * @param {Log} log - The log for the application.
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  constructor(logService, messageService, container) {
+    this._logger = logService.registerLogger(this.constructor.name);
+    this._messageService = messageService;
+    this._container = container;
+    this._screens = {};
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Registers a new logger with the service.
+   * Registers a screen with the display manager.
    * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
+   * @param {string} id - The id of the screen.
    */
-  registerLogger(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
+  registerScreen(id) {
+    if (this._screens[id]) throw new Error(`Error: Screen id ${id} is already registered with the display manager.`);
 
-    this._loggers[context] = LOGGER;
-    return LOGGER;
   }
 
   /**
-   * Removes a logger from the service.
+   * Removes a screen from the display manager.
    * @public
-   * @param {string} context - The context of the logger to be removed.
+   * @param {string} id - The id of the screen.
    */
-  removeLogger(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
+  removeScreen(id) {
+    if (!this._screens[id]) throw new Error(`Error: Screen id ${id} is not registered with the display manager.`);
+
+  }
+
+  render(sprites) {
+    this._screens.forEach((screen) => {
+        if (screen.isDirty) {
+
+        }
+    });
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+  _refresh() {
+
+  }
+
+  _draw() {
+
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -90,18 +113,20 @@ class LogService {
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
-   *
-   * @return {LogService} - A new log service instance.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {string} containerId - The id for the HTML container element.
+   * s
+   * @return {DisplayManager} - A new display manager instance.
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
+  static createInstance(logService, messageService, containerId) {
+    const CONTAINER = document.getElementById(containerId);
 
-    return new LogService(LOG);
+    return new DisplayManager(logService, messageService, CONTAINER);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default DisplayManager;
