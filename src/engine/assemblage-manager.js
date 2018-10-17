@@ -8,9 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMMAND, EVENT, MAX_ENTITIES, MESSAGE} from './constants';
-import {AssemblageAlreadyExists, AssemblageNotFound, AssemblageTemplateNotFound} from './exceptions';
+import {COMMAND, EVENT, MESSAGE} from './constants';
+import {AssemblageAlreadyExists, AssemblageNotFound, InvalidAssemblageType} from './exceptions';
 import Assemblage from './assemblage';
+import UUID from '../common/utilities/uuid';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -78,8 +79,14 @@ class AssemblageManager {
    * @param {object} command - The create assemblage command message.
    */
   onCreateAssemblage(command) {
-    this._currentAssemblage = command;
-    this._messageService.send(MESSAGE.CREATE_ENTITY, {});
+    const ID = command.id || UUID.create();
+
+    // Find entity if it exists, otherwise create a new one
+    this._createAssemblage(ID, command.type);
+    this._messageService.send(MESSAGE.CREATE_ENTITY, {id: ID});
+    command.components.forEach((component) => {
+      this._messageService.send(MESSAGE.CREATE_COMPONENT, {id: ID, type: component.type, state: component.state});
+    });
   }
 
   /**
@@ -134,20 +141,21 @@ class AssemblageManager {
   /**
    * Creates a new assemblage of the specified type.
    * @private
-   * @param {number} id - The id of the parent entity.
+   * @param {string} id - The id of the parent entity (Default: null).
+   * @param {string} type - The type of the assemblage.
    *
+   * @throws {InvalidAssemblageType}
    * @throws {AssemblageAlreadyExists}
    */
-  _createAssemblage(id) {
-    const TYPE = this._currentAssemblage.type;
+  _createAssemblage(id, type) {
+    if (!this._assemblages[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
+    if (this._assemblages[type][id]) {
+      throw new AssemblageAlreadyExists(`Error: Assemblage type ${type} already exists for entity ${id}.`);
+    }
+    const TEMPLATE = this._getTemplate(type);
+    const ASSEMBLAGE = TEMPLATE.createInstance(id);
 
-      // this._assemblages[type] = this._assemblages[type] || [];
-      // if (this._assemblages[type][id]) {
-      //   throw AssemblageAlreadyExists(`Error: Assemblage type ${type} already exists for entity id ${id}.`);
-      // }
-      // const ASSEMBLAGE = Assemblage.createInstance(id, type);
-      //
-      // this._assemblages[type][id] = ASSEMBLAGE;
+    this._assemblages[type][id] = ASSEMBLAGE;
   }
 
   /**
@@ -155,11 +163,28 @@ class AssemblageManager {
    * @private
    * @param {number} id - The id of the parent entity.
    *
+   * @throws {InvalidAssemblageType}
    * @throws {AssemblageNotFound}
    */
   _destroyAssemblage(id, type) {
-    if (!this._assemblages[id]) throw new AssemblageNotFound(`Error: Assemblage id ${id} does not exist.`);
+    if (!this._assemblages[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
+    if (!this._assemblages[type][id]) {
+      throw new AssemblageNotFound(`Error: Assemblage type ${type} does not exist for entity ${id}.`);
+    }
     this._assemblages[id] = null;
+  }
+
+  /**
+   * Returns an assemblage with a matching entity id and type
+   * @private
+   * @param {string} id - The id of the parent entity.
+   * @param {string} type - The type of the assemblage.
+   *
+   * @throws {InvalidAssemblageType}
+   * @return {Assemblage}
+   */
+  _findAssemblage(id, type) {
+    if (!this._assemblages[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
   }
 
   /**
@@ -204,13 +229,13 @@ class AssemblageManager {
   /**
    * Gets the template for the specified assemblage type.
    * @private
-   * @param {number} type - The type of assemblage.
+   * @param {string} type - The type of assemblage.
    *
    * @return {object} The assemblage template.
    * @throws {AssemblageTemplateNotFound}
    */
   _getTemplate(type) {
-    if (!this._templates[type]) throw AssemblageTemplateNotFound(`Error: Assemblage template ${type} not found.`);
+    if (!this._templates[type]) throw InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
     return this._templates[type];
   }
 

@@ -28,16 +28,9 @@ class Assemblage {
   /**
    * The id of the parent entity.
    * @private
-   * @type {number}
+   * @type {string}
    */
   _id;
-
-  /**
-   * The type of the assemblage.
-   * @private
-   * @type {number}
-   */
-  _type;
 
   /**
    * A collection of components attached to the assemblage.
@@ -49,16 +42,24 @@ class Assemblage {
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Get _id
+   * @public
+   * @readonly
+   * @return {string}
+   */
+  get id() {
+    return this._id;
+  }
 
   /**
    * Assemblage
    * @constructor
-   * @param {number} id - The id of the parent entity.
-   * @param {number} type - The type of the assemblage.
+   * @param {string} id - The id of the parent entity.
    */
-  constructor(id, type) {
+  constructor(id) {
     this._id = id;
-    this._type = type;
+    this._components = {};
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -85,13 +86,12 @@ class Assemblage {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
-   * @param {number} id - The id of the parent entity.
-   * @param {string} type - The type of the assemblage.
+   * @param {string} id - The id of the parent entity.
    *
    * @return {Assemblage} - A new assemblage instance.
    */
-  static createInstance(id, type) {
-    return new Assemblage(id, type);
+  static createInstance(id) {
+    return new Assemblage(id);
   }
 }
 

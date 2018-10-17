@@ -11,6 +11,7 @@
 import {MESSAGE, MAX_ENTITIES} from './constants';
 import {EntityLimitExceeded, EntityNotFound} from './exceptions';
 import Entity from './entity';
+import UUID from '../common/utilities/uuid';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -29,15 +30,9 @@ class EntityManager {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * @private
-   * @type {number}
-   */
-  _nextId;
-
-  /**
    * A collection of generated entities.
    * @private
-   * @type {Array}
+   * @type {object}
    */
   _entities;
 
@@ -51,8 +46,7 @@ class EntityManager {
    * @param {MessageService} messageService - The message service for the simulation.
    */
   constructor(messageService) {
-    this._nextId = -1;
-    this._entities = new Array(MAX_ENTITIES).fill(null);
+    this._entities = {};
     this._messageService = messageService;
     this._messageService.subscribe(MESSAGE.CREATE_ENTITY, (command) => this.onCreateEntity(command));
     this._messageService.subscribe(MESSAGE.DESTROY_ENTITY, (command) => this.onDestroyEntity(command));
@@ -88,22 +82,25 @@ class EntityManager {
   /**
    * Creates a new entity.
    * @private
+   * @param {?string} id - The id of the entity (Default: null)
    *
-   * @return {number} The id of the new entity.
+   * @return {string} The id of the new entity.
    */
-  _createEntity() {
-    this._nextId++;
-    if (this._nextId >= MAX_ENTITIES) throw new EntityLimitExceeded(`Error: Entity limit ${MAX_ENTITIES} reached.`);
-    const ENTITY = Entity.createInstance(this._nextId);
+  _createEntity(id=null) {
+    if (Object.keys(this._entities).length >= MAX_ENTITIES) {
+      throw new EntityLimitExceeded(`Error: Entity limit ${MAX_ENTITIES} reached.`);
+    }
+    id = id || UUID.create();
+    const ENTITY = Entity.createInstance(id);
 
-    this._entities[this._nextId] = ENTITY;
-    return this._nextId;
+    this._entities[id] = ENTITY;
+    return id;
   }
 
   /**
    * Destroys an entity with a matching id.
    * @private
-   * @param {number} id - The id of the entity.
+   * @param {string} id - The id of the entity.
    *
    * @throws {EntityNotFound}
    */

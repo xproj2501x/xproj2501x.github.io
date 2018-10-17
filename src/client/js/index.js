@@ -111,4 +111,5 @@ window.addEventListener('load', (event) => {
   const DISPLAY = Display.createInstance('canvas-wrapper');
   const APP = App.createInstance();
 
+
 });

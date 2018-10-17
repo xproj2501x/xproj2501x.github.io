@@ -1,13 +1,14 @@
 /**
- * Assemblage
+ * Cell Assemblage
  * ===
  *
- * @module assemblage
+ * @module cellAssemblage
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import Assemblage from '../../../engine/assemblage';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -17,65 +18,33 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Assemblage
+ * CellAssemblage
  * @class
  */
-class Assemblage {
+class CellAssemblage extends Assemblage {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * The id of the parent entity.
-   * @private
-   * @type {string}
-   */
-  _id;
-
-  /**
-   * A collection of components attached to the assemblage.
-   * @private
-   * @type {object}
-   */
-  _components;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Get _id
-   * @public
-   * @readonly
-   * @return {string}
-   */
-  get id() {
-    return this._id;
-  }
 
   /**
-   * Assemblage
+   * CellAssemblage
    * @constructor
-   * @param {string} id - The id of the parent entity.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the assemblage.
    */
-  constructor(id) {
-    this._id = id;
-    this._components = {};
+  constructor(id, type) {
+    super(id, type);
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  attachComponent(type, state) {
-
-  }
-
-  detachComponent(type) {
-
-  }
-
-  updateComponent(type, state) {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -86,16 +55,17 @@ class Assemblage {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
-   * @param {string} id - The id of the parent entity.
+   * @param {number} id - The id of the parent entity.
+   * @param {string} type - The type of the assemblage.
    *
-   * @return {Assemblage} - A new assemblage instance.
+   * @return {CellAssemblage} - A new assemblage instance.
    */
-  static createInstance(id) {
-    return new Assemblage(id);
+  static createInstance(id, type) {
+    return new CellAssemblage(id, type);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Assemblage;
+export default CellAssemblage;
