@@ -1,8 +1,8 @@
 /**
- * Data Store
+ * Data Manager
  * ===
  *
- * @module DataStore
+ * @module dataManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,26 +19,62 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * DataStore
+ * DataManager
  * @class
  */
-class DataStore {
+class DataManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * The logger for the class.
+   * @private
+   * @type {Logger}
+   */
+  _logger;
 
+  /**
+   * The message service for the application.
+   * @private
+   * @type {MessageService}
+   */
+  _messageService;
 
+  /**
+   * The entity manager for the application.
+   * @private
+   * @type {EntityManager}
+   */
+  _entityManager;
+
+  /**
+   * The component manager for the application.
+   * @private
+   * @type {ComponentManager}
+   */
+  _componentManager;
+
+  /**
+   * The assemblage manager for the application.
+   * @private
+   * @type {AssemblageManager}
+   */
+  _assemblageManager;
+  
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * DataStore
+   * DataManager
    * @constructor
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
    */
-  constructor() {
-
+  constructor(logService, messageService) {
+    this._logger = logService.registerLogger(this.constructor.name);
+    this._messageService = messageService;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -55,15 +91,17 @@ class DataStore {
   /**
    * Static factory method.
    * @static
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
    *
-   * @return {GameOfLife} A new game of life instance.
+   * @return {DataManager} A new data manager instance.
    */
-  static createInstance() {
-    return new DataStore();
+  static createInstance(logService, messageService) {
+    return new DataManager(logService, messageService);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default DataStore;
+export default DataManager;
