@@ -1,15 +1,13 @@
 /**
- * Log Service
+ * Game Manager
  * ===
  *
- * @module logService
+ * @module gameManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -19,66 +17,29 @@ import Logger from './logger';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * GameManager
  * @class
  */
-class LogService {
+class GameManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {Log}
-   */
-  _log;
-
-  /**
-   * @private
-   * @type {object}
-   */
-  _loggers;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * LogService
+   * GameManager
    * @constructor
-   * @param {Log} log - The log for the application.
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  constructor() {
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Registers a new logger with the service.
-   * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
-   */
-  registerLogger(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    return LOGGER;
-  }
-
-  /**
-   * Removes a logger from the service.
-   * @public
-   * @param {string} context - The context of the logger to be removed.
-   */
-  removeLogger(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -90,18 +51,15 @@ class LogService {
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
-   *
-   * @return {LogService} - A new log service instance.
+   * s
+   * @return {GameManager} - A new game manager instance.
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
-
-    return new LogService(LOG);
+  static createInstance() {
+    return new GameManager();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default GameManager;

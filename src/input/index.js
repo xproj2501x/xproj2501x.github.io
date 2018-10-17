@@ -1,15 +1,13 @@
 /**
- * Log Service
+ * Input Manager
  * ===
  *
- * @module logService
+ * @module inputManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -19,67 +17,56 @@ import Logger from './logger';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * InputManager
  * @class
  */
-class LogService {
+class InputManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
    * @private
-   * @type {Log}
+   * @type {Logger}s
    */
-  _log;
+  _logger;
 
   /**
    * @private
-   * @type {object}
+   * @type {MessageService}
    */
-  _loggers;
+  _messageService;
+
+  _container;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * LogService
+   * InputManager
    * @constructor
-   * @param {Log} log - The log for the application.
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
+   * @param {HTMLElement} container - The HTML container element.
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  constructor(logService, messageService, container) {
+    this._logger = logService.registerLogger(this.constructor.name);
+    this._messageService = messageService;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Registers a new logger with the service.
    * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
+   * @param event
    */
-  registerLogger(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    return LOGGER;
+  handleInput(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log(event);
   }
-
-  /**
-   * Removes a logger from the service.
-   * @public
-   * @param {string} context - The context of the logger to be removed.
-   */
-  removeLogger(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
-  }
-
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -90,18 +77,20 @@ class LogService {
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
+   * @param {string} containerId - The id of the HTML container element.
    *
-   * @return {LogService} - A new log service instance.
+   * @return {InputManager} - A new input manager instance.
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
-
-    return new LogService(LOG);
+  static createInstance(logService, messageService, containerId) {
+    const CONTAINER = document.getElementById(containerId);
+    
+    return new InputManager(logService, messageService, CONTAINER);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default InputManager;
