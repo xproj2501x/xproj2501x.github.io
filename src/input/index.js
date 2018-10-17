@@ -26,12 +26,14 @@ class InputManager {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The logger for the class.
    * @private
-   * @type {Logger}s
+   * @type {Logger}
    */
   _logger;
 
   /**
+   * The message service for the application.
    * @private
    * @type {MessageService}
    */
@@ -85,7 +87,7 @@ class InputManager {
    */
   static createInstance(logService, messageService, containerId) {
     const CONTAINER = document.getElementById(containerId);
-    
+
     return new InputManager(logService, messageService, CONTAINER);
   }
 }
