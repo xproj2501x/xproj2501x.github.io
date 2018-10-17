@@ -26,12 +26,14 @@ class DisplayManager {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The logger for the class.
    * @private
-   * @type {Logger}s
+   * @type {Logger}
    */
   _logger;
 
   /**
+   * The message service for the application.
    * @private
    * @type {MessageService}
    */
@@ -44,7 +46,7 @@ class DisplayManager {
   _container;
 
   /**
-   * A collection of screens owned by the display mananger.
+   * A collection of screens owned by the display manager.
    * @private
    * @type {object}
    */
@@ -57,6 +59,8 @@ class DisplayManager {
   /**
    * DisplayManager
    * @constructor
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
    */
   constructor(logService, messageService, container) {
     this._logger = logService.registerLogger(this.constructor.name);
@@ -90,9 +94,9 @@ class DisplayManager {
 
   render(sprites) {
     this._screens.forEach((screen) => {
-        if (screen.isDirty) {
+      if (screen.isDirty) {
 
-        }
+      }
     });
   }
 
@@ -113,10 +117,10 @@ class DisplayManager {
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
    * @param {string} containerId - The id for the HTML container element.
-   * s
+   *
    * @return {DisplayManager} - A new display manager instance.
    */
   static createInstance(logService, messageService, containerId) {

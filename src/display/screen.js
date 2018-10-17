@@ -66,7 +66,7 @@ class Screen {
   /**
    * Static factory method.
    * @static
-   * s
+   *
    * @return {Screen} - A new screen instance.
    */
   static createInstance() {

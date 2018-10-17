@@ -25,6 +25,19 @@ class GameManager {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * The logger for the class.
+   * @private
+   * @type {Logger}
+   */
+  _logger;
+
+  /**
+   * The message service for the application.
+   * @private
+   * @type {MessageService}
+   */
+  _messageService;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -33,8 +46,12 @@ class GameManager {
   /**
    * GameManager
    * @constructor
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
    */
-  constructor() {
+  constructor(logService, messageService) {
+    this._logger = logService.registerLogger(this.constructor.name);
+    this._messageService = messageService;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -51,11 +68,13 @@ class GameManager {
   /**
    * Static factory method.
    * @static
-   * s
+   * @param {LogService} logService - The log service for the application.
+   * @param {MessageService} messageService - The message service for the application.
+   *
    * @return {GameManager} - A new game manager instance.
    */
-  static createInstance() {
-    return new GameManager();
+  static createInstance(logService, messageService) {
+    return new GameManager(logService, messageService);
   }
 }
 
