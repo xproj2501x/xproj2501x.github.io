@@ -12,7 +12,6 @@ import MessageService from '../../common/services/message';
 import Engine from '../../engine/';
 import {COMMAND, EVENT, MESSAGE} from '../../engine/constants';
 import {COMPONENT_TEMPLATES, COMPONENT_TYPE} from './components';
-import {ASSEMBLAGE_TEMPLATES, ASSEMBLAGE_TYPE} from './assemblages';
 import {SYSTEMS} from './systems';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +53,7 @@ class GameOfLife {
   /**
    * GameOfLife
    * @constructor
-   * @param {MessageService}
+   * @param {MessageService} messageService - The message service for the application.
    * @param {Engine}
    */
   constructor(messageService, engine) {
@@ -71,46 +70,52 @@ class GameOfLife {
   }
 
   generateWorld() {
-    this._messageService.send(COMMAND.CREATE_ASSEMBLAGE, {id: 'foo'});
-    // const ASSEMBLAGES = [];
-    //
-    // this._messageService.subscribe(MESSAGE.ENTITY_CREATED, (event) => this.onEntityCreated(event));
-    // for (let idx = 0; idx < GRID_SIZE; idx++) {
-    //   for (let jdx = 0; jdx < GRID_SIZE; jdx++) {
-    //     if (Math.floor(Math.random() * Math.floor(100)) > 75) {
-    //       ASSEMBLAGES.push([
-    //         {
-    //           type: COMPONENT_TYPE.POSITION,
-    //           values: {
-    //             x: idx,
-    //             y: jdx
-    //           }
-    //         },
-    //         {
-    //           type: COMPONENT_TYPE.RULE,
-    //           values: {
-    //             life: parseInt('01100000', 2),
-    //             death: parseInt('10011111', 2),
-    //             cycles: 10
-    //           }
-    //         },
-    //         {
-    //           type: COMPONENT_TYPE.SPRITE,
-    //           values: {
-    //             color: '#F00'
-    //           }
-    //         }
-    //       ]);
-    //     }
-    //   }
-    // }
-    // ASSEMBLAGES.forEach((assemblage) => {
-    //   this._currentAssemblage = assemblage;
-    //   this._messageService.send(MESSAGE.CREATE_ENTITY, {});
-    // });
-    // this._messageService.unsubscribe(MESSAGE.ENTITY_CREATED, (event) => this.onEntityCreated(event));
+    const ASSEMBLAGES = [];
+
+    this._messageService.subscribe(EVENT.ENTITY_CREATED, (event) => this.onEntityCreated(event));
+    for (let idx = 0; idx < GRID_SIZE; idx++) {
+      for (let jdx = 0; jdx < GRID_SIZE; jdx++) {
+        if (Math.floor(Math.random() * Math.floor(100)) > 75) {
+          ASSEMBLAGES.push([
+            {
+              type: COMPONENT_TYPE.POSITION,
+              values: {
+                x: idx,
+                y: jdx
+              }
+            },
+            {
+              type: COMPONENT_TYPE.RULE,
+              values: {
+                life: parseInt('000000110', 2),
+                death: parseInt('111110010', 2),
+                cycles: 10
+              }
+            },
+            {
+              type: COMPONENT_TYPE.SPRITE,
+              values: {
+                color: '#F00'
+              }
+            }
+          ]);
+        }
+      }
+    }
+    ASSEMBLAGES.forEach((assemblage) => {
+      this._currentAssemblage = assemblage;
+      this._messageService.send(COMMAND.CREATE_ENTITY, {});
+    });
+    this._messageService.unsubscribe(EVENT.ENTITY_CREATED, (event) => this.onEntityCreated(event));
   }
 
+  onEntityCreated(event) {
+    this._currentAssemblage.forEach((component) => {
+      this._messageService.send(COMMAND.CREATE_COMPONENT,
+                                {id: event.id, type: component.type, state: component.values});
+    });
+    this._currentAssemblage = null;
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -128,7 +133,6 @@ class GameOfLife {
     const MESSAGE_SERVICE = MessageService.createInstance();
     const CONFIGURATION = {
       componentTemplates: COMPONENT_TEMPLATES,
-      assemblageTemplates: ASSEMBLAGE_TEMPLATES,
       systems: SYSTEMS
     };
     const ENGINE = Engine.createInstance(MESSAGE_SERVICE, CONFIGURATION);

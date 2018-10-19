@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MESSAGE, MAX_ENTITIES} from './constants';
+import {COMMAND, EVENT, MESSAGE, MAX_ENTITIES} from './constants';
 import {EntityLimitExceeded, EntityNotFound} from './exceptions';
 import Entity from './entity';
 import UUID from '../common/utilities/uuid';
@@ -48,8 +48,8 @@ class EntityManager {
   constructor(messageService) {
     this._entities = {};
     this._messageService = messageService;
-    this._messageService.subscribe(MESSAGE.CREATE_ENTITY, (command) => this.onCreateEntity(command));
-    this._messageService.subscribe(MESSAGE.DESTROY_ENTITY, (command) => this.onDestroyEntity(command));
+    this._messageService.subscribe(COMMAND.CREATE_ENTITY, (command) => this.onCreateEntity(command));
+    this._messageService.subscribe(COMMAND.DESTROY_ENTITY, (command) => this.onDestroyEntity(command));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ class EntityManager {
   onCreateEntity(command) {
     const ID = this._createEntity();
 
-    this._messageService.send(MESSAGE.ENTITY_CREATED, {id: ID});
+    this._messageService.send(EVENT.ENTITY_CREATED, {id: ID});
   }
 
   /**
@@ -73,7 +73,7 @@ class EntityManager {
     const ID = command.id;
 
     this._destroyEntity(ID);
-    this._messageService.send(MESSAGE.ENTITY_DESTROYED, {id: ID});
+    this._messageService.send(EVENT.ENTITY_DESTROYED, {id: ID});
   }
 
   //////////////////////////////////////////////////////////////////////////////

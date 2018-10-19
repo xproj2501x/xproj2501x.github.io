@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MESSAGE} from './constants';
+import {COMMAND, EVENT} from './constants';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -35,7 +35,7 @@ class System {
   /**
    * A collection of assemblages used by the simulation.
    * @protected
-   * @type {Array}
+   * @type {object}
    */
   _assemblages;
 
@@ -50,10 +50,10 @@ class System {
    */
   constructor(messageService) {
     this._messageService = messageService;
-    this._assemblages = [];
-    this._messageService.subscribe(MESSAGE.COMPONENT_CREATED, (event) => this.onComponentCreated(event));
-    this._messageService.subscribe(MESSAGE.COMPONENT_DESTROYED, (event) => this.onComponentDestroyed(event));
-    this._messageService.subscribe(MESSAGE.COMPONENT_UPDATED, (event) => this.onComponentUpdated(event));
+    this._assemblages = {};
+    this._messageService.subscribe(EVENT.COMPONENT_CREATED, (event) => this.onComponentCreatedOrUpdated(event));
+    this._messageService.subscribe(EVENT.COMPONENT_DESTROYED, (event) => this.onComponentDestroyed(event));
+    this._messageService.subscribe(EVENT.ENTITY_DESTROYED, (event) => this.onEntityDestroyed(event));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -70,22 +70,12 @@ class System {
   }
 
   /**
-   * Message handler for the on assemblage created event.
-   * @public
-   * @abstract
-   * @param {object} event - The on assemblage created event message.
-   */
-  onAssemblageCreated(event) {
-    throw Error(`Error: OnAssemblageCreated called from System base class`);
-  }
-
-  /**
    * Message handler for the on component created event.
    * @public
    * @abstract
    * @param {object} event - The on component created event message.
    */
-  onComponentCreated(event) {
+  onComponentCreatedOrUpdated(event) {
     throw Error(`Error: OnComponentCreated called from System base class`);
   }
 
@@ -99,16 +89,9 @@ class System {
     throw Error(`Error: OnComponentDestroyed called from System base class`);
   }
 
-  /**
-   * Message handler for the on component updated event.
-   * @public
-   * @abstract
-   * @param {object} event - The on component updated event message.
-   */
-  onComponentUpdated(event) {
-    throw Error(`Error: OnComponentEvent called from System base class`);
+  onEntityDestroyed(event) {
+    throw Error(`Error: OnEntityDestroyed called from System base class`);
   }
-
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////

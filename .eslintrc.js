@@ -244,7 +244,7 @@ module.exports = {
     }], // NOTE: Alternate setting will be entertained
     'id-blacklist': [2, 'e', 'cb'],
     'id-length': [1, {
-      min: 3,
+      min: 1,
       max: 50,
       exceptions: [] // Update as exceptions are agreed upon
     }],

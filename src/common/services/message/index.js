@@ -41,7 +41,7 @@ class MessageService {
    * @constructor
    */
   constructor() {
-    this._subscriptions = [];
+    this._subscriptions = {};
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ class MessageService {
   /**
    * Adds a subscriber for a subject.
    * @public
-   * @param {number} subject - The subject of the message.
+   * @param {string} subject - The subject of the message.
    * @param {function} subscriber - The subscriber to be added.
    */
   subscribe(subject, subscriber) {
@@ -63,19 +63,19 @@ class MessageService {
   /**
    * Removes a subscriber for a subject.
    * @public
-   * @param {number} subject - The subject of the message.
+   * @param {string} subject - The subject of the message.
    * @param {function} subscriber - The subscriber to be removed.
    */
   unsubscribe(subject, subscriber) {
     if (!(subject in this._subscriptions)) return;
     const INDEX = this._subscriptions[subject].indexOf(subscriber);
 
-    this._subscriptions.splice(INDEX, 1);
+    this._subscriptions[subject].splice(INDEX, 1);
   }
 
   /**
    * Sends a message to all subscribers for the subject.
-   * @param {number} subject - The subject of the message.
+   * @param {string} subject - The subject of the message.
    * @param {object} message - The message to be sent.
    */
   send(subject, message) {

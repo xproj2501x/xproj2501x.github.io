@@ -2,6 +2,7 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 import RuleSystem from './rule-system';
+import RenderSystem from './render-system';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
@@ -10,7 +11,8 @@ import RuleSystem from './rule-system';
  * Systems
  */
 const SYSTEMS = [
-  RuleSystem
+  RuleSystem,
+  RenderSystem
 ];
 
 
