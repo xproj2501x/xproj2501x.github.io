@@ -74,7 +74,7 @@ class AssemblageManager {
   /**
    * Creates a new assemblage of the specified type.
    * @public
-   * @param {string} id - The id of the parent entity (Default: null).
+   * @param {string} id - The id of the parent entity.
    * @param {string} type - The type of the assemblage.
    * @param {object} state - The state of the assemblage.
    *
@@ -82,7 +82,7 @@ class AssemblageManager {
    * @throws {AssemblageAlreadyExists}
    */
   createAssemblage(id, type, state) {
-    const TEMPLATE = this._getTemplate(type);
+    const TEMPLATE = this._findTemplate(type);
 
     if (this._assemblages[type][id]) {
       throw new AssemblageAlreadyExists(`Error: Assemblage type ${type} already exists for entity ${id}.`);
@@ -92,7 +92,6 @@ class AssemblageManager {
         throw new InvalidAssemblageState(`Error: Component ${KEY} missing for assemblage type ${type}.`);
       }
     }
-
     this._assemblages[type][id] = Assemblage.createInstance(id, type, TEMPLATE, state);
   }
 
@@ -154,7 +153,7 @@ class AssemblageManager {
    * @return {object} The assemblage template.
    * @throws {AssemblageTemplateNotFound}
    */
-  _getTemplate(type) {
+  _findTemplate(type) {
     if (!this._templates[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
     return this._templates[type];
   }

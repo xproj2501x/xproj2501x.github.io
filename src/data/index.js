@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import EntityManager from './entity-manager';
+import ComponentManager from './component-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
-// Imports
+// Definitions
 ////////////////////////////////////////////////////////////////////////////////
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -35,32 +36,25 @@ class DataManager {
   _logger;
 
   /**
-   * The message service for the application.
+   * The message service for the simulation.
    * @private
    * @type {MessageService}
    */
   _messageService;
 
   /**
-   * The entity manager for the application.
+   * The entity manager for the simulation.
    * @private
    * @type {EntityManager}
    */
   _entityManager;
 
   /**
-   * The component manager for the application.
+   * The component manager for the simulation.
    * @private
    * @type {ComponentManager}
    */
   _componentManager;
-
-  /**
-   * The assemblage manager for the application.
-   * @private
-   * @type {AssemblageManager}
-   */
-  _assemblageManager;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -69,8 +63,8 @@ class DataManager {
   /**
    * DataManager
    * @constructor
-   * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    */
   constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
@@ -80,6 +74,10 @@ class DataManager {
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  createGameObject() {
+
+  }
+
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -91,12 +89,15 @@ class DataManager {
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    *
    * @return {DataManager} A new data manager instance.
    */
   static createInstance(logService, messageService) {
+    const ENTITY_MANAGER = EntityManager.createInstance(logService);
+    const COMPONENT_MANAGER = ComponentManager.createInstance(logService);
+
     return new DataManager(logService, messageService);
   }
 }

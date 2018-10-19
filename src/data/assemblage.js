@@ -81,7 +81,7 @@ class Assemblage {
   constructor(id, type, state) {
     this._id = id;
     this._type = type;
-    this._components = {};
+    this._state = {};
   }
 
   //////////////////////////////////////////////////////////////////////////////

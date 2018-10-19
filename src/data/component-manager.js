@@ -144,7 +144,7 @@ class ComponentManager {
    *
    * @return {object}
    */
-  findComonentsForEntity(id) {
+  findComponentsForEntity(id) {
     const COMPONENTS = {};
 
     for (const TYPE in this._components) {
