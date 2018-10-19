@@ -3,38 +3,39 @@
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * Component Type enum
- * @enum {number}
+ * @enum {string}
  */
 const COMPONENT_TYPE = {
-  TIME: 0,
-  POSITION: 1,
-  RULE: 2,
-  SPRITE: 3
+  TIME: 'TIME',
+  POSITION: 'POSITION',
+  RULE: 'RULE',
+  SPRITE: 'SPRITE'
 };
 
 /**
  *
  * @type {{}}
  */
-const COMPONENT_TEMPLATES = [
-  {
-    start: 0,
-    current: 0,
-    increment: 1
+const COMPONENT_TEMPLATES = {
+  TIME: {
+    start: 'number',
+    current: 'number',
+    increment: 'number'
   },
-  {
-    x: 0,
-    y: 0,
+  POSITION: {
+    x: 'number',
+    y: 'number'
   },
-  {
-    life: 0,
-    death: 0,
-    cycles: 0
+  RULE: {
+    life: 'string',
+    death: 'string',
+    cycles: 'number'
   },
-  {
-    color: '#FFFFFF'
+  SPRITE: {
+    color: 'string'
   }
-];
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////

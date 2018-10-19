@@ -56,13 +56,6 @@ class ComponentNotFound extends ExtendableError {}
 class ComponentTemplateNotFound extends ExtendableError {}
 
 /**
- * ComponentTypeNotValid
- * @class
- * @extends ExtendableError
- */
-class ComponentTypeNotValid extends ExtendableError {}
-
-/**
  * EntityLimitExceeded
  * @class
  * @extends ExtendableError
