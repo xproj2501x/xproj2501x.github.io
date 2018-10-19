@@ -78,9 +78,9 @@ class App {
 
    */
   start() {
-    // const GAME_OF_LIFE = GameOfLife.createInstance();
-    //
-    // GAME_OF_LIFE.start();
+    const GAME_OF_LIFE = GameOfLife.createInstance();
+
+    GAME_OF_LIFE.start();
   }
 
   toggleMenu(event) {
@@ -110,6 +110,5 @@ class App {
 }
 
 window.addEventListener('load', (event) => {
-  const DISPLAY = Display.createInstance('canvas-wrapper');
   const APP = App.createInstance();
 });

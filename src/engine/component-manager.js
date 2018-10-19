@@ -8,8 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MESSAGE} from './constants';
-import {ComponentAlreadyExists, ComponentNotFound, ComponentTemplateNotFound} from './exceptions';
+import {COMMAND, EVENT, MESSAGE} from './constants';
+import {ComponentAlreadyExists, ComponentNotFound, ComponentTemplateNotFound, InvalidComponentState,
+  InvalidComponentType} from './exceptions';
 import Component from './component';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +62,11 @@ class ComponentManager {
   constructor(messageService, templates) {
     this._messageService = messageService;
     this._templates = templates;
-    this._components = [];
+    this._components = {};
+    this._messageService.subscribe(COMMAND.CREATE_COMPONENT, (command) => this.onCreateComponent(command));
+    this._messageService.subscribe(COMMAND.DESTROY_COMPONENT, (command) => this.onDestroyComponent(command));
+    this._messageService.subscribe(COMMAND.UPDATE_COMPONENT, (command) => this.onUpdateComponent(command));
+    this._messageService.subscribe(EVENT.ENTITY_DESTROYED, (event) => this.onEntityDestroyed(event));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -70,10 +75,15 @@ class ComponentManager {
   /**
    * Message handler for the create component command.
    * @param {object} command - The create component command message.
+   *
+   * @throws {InvalidComponentState}
    */
   onCreateComponent(command) {
+    if (!command.id) throw new InvalidComponentState(`Error: The entity id cannot be null`);
+    if (!command.type) throw new InvalidComponentState(`Error: The component type cannot be null`);
+    if (!command.state) throw new InvalidComponentState(`Error: The component state cannot be null`);
     this._createComponent(command.id, command.type, command.state);
-    this._messageService.send(MESSAGE.COMPONENT_CREATED, command);
+    this._messageService.send(EVENT.COMPONENT_CREATED, command);
   }
 
   /**
@@ -82,7 +92,7 @@ class ComponentManager {
    */
   onDestroyComponent(command) {
     this._destroyComponent(command.id, command.type);
-    this._messageService.send(MESSAGE.COMPONENT_DESTROYED, command);
+    this._messageService.send(EVENT.COMPONENT_DESTROYED, command);
   }
 
   /**
@@ -91,7 +101,7 @@ class ComponentManager {
    */
   onUpdateComponent(command) {
     this._updateComponent(command.id, command.type, command.state);
-    this._messageService.send(MESSAGE.COMPONENT_UPDATED, command);
+    this._messageService.send(EVENT.COMPONENT_UPDATED, command);
   }
 
   /**
@@ -115,27 +125,27 @@ class ComponentManager {
   /**
    * Creates a new component.
    * @private
-   * @param {number} id - The entity id.
-   * @param {number} type - The component type.
+   * @param {string} id - The entity id.
+   * @param {string} type - The component type.
    * @param {object} state - The initial state of the component.
    *
    * @throws {ComponentAlreadyExists}
    */
   _createComponent(id, type, state) {
+    this._components[type] = this._components[type] || {};
     if (this._components[type][id]) {
       throw ComponentAlreadyExists(`Error: Component type ${type} already attached to entity ${id}.`);
     }
     const TEMPLATE = this._getTemplate(type);
-    const COMPONENT = Component.createInstance(id, type, TEMPLATE, state);
 
-    this._components[type][id] = COMPONENT;
+    this._components[type][id] = Component.createInstance(id, type, TEMPLATE, state);
   }
 
   /**
    * Destroys a component with a matching id.
    * @private
-   * @param {number} id - The entity id.
-   * @param {number} type - The component type.
+   * @param {string} id - The entity id.
+   * @param {string} type - The component type.
    *
    * @throws {ComponentNotFound}
    */
@@ -149,8 +159,8 @@ class ComponentManager {
   /**
    * Updates the state of a component with a matching id.
    * @private
-   * @param {number} id - The entity id.
-   * @param {number} type - The component type.
+   * @param {string} id - The entity id.
+   * @param {string} type - The component type.
    * @param {object} state - The new state of the component.
    *
    * @throws {ComponentNotFound}
@@ -167,7 +177,7 @@ class ComponentManager {
   /**
    * Gets the template for the specified component type.
    * @private
-   * @param {number} type - The type of component.
+   * @param {string} type - The type of component.
    *
    * @return {object} The component template.
    * @throws {ComponentTemplateNotFound}
@@ -188,7 +198,7 @@ class ComponentManager {
    * @return {ComponentManager} - A new component manager instance.
    */
   static createInstance(messageService, templates) {
-    templates = templates || [];
+    templates = templates || {};
     return new ComponentManager(messageService, templates);
   }
 }
