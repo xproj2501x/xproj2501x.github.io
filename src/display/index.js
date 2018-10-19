@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import {ScreenAlreadyExists, ScreenNotFound} from './exceptions';
+import Screen from './screen';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -33,13 +35,14 @@ class DisplayManager {
   _logger;
 
   /**
-   * The message service for the application.
+   * The message service for the simulation.
    * @private
    * @type {MessageService}
    */
   _messageService;
 
   /**
+   * The HTML container element for the display.
    * @private
    * @type {HTMLElement}
    */
@@ -59,8 +62,9 @@ class DisplayManager {
   /**
    * DisplayManager
    * @constructor
-   * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {HTMLElement} container - The HTML container element for the display.
    */
   constructor(logService, messageService, container) {
     this._logger = logService.registerLogger(this.constructor.name);
@@ -73,43 +77,46 @@ class DisplayManager {
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Registers a screen with the display manager.
+   * Creates a new screen.
    * @public
    * @param {string} id - The id of the screen.
+   *
+   * @throws {ScreenAlreadyExists}
    */
-  registerScreen(id) {
-    if (this._screens[id]) throw new Error(`Error: Screen id ${id} is already registered with the display manager.`);
-
+  createScreen(id) {
+    if (this._screens[id]) {
+      throw new ScreenAlreadyExists(`Error: Screen id ${id} is already registered with the display manager.`);
+    }
+    this._screens[id] = Screen.createInstance(id, this._container);
   }
 
   /**
-   * Removes a screen from the display manager.
+   * Destroys a screen with a matching id.
    * @public
    * @param {string} id - The id of the screen.
+   *
+   * @throws {ScreenNotFound}
    */
-  removeScreen(id) {
-    if (!this._screens[id]) throw new Error(`Error: Screen id ${id} is not registered with the display manager.`);
-
+  destroyScreen(id) {
+    if (!this._screens[id]) {
+      throw new ScreenNotFound(`Error: Screen id ${id} is not registered with the display manager.`);
+    }
+    delete this._screens[id];
   }
 
+  /**
+   * Runs the render routine for each screen in the display.
+   * @param {array} sprites - A collection of sprites to draw to the screen.
+   */
   render(sprites) {
     this._screens.forEach((screen) => {
-      if (screen.isDirty) {
-
-      }
+      screen.render();
     });
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  _refresh() {
-
-  }
-
-  _draw() {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -117,8 +124,8 @@ class DisplayManager {
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    * @param {string} containerId - The id for the HTML container element.
    *
    * @return {DisplayManager} - A new display manager instance.

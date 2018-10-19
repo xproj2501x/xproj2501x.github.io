@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
 import Engine from '../../engine/';
 import {COMMAND, EVENT, MESSAGE} from '../../engine/constants';
@@ -130,12 +131,9 @@ class GameOfLife {
    * @return {GameOfLife} A new game of life instance.
    */
   static createInstance() {
+    const LOG_SERVICE = LogService.createInstance(0);
     const MESSAGE_SERVICE = MessageService.createInstance();
-    const CONFIGURATION = {
-      componentTemplates: COMPONENT_TEMPLATES,
-      systems: SYSTEMS
-    };
-    const ENGINE = Engine.createInstance(MESSAGE_SERVICE, CONFIGURATION);
+    const ENGINE = Engine.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
 
     return new GameOfLife(MESSAGE_SERVICE, ENGINE);
   }

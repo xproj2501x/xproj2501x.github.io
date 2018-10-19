@@ -25,24 +25,33 @@ class Screen {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * The id of the screen.
+   * @private
+   * @type {string}
+   */
+  _id;
+
+  /**
+   * The canvas element for the screen.
+   * @private
+   * @type {HTMLCanvasElement}
+   */
+  _canvas;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @public
-   * @readonly
-   * @return {boolean}
-   */
-  get isDirty() {
-    return false;
-  }
 
   /**
    * Screen
    * @constructor
+   * @param {string} id - The id of the screen.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the screen.
    */
-  constructor() {
+  constructor(id, canvas) {
+    this._id = id;
+    this._canvas = canvas;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -52,13 +61,6 @@ class Screen {
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  _refresh() {
-
-  }
-
-  _draw() {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -66,11 +68,16 @@ class Screen {
   /**
    * Static factory method.
    * @static
+   * @param {string} id - The id of the screen.
+   * @param {HTMLElement} container - The HTML container for the screen.
    *
    * @return {Screen} - A new screen instance.
    */
-  static createInstance() {
-    return new Screen();
+  static createInstance(id, container) {
+    const CANVAS = document.createElement('canvas');
+
+    container.appendChild(CANVAS);
+    return new Screen(id, CANVAS);
   }
 }
 

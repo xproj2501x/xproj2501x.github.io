@@ -111,4 +111,5 @@ class App {
 
 window.addEventListener('load', (event) => {
   const APP = App.createInstance();
+
 });

@@ -115,15 +115,24 @@ class Component {
    * @static
    * @param {string} id - The id of the parent entity.
    * @param {string} type - The type of the component.
+   * @param {object} template - The template for the component.
    * @param {object} state - The state of the component.
    *
    * @throws {InvalidComponentState}
-   * @return {Component} - A new component instance.
+   * @return {Component} A new component instance.
    */
-  static createInstance(id, type, state) {
-    if (!id) throw new Error(`Error: The entity id cannot be null`);
-    if (!type) throw new Error(`Error: The component type cannot be null`);
-    if (!state) throw new Error(`Error: The component state cannot be null`);
+  static createInstance(id, type, template, state) {
+    for (const KEY in state) {
+      if (state.hasOwnProperty(KEY)) {
+        if (!template.hasOwnProperty(KEY)) {
+          throw new InvalidComponentState(`Error: Property ${KEY} is not valid for component type ${type}.`);
+        }
+        if (typeof state[KEY] !== template[KEY]) {
+          throw new InvalidComponentState(
+            `Error: Property type ${typeof state[KEY]} is not valid for property ${KEY} of component type ${type}.`);
+        }
+      }
+    }
     return new Component(id, type, state);
   }
 }

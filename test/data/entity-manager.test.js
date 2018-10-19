@@ -2,7 +2,7 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import {expect} from 'chai';
-import EntityManager from '../../src/engine/entity-manager';
+import EntityManager from '../../src/data/entity-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -13,11 +13,20 @@ import EntityManager from '../../src/engine/entity-manager';
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('EntityManager', () => {
+
+  describe('#ctor', () => {
+
+  });
+
   describe('#createEntity', () => {
 
   });
 
   describe('#destroyEntity', () => {
+
+  });
+
+  describe('#findEntity', () => {
 
   });
 

@@ -8,8 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MAX_ENTITIES} from './constants';
-import {EntityLimitExceeded, EntityNotFound} from './exceptions';
+import {EntityNotFound} from './exceptions';
 import Entity from './entity';
 import UUID from '../common/utilities/uuid';
 
@@ -30,6 +29,13 @@ class EntityManager {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The logger for the entity manager.
+   * @private
+   * @type {Logger}
+   */
+  _logger;
+
+  /**
    * A collection of generated entities.
    * @private
    * @type {object}
@@ -43,8 +49,10 @@ class EntityManager {
   /**
    * EntityManager
    * @constructor
+   * @param {LogService} logService - The log service for the simulation.
    */
-  constructor() {
+  constructor(logService) {
+    this._logger = logService.registerLogger(this.constructor.name);
     this._entities = {};
   }
 
@@ -58,9 +66,6 @@ class EntityManager {
    * @return {string} The id of the new entity.
    */
   createEntity() {
-    if (Object.keys(this._entities).length >= MAX_ENTITIES) {
-      throw new EntityLimitExceeded(`Error: Entity limit ${MAX_ENTITIES} reached.`);
-    }
     const ID = UUID.create();
     const ENTITY = Entity.createInstance(ID);
 
@@ -88,7 +93,8 @@ class EntityManager {
    * @return {boolean}
    */
   findEntity(id) {
-    return (id in this._entities);
+    if (!this._entities[id]) throw new EntityNotFound(`Error: Entity id ${id} does not exist.`);
+    return this._entities[id];
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -100,11 +106,13 @@ class EntityManager {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
+   * @static
+   * @param {LogService} logService - The log service for the simulation.
    *
    * @return {EntityManager} - A new entity manager instance.
    */
-  static createInstance() {
-    return new EntityManager();
+  static createInstance(logService) {
+    return new EntityManager(logService);
   }
 }
 

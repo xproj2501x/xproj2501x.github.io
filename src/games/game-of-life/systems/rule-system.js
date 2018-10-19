@@ -250,7 +250,7 @@ class RuleSystem extends System {
         this._cellsToDelete.push(position);
       }
     }
-    if (parseInt('001100000', 2) & (1 << neighbors)) {
+    if (parseInt('000000110', 2) & (1 << neighbors)) {
       this._cellsToAdd.push(position);
     }
   }

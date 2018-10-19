@@ -33,12 +33,17 @@ class InputManager {
   _logger;
 
   /**
-   * The message service for the application.
+   * The message service for the simulation.
    * @private
    * @type {MessageService}
    */
   _messageService;
 
+  /**
+   * The HTML container element.
+   * @private
+   * @type {HTMLElement}
+   */
   _container;
 
   //////////////////////////////////////////////////////////////////////////////
@@ -48,8 +53,8 @@ class InputManager {
   /**
    * InputManager
    * @constructor
-   * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    * @param {HTMLElement} container - The HTML container element.
    */
   constructor(logService, messageService, container) {
@@ -61,14 +66,15 @@ class InputManager {
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * Handles input for the simulation.
    * @public
-   * @param event
+   * @param {object} event - The input event.
    */
   handleInput(event) {
     event.stopPropagation();
     event.preventDefault();
-    console.log(event);
   }
+
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -79,8 +85,8 @@ class InputManager {
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    * @param {string} containerId - The id of the HTML container element.
    *
    * @return {InputManager} - A new input manager instance.

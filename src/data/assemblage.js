@@ -16,6 +16,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+import {InvalidAssemblageState} from './exceptions';
+
 /**
  * Assemblage
  * @class
@@ -33,11 +35,18 @@ class Assemblage {
   _id;
 
   /**
+   * The type of the assemblage.
+   * @private
+   * @type {string}
+   */
+  _type;
+
+  /**
    * A collection of components attached to the assemblage.
    * @private
    * @type {object}
    */
-  _components;
+  _state;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -53,29 +62,31 @@ class Assemblage {
   }
 
   /**
+   * Get _type
+   * @public
+   * @readonly
+   * @return {string}
+   */
+  get type() {
+    return this._type;
+  }
+
+  /**
    * Assemblage
    * @constructor
    * @param {string} id - The id of the parent entity.
+   * @param {string} type - The type of the assemblage.
+   * @param {object} state - The state of the assemblage.
    */
-  constructor(id) {
+  constructor(id, type, state) {
     this._id = id;
+    this._type = type;
     this._components = {};
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  attachComponent(type, state) {
-
-  }
-
-  detachComponent(type) {
-
-  }
-
-  updateComponent(type, state) {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -86,12 +97,23 @@ class Assemblage {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
+   * @static
    * @param {string} id - The id of the parent entity.
+   * @param {string} type - The type of the assemblage.
+   * @param {object} template - The template for the assemblage.
+   * @param {object} state - The state of the assemblage.
    *
-   * @return {Assemblage} - A new assemblage instance.
+   * @return {Assemblage} A new assemblage instance.
    */
-  static createInstance(id) {
-    return new Assemblage(id);
+  static createInstance(id, type, template, state) {
+    for (const KEY in state) {
+      if (state.hasOwnProperty(KEY)) {
+        if (!template.hasOwnProperty(KEY)) {
+          throw new InvalidAssemblageState(`Error: Component ${KEY} is not valid for assemblage type ${type}.`);
+        }
+      }
+    }
+    return new Assemblage(id, type, state);
   }
 }
 

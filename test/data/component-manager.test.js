@@ -2,7 +2,7 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import {expect} from 'chai';
-import ComponentManager from '../../src/engine/component-manager';
+import ComponentManager from '../../src/data/component-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -13,6 +13,31 @@ import ComponentManager from '../../src/engine/component-manager';
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('ComponentManager', () => {
+
+  describe('#createComponent', () => {
+
+  });
+
+  describe('#destroyComponent', () => {
+
+  });
+
+  describe('#updateComponent', () => {
+
+  });
+
+  describe('#findComponent', () => {
+
+  });
+
+  describe('#findComponentsOfType', () => {
+
+  });
+
+  describe('#findComponentsForEntity', () => {
+
+  });
+
   describe('#createInstance', () => {
 
   });

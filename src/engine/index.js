@@ -8,10 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {FRAME_DURATION, MAX_FRAME_SKIP} from './constants';
-import EntityManager from './entity-manager';
-import ComponentManager from './component-manager';
-import AssemblageManager from './assemblage-manager';
+import {FRAME_DURATION, MAX_SKIP_DURATION} from './constants';
 import SystemManager from './system-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,6 +28,13 @@ class Engine {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The logger for the entity manager.
+   * @private
+   * @type {Logger}
+   */
+  _logger;
+
+  /**
    * The message service for the simulation.
    * @private
    * @type {MessageService}
@@ -38,29 +42,11 @@ class Engine {
   _messageService;
 
   /**
-   * The entity manager for the simulation.
-   * @private
-   * @type {EntityManager}
-   */
-  _entityManager;
-
-  /**
-   * @private
-   * @type {ComponentManager}
-   */
-  _componentManager;
-
-  /**
    * @private
    * @type {SystemManager}
    */
   _systemManager;
 
-  /**
-   * @private
-   * @type {AssemblageManager}
-   */
-  _assemblageManager;
 
   /**
    * @private
@@ -92,15 +78,12 @@ class Engine {
   /**
    * Engine
    * @constructor
+   * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
-   * @param {object} managers - Manager services for the simulation.
    */
-  constructor(messageService, managers) {
+  constructor(logService, messageService) {
+    this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
-    this._entityManager = managers.entityManager;
-    this._componentManager = managers.componentManager;
-    this._assemblageManager = managers.assemblageManager
-    this._systemManager = managers.systemManager;
     this._isRunning = false;
     this._time = 0;
   }
@@ -115,13 +98,12 @@ class Engine {
   start() {
     this._isRunning = true;
     this._lastTick = Date.now();
-    this._frameId = requestAnimationFrame(() => {
-      this._tick();
-    });
+    this._frameId = requestAnimationFrame(() => this._tick());
   }
 
   /**
    * Stops the engine.
+   * @public
    */
   stop() {
     this._isRunning = false;
@@ -143,27 +125,13 @@ class Engine {
       const CURRENT_TIME = Date.now();
       let delta = CURRENT_TIME - this._lastTick;
 
-      delta = delta > MAX_FRAME_SKIP ? MAX_FRAME_SKIP : delta;
-      if (delta >= FRAME_DURATION) {
-        this._update(delta);
-        this._render(delta);
-        this._lastTick = CURRENT_TIME;
+      delta = delta > MAX_SKIP_DURATION ? MAX_SKIP_DURATION : delta;
+      while (delta >= FRAME_DURATION) {
+        this._systemManager.update(delta);
+        delta -= FRAME_DURATION;
       }
-      this._frameId = requestAnimationFrame(() => {
-        this._tick();
-      });
+      this._frameId = requestAnimationFrame(() => this._tick());
     }
-  }
-
-  _update(delta) {
-    while (delta >= FRAME_DURATION) {
-      this._systemManager.update(delta);
-      delta -= FRAME_DURATION;
-    }
-  }
-
-  _render(interpolation) {
-
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -172,20 +140,13 @@ class Engine {
   /**
    * Static factory method.
    * @static
+   * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
-   * @param {object} configuration -
    *
    * @return {Engine} - A new engine instance.
    */
-  static createInstance(messageService, configuration) {
-    const MANAGERS = {
-      entityManager: EntityManager.createInstance(messageService),
-      componentManager: ComponentManager.createInstance(messageService, configuration.componentTemplates),
-      assemblageManager: AssemblageManager.createInstance(messageService, configuration.assemblageTemplates),
-      systemManager: SystemManager.createInstance(messageService, configuration.systems)
-    };
-
-    return new Engine(messageService, MANAGERS);
+  static createInstance(logService, messageService) {
+    return new Engine(logService, messageService);
   }
 }
 

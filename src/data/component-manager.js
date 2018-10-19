@@ -8,8 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MESSAGE} from './constants';
-import {ComponentAlreadyExists, ComponentNotFound, ComponentTemplateNotFound} from './exceptions';
+import {ComponentAlreadyExists, ComponentNotFound, InvalidComponentState,
+  InvalidComponentType} from './exceptions';
 import Component from './component';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -29,11 +29,11 @@ class ComponentManager {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The message service for the simulation.
+   * The logger for the component manager.
    * @private
-   * @type {MessageService}
+   * @type {Logger}
    */
-  _messageService;
+  _logger;
 
   /**
    * A collection of component templates for the simulation.
@@ -43,6 +43,7 @@ class ComponentManager {
   _templates;
 
   /**
+   * A collection of activate components used by the simulation.
    * @private
    * @type {object}
    */
@@ -55,13 +56,18 @@ class ComponentManager {
   /**
    * ComponentManager
    * @constructor
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {Array} templates - The component templates for the simulation.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {object} templates - The component templates for the simulation.
    */
-  constructor(messageService, templates) {
-    this._messageService = messageService;
+  constructor(logService, templates) {
+    this._logger = logService.registerLogger(this.constructor.name);
     this._templates = templates;
-    this._components = [];
+    this._components = {};
+    for (const KEY in this._templates) {
+      if (this._templates.hasOwnProperty(KEY)) {
+        this._components[KEY] = {};
+      }
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -70,50 +76,91 @@ class ComponentManager {
   /**
    * Creates a new component.
    * @public
-   * @param {number} id - The entity id.
-   * @param {number} type - The component type.
+   * @param {string} id - The id of the parent entity.
+   * @param {string} type - The component type.
    * @param {object} state - The initial state of the component.
    *
    * @throws {ComponentAlreadyExists}
    */
   createComponent(id, type, state) {
-    if (this._components[type][id]) {
-      throw ComponentAlreadyExists(`Error: Component type ${type} already attached to entity ${id}.`);
-    }
-    const TEMPLATE = this._getTemplate(type);
-    const COMPONENT = Component.createInstance(id, type, TEMPLATE, state);
+    const TEMPLATE = this._findTemplate(type);
 
-    this._components[type][id] = COMPONENT;
+    if (this._components[type][id]) {
+      throw new ComponentAlreadyExists(`Error: Component type ${type} already attached to entity ${id}.`);
+    }
+    for (const KEY in TEMPLATE) {
+      if (TEMPLATE.hasOwnProperty(KEY) && !state.hasOwnProperty(KEY)) {
+        throw new InvalidComponentState(`Error: Property ${KEY} missing for component type ${type}.`);
+      }
+    }
+    this._components[type][id] = Component.createInstance(id, type, TEMPLATE, state);
   }
 
   /**
    * Destroys a component with a matching id.
    * @public
-   * @param {number} id - The entity id.
-   * @param {number} type - The component type.
+   * @param {string} id - The id of the parent entity.
+   * @param {string} type - The component type.
    *
    * @throws {ComponentNotFound}
    */
   destroyComponent(id, type) {
-    if (this._components[type][id]) {
-      throw ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
-    }
-    this._components[type][id] = null;
+    const COMPONENTS = this.findComponentsOfType(type);
+
+    if (!COMPONENTS[id]) throw new ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
+    delete COMPONENTS[id];
   }
 
   /**
+   * Finds a component with matching type and parent entity.
    * @public
-   * @param {string} id
-   * @param {string} type
+   * @param {string} id - The id of the parent entity.
+   * @param {string} type - The component type.
+   *
+   * @throws {ComponentNotFound}
+   * @return {Component}
    */
   findComponent(id, type) {
+    const COMPONENTS = this.findComponentsOfType(type);
 
+    if (!COMPONENTS[id]) throw new ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
+    return COMPONENTS[id];
+  }
+
+  /**
+   * Finds all components of a specified type.
+   * @param {string} type - The component type.
+   *
+   * @return {object}
+   */
+  findComponentsOfType(type) {
+    if (!this._components[type]) throw new InvalidComponentType(`Error: Component type ${type} is not valid.`);
+    return this._components[type];
+  }
+
+  /**
+   * Finds all components for the specified entity.
+   * @param {string} id - The id of the parent entity.
+   *
+   * @return {object}
+   */
+  findComonentsForEntity(id) {
+    const COMPONENTS = {};
+
+    for (const TYPE in this._components) {
+      if (this._components.hasOwnProperty(TYPE)) {
+        if (id in this._components[TYPE]) {
+          COMPONENTS[TYPE] = this._components[TYPE][id];
+        }
+      }
+    }
+    return COMPONENTS;
   }
 
   /**
    * Updates the state of a component with a matching id.
    * @public
-   * @param {number} id - The entity id.
+   * @param {string} id - The id of the parent entity.
    * @param {number} type - The component type.
    * @param {object} state - The new state of the component.
    *
@@ -121,7 +168,7 @@ class ComponentManager {
    */
   updateComponent(id, type, state) {
     if (this._components[type][id]) {
-      throw ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
+      throw new ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
     }
     const COMPONENT = this._components[type][id];
 
@@ -131,18 +178,16 @@ class ComponentManager {
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-
-
   /**
    * Gets the template for the specified component type.
    * @private
-   * @param {number} type - The type of component.
+   * @param {string} type - The type of component.
    *
    * @return {object} The component template.
    * @throws {ComponentTemplateNotFound}
    */
-  _getTemplate(type) {
-    if (!this._templates[type]) throw ComponentTemplateNotFound(`Error: Component template ${type} not found.`);
+  _findTemplate(type) {
+    if (!this._templates[type]) throw new InvalidComponentType(`Error: Component type ${type} is not valid.`);
     return this._templates[type];
   }
 
@@ -151,14 +196,14 @@ class ComponentManager {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {Array} templates - The component templates for the simulation.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {object} templates - The component templates for the simulation.
    *
    * @return {ComponentManager} - A new component manager instance.
    */
-  static createInstance(messageService, templates) {
-    templates = templates || [];
-    return new ComponentManager(messageService, templates);
+  static createInstance(logService, templates) {
+    templates = templates || {};
+    return new ComponentManager(logService, templates);
   }
 }
 
