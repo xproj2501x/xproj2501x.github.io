@@ -36,11 +36,18 @@ class ComponentManager {
   _logger;
 
   /**
-   * A collection of component templates for the simulation.
+   * The type of component manager.
+   * @private
+   * @type {number}
+   */
+  _type;
+
+  /**
+   * The template for the type of component the manager creates.
    * @private
    * @type {object}
    */
-  _templates;
+  _template;
 
   /**
    * A collection of activate components used by the simulation.

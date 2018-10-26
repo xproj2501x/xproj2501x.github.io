@@ -112,7 +112,9 @@ class App {
 window.addEventListener('load', (event) => {
   const APP = App.createInstance();
   let mask = 0;
+  let foo = [1, 2, 3, 4, 5, 6];
 
   console.log(mask |= (1 << 0));
   console.log(mask ^= (1 << 1));
+  console.log(...foo);
 });

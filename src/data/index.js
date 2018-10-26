@@ -65,38 +65,19 @@ class DataManager {
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
+   * @param {EntityManager} entityManager - The entity manager for the simulation.
    */
-  constructor(logService, messageService) {
+  constructor(logService, messageService, entityManager) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
-    this._entityManager = {};
+    this._entityManager = entityManager;
     this._componentManagers = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Creates a new game object with the specified settings.
-   * @param {string} type - The type of game object to create.
-   * @param {object} settings - The settings for the game object.
-   */
-  createGameObject(type, settings) {
 
-  }
-
-  /**
-   *
-   * @param {string} id - The id of the parent entity.
-   * @param {type} type - The type of the game object.
-   */
-  findGameObject(id, type) {
-
-  }
-
-  findGameObjectsOfType(type) {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -115,9 +96,8 @@ class DataManager {
    */
   static createInstance(logService, messageService) {
     const ENTITY_MANAGER = EntityManager.createInstance(logService);
-    const COMPONENT_MANAGER = ComponentManager.createInstance(logService);
 
-    return new DataManager(logService, messageService);
+    return new DataManager(logService, messageService, ENTITY_MANAGER);
   }
 }
 
