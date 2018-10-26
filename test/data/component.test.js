@@ -45,14 +45,11 @@ describe('Component', () => {
       expect(component.state.foo).to.equal(NEW_STATE.foo);
       expect(component.state.bar).to.equal(NEW_STATE.bar);
     });
-  });
 
-  describe('#update', () => {
     it('should throw an error for an invalid state', () => {
       expect(() => component.update(INVALID_STATE)).to.throw();
     });
   });
-
 
   describe('#createInstance', () => {
     it('create a new component', () => {

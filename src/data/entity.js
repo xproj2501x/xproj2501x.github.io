@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {InvalidEntityId} from './exceptions';
+import {ComponentAlreadyAttachedToEntity, ComponentNotAttachedToEntity, InvalidEntityId} from './exceptions';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -29,9 +29,15 @@ class Entity {
   /**
    * The id of the entity.
    * @private
-   * @type {string}
+   * @type {number}
    */
   _id;
+
+  /**
+   * @private
+   * @type {number}
+   */
+  _componentMask;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -40,29 +46,75 @@ class Entity {
    * Get _id
    * @public
    * @readonly
-   * @return {string}
+   * @return {number}
    */
   get id() {
     return this._id;
   }
 
   /**
+   * Get _componentMask
+   * @public
+   * @readonly
+   * @return {number}
+   */
+  get componentMask() {
+    return this._componentMask;
+  }
+
+  /**
    * Entity
    * @constructor
-   * @param {string} id - The id of the entity.
+   * @param {number} id - The id of the entity.
    */
   constructor(id) {
     this._id = id;
+    this._componentMask = 0;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Attaches a component to the entity.
+   * @param {number} type - The type of component to attach to the entity.
+   *
+   * @throws {ComponentAlreadyAttachedToEntity}
+   */
+  attachComponent(type) {
+    if (this._hasComponent(type)) {
+      throw new ComponentAlreadyAttachedToEntity(
+        `Error: Component type ${type} is already attached to entity ${this._id}.`);
+    }
+    this._componentMask |= (1 << type);
+  }
 
+  /**
+   * Detaches a component from the entity.
+   * @param {number} type - The type of component to detach from the entity.
+   *
+   * @throws {ComponentNotAttachedToEntity}
+   */
+  detachComponent(type) {
+    if (!this._hasComponent(type)) {
+      throw new ComponentNotAttachedToEntity(`Error: Component type ${type} is not attached to entity ${this._id}.`);
+    }
+    this._componentMask ^= (1 << type);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   *
+   * @private
+   * @param {number} type - The type of the component.
+   *
+   * @return {number}
+   */
+  _hasComponent(type) {
+    return (this._componentMask >> type) & 1;
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -71,13 +123,13 @@ class Entity {
   /**
    * Static factory method.
    * @static
-   * @param {string} id - The id of the entity.
+   * @param {number} id - The id of the entity.
    *
    * @throws {InvalidEntityId}
    * @return {Entity} - A new entity instance.
    */
   static createInstance(id) {
-    if (!id) throw new InvalidEntityId(`Error: entity id cannot be null`);
+    if (!id && id !== 0) throw new InvalidEntityId(`Error: entity id cannot be null`);
     return new Entity(id);
   }
 }

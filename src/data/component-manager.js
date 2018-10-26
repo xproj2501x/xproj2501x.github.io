@@ -76,8 +76,8 @@ class ComponentManager {
   /**
    * Creates a new component.
    * @public
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The component type.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The component type.
    * @param {object} state - The initial state of the component.
    *
    * @throws {ComponentAlreadyExists}
@@ -99,8 +99,8 @@ class ComponentManager {
   /**
    * Destroys a component with a matching id.
    * @public
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The component type.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The component type.
    *
    * @throws {ComponentNotFound}
    */
@@ -114,8 +114,8 @@ class ComponentManager {
   /**
    * Finds a component with matching type and parent entity.
    * @public
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The component type.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The component type.
    *
    * @throws {ComponentNotFound}
    * @return {Component}
@@ -129,7 +129,7 @@ class ComponentManager {
 
   /**
    * Finds all components of a specified type.
-   * @param {string} type - The component type.
+   * @param {number} type - The component type.
    *
    * @return {object}
    */
@@ -140,7 +140,7 @@ class ComponentManager {
 
   /**
    * Finds all components for the specified entity.
-   * @param {string} id - The id of the parent entity.
+   * @param {number} id - The id of the parent entity.
    *
    * @return {object}
    */
@@ -160,7 +160,7 @@ class ComponentManager {
   /**
    * Updates the state of a component with a matching id.
    * @public
-   * @param {string} id - The id of the parent entity.
+   * @param {number} id - The id of the parent entity.
    * @param {number} type - The component type.
    * @param {object} state - The new state of the component.
    *
@@ -181,7 +181,7 @@ class ComponentManager {
   /**
    * Gets the template for the specified component type.
    * @private
-   * @param {string} type - The type of component.
+   * @param {number} type - The type of component.
    *
    * @return {object} The component template.
    * @throws {ComponentTemplateNotFound}

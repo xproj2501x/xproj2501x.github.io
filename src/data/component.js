@@ -29,14 +29,14 @@ class Component {
   /**
    * The id of the parent entity.
    * @private
-   * @type {string}
+   * @type {number}
    */
   _id;
 
   /**
    * The type of the component
    * @private
-   * @type {string}
+   * @type {number}
    */
   _type;
 
@@ -54,7 +54,7 @@ class Component {
    * Get _id
    * @public
    * @readonly
-   * @return {string}
+   * @return {number}
    */
   get id() {
     return this._id;
@@ -73,8 +73,8 @@ class Component {
   /**
    * Component
    * @constructor
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the component.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
    * @param {object} state - The state of the component.
    */
   constructor(id, type, state) {
@@ -113,8 +113,8 @@ class Component {
   /**
    * Static factory method.
    * @static
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the component.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
    * @param {object} template - The template for the component.
    * @param {object} state - The state of the component.
    *

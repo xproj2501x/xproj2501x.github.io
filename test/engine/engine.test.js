@@ -21,6 +21,10 @@ describe('Engine', () => {
 
   });
 
+  describe('#pause', () => {
+
+  });
+
   describe('#createInstance', () => {
 
   });

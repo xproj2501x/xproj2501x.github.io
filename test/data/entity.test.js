@@ -13,22 +13,61 @@ import Entity from '../../src/data/entity';
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('Entity', () => {
-  const ID = '1234';
+  const ENTITY_ID = 0;
+  const COMPONENT_TYPE = 0;
+  let entity;
 
   describe('#ctor', () => {
+    entity = new Entity(ENTITY_ID);
 
     it('should have the id passed to the constructor', () => {
-      const ENTITY = new Entity(ID);
+      expect(entity.id).to.equal(ENTITY_ID);
+    });
 
-      expect(ENTITY.id).to.equal(ID);
+    it('should have a default component mask of 0', () => {
+      expect(entity.componentMask).to.equal(0);
+    });
+  });
+
+  describe('#attachComponent', () => {
+    beforeEach(() => {
+      entity = new Entity(ENTITY_ID);
+      entity.attachComponent(COMPONENT_TYPE);
+    });
+
+    it('should be able to attach a component', () => {
+      expect(entity.componentMask).to.equal(1);
+    });
+
+    it('should be throw when a component of the specified type is already attached', () => {
+      expect(() => entity.attachComponent(COMPONENT_TYPE)).to.throw(
+        `Error: Component type ${COMPONENT_TYPE} is already attached to entity ${ENTITY_ID}.`);
+    });
+  });
+
+  describe('#detachComponent', () => {
+    beforeEach(() => {
+      entity = new Entity(ENTITY_ID);
+      entity.attachComponent(COMPONENT_TYPE);
+      entity.detachComponent(COMPONENT_TYPE);
+    });
+
+    it('should be able to detach a component', () => {
+      expect(entity.componentMask).to.equal(0);
+    });
+
+    it('should be throw when a component of specified type is not attached', () => {
+      expect(() => entity.detachComponent(COMPONENT_TYPE)).to.throw(
+        `Error: Component type ${COMPONENT_TYPE} is not attached to entity ${ENTITY_ID}.`
+      );
     });
   });
 
   describe('#createInstance', () => {
     it('should have the id passed to the constructor', () => {
-      const ENTITY = Entity.createInstance(ID);
+      const ENTITY = new Entity.createInstance(ENTITY_ID);
 
-      expect(ENTITY.id).to.equal(ID);
+      expect(ENTITY.id).to.equal(ENTITY_ID);
     });
 
     it('should throw when an id is not passed to the constructor', () => {

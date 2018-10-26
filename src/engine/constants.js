@@ -1,11 +1,45 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+/**
+ * The number of milliseconds in a second.
+ * @constant
+ * @default
+ * @type {number}
+ */
 const MILLISECONDS = 1000;
 
-const FRAME_DURATION = MILLISECONDS / 30;
+/**
+ * The desired number of frames per second.
+ * @constant
+ * @default
+ * @type {number}
+ */
+const FRAMES_PER_SECOND = 60;
 
-const MAX_FRAME_SKIP = FRAME_DURATION * 5;
+/**
+ * The desired length of a single frame.
+ * @constant
+ * @default
+ * @type {number}
+ */
+const FRAME_DURATION = MILLISECONDS / FRAMES_PER_SECOND;
+
+/**
+ * The maximum number of frames to skip.
+ * @constant
+ * @default
+ * @type {number}
+ */
+const MAX_FRAME_SKIP = 5;
+
+/**
+ * The maximum length of time to skip.
+ * @constant
+ * @default
+ * @type {number}
+ */
+const MAX_SKIP_DURATION = MAX_FRAME_SKIP * FRAME_DURATION;
 
 const COMMAND = {
   CREATE_ASSEMBLAGE: 'CREATE_ASSEMBLAGE',
@@ -73,4 +107,5 @@ const MAX_COMPONENTS = 128;
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {COMMAND, EVENT, QUERY, MESSAGE, MAX_COMPONENTS, MAX_ENTITIES, MILLISECONDS, FRAME_DURATION, MAX_FRAME_SKIP};
+export {COMMAND, EVENT, QUERY, MESSAGE, MAX_COMPONENTS, MAX_ENTITIES, MILLISECONDS, FRAMES_PER_SECOND, FRAME_DURATION,
+  MAX_FRAME_SKIP, MAX_SKIP_DURATION};

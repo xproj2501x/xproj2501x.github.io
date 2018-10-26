@@ -50,11 +50,11 @@ class DataManager {
   _entityManager;
 
   /**
-   * The component manager for the simulation.
+   * A collection component managers for the simulation.
    * @private
-   * @type {ComponentManager}
+   * @type {array}
    */
-  _componentManager;
+  _componentManagers;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -69,15 +69,34 @@ class DataManager {
   constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
+    this._entityManager = {};
+    this._componentManagers = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  createGameObject() {
+  /**
+   * Creates a new game object with the specified settings.
+   * @param {string} type - The type of game object to create.
+   * @param {object} settings - The settings for the game object.
+   */
+  createGameObject(type, settings) {
 
   }
 
+  /**
+   *
+   * @param {string} id - The id of the parent entity.
+   * @param {type} type - The type of the game object.
+   */
+  findGameObject(id, type) {
+
+  }
+
+  findGameObjectsOfType(type) {
+
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods

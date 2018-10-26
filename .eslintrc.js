@@ -293,7 +293,7 @@ module.exports = {
     // 'newline-before-return': 0,
     // 'newline-per-chained-call': 0,
     'no-array-constructor': 1,
-    'no-bitwise': 1, // NOTE: If we start to use bitwise, revisit this setting
+    'no-bitwise': 0, // NOTE: If we start to use bitwise, revisit this setting
     'no-continue': 1,
     // 'no-inline-comments': 0,
     // 'no-lonely-if': 0,

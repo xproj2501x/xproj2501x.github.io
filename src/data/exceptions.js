@@ -35,6 +35,20 @@ class AssemblageNotFound extends ExtendableError {}
 class AssemblageTemplateNotFound extends ExtendableError {}
 
 /**
+ * ComponentAlreadyAttachedToEntity
+ * @class
+ * @extends ExtendableError
+ */
+class ComponentAlreadyAttachedToEntity extends ExtendableError {}
+
+/**
+ * ComponentNotAttachedToEntity
+ * @class
+ * @extends ExtendableError
+ */
+class ComponentNotAttachedToEntity extends ExtendableError {}
+
+/**
  * ComponentAlreadyExists
  * @class
  * @extends ExtendableError
@@ -107,6 +121,7 @@ class InvalidEntityId extends ExtendableError {}
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {AssemblageAlreadyExists, AssemblageNotFound, AssemblageTemplateNotFound, ComponentAlreadyExists,
-  ComponentNotFound, ComponentTemplateNotFound, EntityLimitExceeded, EntityNotFound, InvalidAssemblageState,
-  InvalidAssemblageType, InvalidComponentState, InvalidComponentType, InvalidEntityId};
+export {AssemblageAlreadyExists, AssemblageNotFound, AssemblageTemplateNotFound, ComponentAlreadyAttachedToEntity,
+  ComponentNotAttachedToEntity, ComponentAlreadyExists, ComponentNotFound, ComponentTemplateNotFound,
+  EntityLimitExceeded, EntityNotFound, InvalidAssemblageState, InvalidAssemblageType, InvalidComponentState,
+  InvalidComponentType, InvalidEntityId};

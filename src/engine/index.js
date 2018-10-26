@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {FRAME_DURATION, MAX_SKIP_DURATION} from './constants';
+import {FRAMES_PER_SECOND, FRAME_DURATION, MAX_FRAME_SKIP, MAX_SKIP_DURATION} from './constants';
 import SystemManager from './system-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,22 +47,33 @@ class Engine {
    */
   _systemManager;
 
-
   /**
    * @private
-   * @type {Boolean}
+   * @type {boolean}
    */
   _isRunning;
 
   /**
    * @private
-   * @type {int}
+   * @type {boolean}
+   */
+  _isPaused;
+
+  /**
+   * @private
+   * @type {number}
    */
   _time;
 
   /**
    * @private
-   * @type {int}
+   * @type {number}
+   */
+  _startTime;
+
+  /**
+   * @private
+   * @type {number}
    */
   _lastTick;
 
@@ -74,6 +85,14 @@ class Engine {
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @public
+   * @readonly
+   * @return {number}
+   */
+  get elapsedTime() {
+    return Date.now() - this._startTime;
+  }
 
   /**
    * Engine
@@ -97,7 +116,8 @@ class Engine {
    */
   start() {
     this._isRunning = true;
-    this._lastTick = Date.now();
+    this._startTime = Date.now();
+    this._lastTick = this._startTime;
     this._frameId = requestAnimationFrame(() => this._tick());
   }
 
@@ -106,10 +126,24 @@ class Engine {
    * @public
    */
   stop() {
-    this._isRunning = false;
-    cancelAnimationFrame(this._frameId);
+    if (this._isRunning) {
+      this._isRunning = false;
+      cancelAnimationFrame(this._frameId);
+    }
   }
 
+  /**
+   * Pauses the engine
+   * @public
+   */
+  pause() {
+    this._isPaused = !this._isPaused;
+    if (this._isPaused) {
+      this._timePaused = Date.now();
+    } else {
+
+    }
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -127,7 +161,7 @@ class Engine {
 
       delta = delta > MAX_SKIP_DURATION ? MAX_SKIP_DURATION : delta;
       while (delta >= FRAME_DURATION) {
-        this._systemManager.update(delta);
+        // this._systemManager.update(delta);
         delta -= FRAME_DURATION;
       }
       this._frameId = requestAnimationFrame(() => this._tick());

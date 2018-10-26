@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {EntityNotFound} from './exceptions';
+import {MAX_ENTITIES} from './constants';
+import {EntityLimitExceeded, EntityNotFound} from './exceptions';
 import Entity from './entity';
-import UUID from '../common/utilities/uuid';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -36,9 +36,16 @@ class EntityManager {
   _logger;
 
   /**
+   * The next available entity id.
+   * @private
+   * @type {number}
+   */
+  _nextId;
+
+  /**
    * A collection of generated entities.
    * @private
-   * @type {object}
+   * @type {array}
    */
   _entities;
 
@@ -53,7 +60,7 @@ class EntityManager {
    */
   constructor(logService) {
     this._logger = logService.registerLogger(this.constructor.name);
-    this._entities = {};
+    this._entities = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -63,20 +70,22 @@ class EntityManager {
    * Creates a new entity.
    * @public
    *
-   * @return {string} The id of the new entity.
+   * @throws {EntityLimitExceeded}
+   * @return {Entity} The new entity.
    */
   createEntity() {
-    const ID = UUID.create();
-    const ENTITY = Entity.createInstance(ID);
+    this._nextId++;
+    if (this._nextId >= MAX_ENTITIES) throw new EntityLimitExceeded(`Error: entity limit ${MAX_ENTITIES} exceeded.`);
+    const ENTITY = Entity.createInstance(this._nextId);
 
-    this._entities[ID] = ENTITY;
-    return ID;
+    this._entities[this._nextId] = ENTITY;
+    return ENTITY;
   }
 
   /**
    * Destroys an entity with a matching id.
    * @public
-   * @param {string} id - The id of the entity.
+   * @param {number} id - The id of the entity.
    *
    * @throws {EntityNotFound}
    */
@@ -88,9 +97,10 @@ class EntityManager {
   /**
    * Finds an entity with a matching id.
    * @public
-   * @param {string} id - The id of the entity.
+   * @param {number} id - The id of the entity.
    *
-   * @return {boolean}
+   * @throws {EntityNotFound}
+   * @return {Entity}
    */
   findEntity(id) {
     if (!this._entities[id]) throw new EntityNotFound(`Error: Entity id ${id} does not exist.`);
