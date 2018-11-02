@@ -6,35 +6,35 @@
  * @enum {string}
  */
 const COMPONENT_TYPE = {
-  TIME: 'TIME',
-  POSITION: 'POSITION',
-  RULE: 'RULE',
-  SPRITE: 'SPRITE'
+  TIME: 0,
+  POSITION: 1,
+  RULE: 2,
+  SPRITE: 3
 };
 
 /**
  *
  * @type {{}}
  */
-const COMPONENT_TEMPLATES = {
-  TIME: {
+const COMPONENT_TEMPLATES = [
+  {
     start: 'number',
     current: 'number',
     increment: 'number'
   },
-  POSITION: {
+  {
     x: 'number',
     y: 'number'
   },
-  RULE: {
+  {
     life: 'string',
     death: 'string',
     cycles: 'number'
   },
-  SPRITE: {
+  {
     color: 'string'
   }
-};
+];
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports

@@ -47,7 +47,7 @@ class ComponentManager {
    * @private
    * @type {object}
    */
-  _template;
+  _templates;
 
   /**
    * A collection of activate components used by the simulation.
@@ -69,7 +69,7 @@ class ComponentManager {
   constructor(logService, templates) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._templates = templates;
-    this._components = {};
+    this._components = [];
     for (const KEY in this._templates) {
       if (this._templates.hasOwnProperty(KEY)) {
         this._components[KEY] = {};

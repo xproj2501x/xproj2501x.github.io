@@ -66,8 +66,8 @@ class RuleSystem extends System {
    * RuleSystem
    * @constructor
    */
-  constructor(messageService) {
-    super(messageService);
+  constructor(logService, messageService) {
+    super(logService, messageService);
     this._cycle = 0;
   }
 
@@ -78,8 +78,9 @@ class RuleSystem extends System {
    * The update routine for the system.
    * @param {number} delta
    */
-  update(delta) {
+  update(assemblages) {
     this._cycle++;
+    this._buildGrid(assemblages);
     if (this._cycle % 10 === 0) {
       this._buildGrid();
       for (let idx = 0; idx < GRID_SIZE; idx++) {
@@ -94,88 +95,14 @@ class RuleSystem extends System {
     }
   }
 
-  /**
-   * Message handler for the component created and updated events.
-   * @param {object} event - The component created or updated event message.
-   */
-  onComponentCreatedOrUpdated(event) {
-    if (event.type === COMPONENT_TYPE.POSITION || event.type === COMPONENT_TYPE.RULE) {
-      this._addOrUpdateAssemblage(event.id, event.type, event.state);
-    }
-  }
-
-  /**
-   * Message handler for the component destroyed event.
-   * @param {object} event - The component destroyed message.
-   */
-  onComponentDestroyed(event) {
-    if (event.type === COMPONENT_TYPE.POSITION || event.type === COMPONENT_TYPE.RULE) {
-      this._destroyComponent(event.id, event.type);
-    }
-  }
-
-  onEntityDestroyed(event) {
-    this._destroyAssemblage(event.id);
-  }
-
-  onEntityCreated(event) {
-    this._messageService.send(COMMAND.CREATE_COMPONENT,
-      {id: event.id, type: COMPONENT_TYPE.POSITION, state: {
-            x: this._currentAssemblage[0],
-            y: this._currentAssemblage[1]
-    }});
-    this._messageService.send(COMMAND.CREATE_COMPONENT,
-      {id: event.id, type: COMPONENT_TYPE.RULE, state: {
-          life: parseInt('000000110', 2),
-          death: parseInt('111110010', 2),
-          cycles: 10
-        }});
-    this._messageService.send(COMMAND.CREATE_COMPONENT,
-      {id: event.id, type: COMPONENT_TYPE.SPRITE, state: {
-          color: '#F00'
-        }});
-    this._currentAssemblage = null;
-  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Updates an assemblage used by the system.
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the component.
-   * @param {object} state - The state of the component.
-   * @private
-   */
-  _addOrUpdateAssemblage(id, type, state) {
-    const ASSEMBLAGE = this._assemblages[id] || {};
-
-    ASSEMBLAGE[type] = Object.assign({}, state);
-    this._assemblages[id] = ASSEMBLAGE;
-  }
-
-  /**
-   * Removes a component from an assemblage.
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the component.
-   * @private
-   */
-  _destroyComponent(id, type) {
-    const ASSEMBLAGE = this._assemblages[id] || {};
-
-    if (type in ASSEMBLAGE) {
-      delete ASSEMBLAGE[type];
-    }
-  }
-
-  _destroyAssemblage(id) {
-    if (this._assemblages[id]) delete this._assemblages[id];
-  }
-
-  /**
    * Builds the grid for the current state from the collection of assemblages.
    * @private
    */
-  _buildGrid() {
+  _buildGrid(assemblages) {
     this._cells = [];
     this._cellsToDelete = [];
     this._cellsToAdd = [];
@@ -191,7 +118,6 @@ class RuleSystem extends System {
       }
     }
   }
-
 
   /**
    * Finds the assemblage for the cell at position x, y.
