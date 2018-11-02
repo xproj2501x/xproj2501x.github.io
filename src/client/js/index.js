@@ -2,14 +2,16 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import '../css/_site.scss';
-import Display from './display';
-import GameOfLife from '../../games/game-of-life';
 import LogService from '../../common/services/log';
+import MessageService from '../../common/services/message';
+import GameManager from '../../games';
+import {FRAME_DURATION} from '../../engine/constants';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 const LOG_SERVICE = LogService.createInstance(0);
+const MESSAGE_SERVICE = MessageService.createInstance();
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -78,9 +80,9 @@ class App {
 
    */
   start() {
-    const GAME_OF_LIFE = GameOfLife.createInstance();
+    const GAME_MANAGER = GameManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
 
-    GAME_OF_LIFE.start();
+    GAME_MANAGER.start([], []);
   }
 
   toggleMenu(event) {
@@ -111,10 +113,6 @@ class App {
 
 window.addEventListener('load', (event) => {
   const APP = App.createInstance();
-  let mask = 0;
-  let foo = [1, 2, 3, 4, 5, 6];
 
-  console.log(mask |= (1 << 0));
-  console.log(mask ^= (1 << 1));
-  console.log(...foo);
+  console.log(FRAME_DURATION);
 });

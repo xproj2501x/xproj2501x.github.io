@@ -17,7 +17,7 @@ const ASSEMBLAGE_TYPE = {
 
 /**
  *
- * @type {{}}
+ * @type {array}
  */
 const ASSEMBLAGE_TEMPLATES = [
   [

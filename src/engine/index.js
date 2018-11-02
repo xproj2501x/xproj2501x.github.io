@@ -99,10 +99,12 @@ class Engine {
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
+   * @param {SystemManager} systemManager - The system manager for the simulation.
    */
-  constructor(logService, messageService) {
+  constructor(logService, messageService, systemManager) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
+    this._systemManager = systemManager;
     this._isRunning = false;
     this._time = 0;
   }
@@ -161,9 +163,11 @@ class Engine {
 
       delta = delta > MAX_SKIP_DURATION ? MAX_SKIP_DURATION : delta;
       while (delta >= FRAME_DURATION) {
-        // this._systemManager.update(delta);
+        this._systemManager.update(FRAME_DURATION);
         delta -= FRAME_DURATION;
+        this._lastTick += FRAME_DURATION;
       }
+
       this._frameId = requestAnimationFrame(() => this._tick());
     }
   }
@@ -176,11 +180,15 @@ class Engine {
    * @static
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
+   * @param {DataManager} dataManager - The data manager for the simulation.
+   * @param {array} systems - The systems used by the simulation.
    *
    * @return {Engine} - A new engine instance.
    */
-  static createInstance(logService, messageService) {
-    return new Engine(logService, messageService);
+  static createInstance(logService, messageService, dataManager, systems) {
+    const SYSTEM_MANAGER = SystemManager.createInstance(logService, messageService, dataManager, systems);
+
+    return new Engine(logService, messageService, SYSTEM_MANAGER);
   }
 }
 
