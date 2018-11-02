@@ -25,6 +25,8 @@ class SystemManager {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  _dataManager;
+
   /**
    * The logger for the entity manager.
    * @private
@@ -89,6 +91,7 @@ class SystemManager {
    * @param {number} delta - The time elapsed since the last call to update.
    */
   update(delta) {
+    console.log('system manager');
     this._systems.forEach((system) => {
       system.update(delta);
     });

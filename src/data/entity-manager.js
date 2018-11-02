@@ -61,6 +61,7 @@ class EntityManager {
   constructor(logService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._entities = [];
+    this._nextId = -1;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -70,12 +71,10 @@ class EntityManager {
    * Creates a new entity.
    * @public
    *
-   * @throws {EntityLimitExceeded}
    * @return {Entity} The new entity.
    */
   createEntity() {
     this._nextId++;
-    if (this._nextId >= MAX_ENTITIES) throw new EntityLimitExceeded(`Error: entity limit ${MAX_ENTITIES} exceeded.`);
     const ENTITY = Entity.createInstance(this._nextId);
 
     this._entities[this._nextId] = ENTITY;

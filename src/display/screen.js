@@ -71,7 +71,7 @@ class Screen {
    * @param {string} id - The id of the screen.
    * @param {HTMLElement} container - The HTML container for the screen.
    *
-   * @return {Screen} - A new screen instance.
+   * @return {Screen} A new screen instance.
    */
   static createInstance(id, container) {
     const CANVAS = document.createElement('canvas');

@@ -8,7 +8,6 @@ import Entity from '../../src/data/entity';
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // Test
 ////////////////////////////////////////////////////////////////////////////////
@@ -65,9 +64,9 @@ describe('Entity', () => {
 
   describe('#createInstance', () => {
     it('should have the id passed to the constructor', () => {
-      const ENTITY = new Entity.createInstance(ENTITY_ID);
+      entity = new Entity.createInstance(ENTITY_ID);
 
-      expect(ENTITY.id).to.equal(ENTITY_ID);
+      expect(entity.id).to.equal(ENTITY_ID);
     });
 
     it('should throw when an id is not passed to the constructor', () => {

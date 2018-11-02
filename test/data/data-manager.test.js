@@ -18,6 +18,14 @@ describe('DataManager', () => {
 
   });
 
+  describe('#createAssemblage', () => {
+
+  });
+
+  describe('#findAssemblagesOfType', () => {
+
+  });
+
   describe('#createInstance', () => {
 
   });

@@ -36,18 +36,11 @@ class ComponentManager {
   _logger;
 
   /**
-   * The type of component manager.
-   * @private
-   * @type {number}
-   */
-  _type;
-
-  /**
    * The template for the type of component the manager creates.
    * @private
    * @type {object}
    */
-  _template;
+  _templates;
 
   /**
    * A collection of activate components used by the simulation.
@@ -69,10 +62,10 @@ class ComponentManager {
   constructor(logService, templates) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._templates = templates;
-    this._components = {};
+    this._components = [];
     for (const KEY in this._templates) {
       if (this._templates.hasOwnProperty(KEY)) {
-        this._components[KEY] = {};
+        this._components[KEY] = [];
       }
     }
   }
@@ -115,7 +108,7 @@ class ComponentManager {
     const COMPONENTS = this.findComponentsOfType(type);
 
     if (!COMPONENTS[id]) throw new ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
-    delete COMPONENTS[id];
+    COMPONENTS[id] = null;
   }
 
   /**
@@ -125,7 +118,7 @@ class ComponentManager {
    * @param {number} type - The component type.
    *
    * @throws {ComponentNotFound}
-   * @return {Component}
+   * @return {Component} A component with a matching id and type.
    */
   findComponent(id, type) {
     const COMPONENTS = this.findComponentsOfType(type);
@@ -138,7 +131,8 @@ class ComponentManager {
    * Finds all components of a specified type.
    * @param {number} type - The component type.
    *
-   * @return {object}
+   * @throws {InvalidComponentType}
+   * @return {array} A collection of components of the specified type.
    */
   findComponentsOfType(type) {
     if (!this._components[type]) throw new InvalidComponentType(`Error: Component type ${type} is not valid.`);
@@ -149,10 +143,10 @@ class ComponentManager {
    * Finds all components for the specified entity.
    * @param {number} id - The id of the parent entity.
    *
-   * @return {object}
+   * @return {array}
    */
   findComponentsForEntity(id) {
-    const COMPONENTS = {};
+    const COMPONENTS = [];
 
     for (const TYPE in this._components) {
       if (this._components.hasOwnProperty(TYPE)) {
@@ -209,7 +203,7 @@ class ComponentManager {
    * @return {ComponentManager} - A new component manager instance.
    */
   static createInstance(logService, templates) {
-    templates = templates || {};
+    templates = templates || [];
     return new ComponentManager(logService, templates);
   }
 }

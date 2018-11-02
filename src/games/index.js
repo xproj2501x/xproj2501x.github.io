@@ -12,6 +12,7 @@ import Engine from '../engine';
 import DataManager from '../data';
 import {COMPONENT_TYPE, COMPONENT_TEMPLATES} from './game-of-life/components';
 import {ASSEMBLAGE_TYPE, ASSEMBLAGE_TEMPLATES} from './game-of-life/assemblages';
+import {SYSTEMS} from './game-of-life/systems';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -72,17 +73,43 @@ class GameManager {
     this._logger = logService.registerLogger(this.constructor.name);
     this._logService = logService;
     this._messageService = messageService;
+    this.start(logService);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  start(logService) {
+    const DATA_MANAGER = DataManager.createInstance(
+      logService, this._messageService, COMPONENT_TEMPLATES, ASSEMBLAGE_TEMPLATES);
+    const ENGINE = Engine.createInstance(logService, this._messageService, DATA_MANAGER, SYSTEMS);
 
-  start(componentTemplates, assemblageTemplates) {
-    const DATA_MANAGER = DataManager.createInstance(this._logService, this._messageService, componentTemplates, assemblageTemplates);
+    for (let idx = 0; idx < 250; idx++) {
+      for (let jdx = 0; jdx < 750; jdx++) {
+        const CHANCE = Math.floor(Math.random() * Math.floor(100));
 
-    this._engine = Engine.createInstance(this._logService, this._messageService, DATA_MANAGER, []);
-    this._engine.start();
+        if (CHANCE > 65) {
+          const SETTINGS = [
+            {
+              x: idx,
+              y: jdx
+            },
+            {
+              life: '000000110',
+              death: '111110010',
+              cycles: 10
+            },
+            {
+              color: '#F00'
+            }
+          ];
+
+          DATA_MANAGER.createAssemblage(ASSEMBLAGE_TYPE.CELL, SETTINGS);
+        }
+      }
+    }
+
+    ENGINE.start();
   }
 
   stop() {

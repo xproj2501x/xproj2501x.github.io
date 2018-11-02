@@ -14,6 +14,17 @@ import DisplayManager from '../../src/display/';
 ////////////////////////////////////////////////////////////////////////////////
 describe('DisplayManager', () => {
 
+  describe('#ctor', () => {
+
+  });
+
+  describe('#pushScreen', () => {
+
+  });
+
+  describe('#popScreen', () => {
+
+  });
 
   describe('#createInstance', () => {
 

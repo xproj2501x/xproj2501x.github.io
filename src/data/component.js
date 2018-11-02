@@ -54,6 +54,7 @@ class Component {
    * Get _id
    * @public
    * @readonly
+   *
    * @return {number}
    */
   get id() {
@@ -61,9 +62,21 @@ class Component {
   }
 
   /**
+   * Get _type
+   * @public
+   * @readonly
+   *
+   * @return {number}
+   */
+  get type() {
+    return this._type;
+  }
+
+  /**
    * Get _state
    * @public
    * @readonly
+   *
    * @return {object}
    */
   get state() {
@@ -96,7 +109,7 @@ class Component {
   update(state) {
     for (const KEY in state) {
       if (!this._state.hasOwnProperty(KEY)) {
-        throw new InvalidComponentState(`Error: Invalid property ${KEY} for component type ${this._type}`);
+        throw new InvalidComponentState(`Error: Invalid property ${KEY} for component type ${this._type}.`);
       }
     }
     this._state = Object.assign({}, this._state, state);

@@ -37,15 +37,9 @@ class AssemblageManager {
   /**
    * A collection of assemblage templates for the simulation.
    * @private
-   * @type {object}
+   * @type {array}
    */
   _templates;
-
-  /**
-   * @private
-   * @type {object}
-   */
-  _assemblages;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -55,17 +49,11 @@ class AssemblageManager {
    * AssemblageManager
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
-   * @param {object} templates - Assemblage templates for the simulation.
+   * @param {array} templates - Assemblage templates for the simulation.
    */
   constructor(logService, templates) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._templates = templates;
-    this._assemblages = {};
-    for (const KEY in this._templates) {
-      if (this._templates.hasOwnProperty(KEY)) {
-        this._assemblages[KEY] = {};
-      }
-    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -84,62 +72,7 @@ class AssemblageManager {
   createAssemblage(id, type, state) {
     const TEMPLATE = this._findTemplate(type);
 
-    if (this._assemblages[type][id]) {
-      throw new AssemblageAlreadyExists(`Error: Assemblage type ${type} already exists for entity ${id}.`);
-    }
-    for (const KEY in TEMPLATE) {
-      if (TEMPLATE.hasOwnProperty(KEY) && !state.hasOwnProperty(KEY)) {
-        throw new InvalidAssemblageState(`Error: Component ${KEY} missing for assemblage type ${type}.`);
-      }
-    }
-    this._assemblages[type][id] = Assemblage.createInstance(id, type, TEMPLATE, state);
-  }
-
-  /**
-   * Destroys an assemblage with a matching id.
-   * @public
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the assemblage.
-   *
-   * @throws {AssemblageNotFound}
-   */
-  destroyAssemblage(id, type) {
-    const ASSEMBLAGES = this.findAssemblagesOfType(type);
-
-    if (!ASSEMBLAGES[id]) {
-      throw new AssemblageNotFound(`Error: Assemblage type ${type} does not exist for entity ${id}.`);
-    }
-    delete ASSEMBLAGES[id];
-  }
-
-  /**
-   * Finds an assemblage with a matching entity id and type
-   * @public
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the assemblage.
-   *
-   * @throws {AssemblageNotFound}
-   * @return {Assemblage}
-   */
-  findAssemblage(id, type) {
-    const ASSEMBLAGES = this.findAssemblagesOfType(type);
-
-    if (!ASSEMBLAGES[id]) {
-      throw new AssemblageNotFound(`Error: Assemblage type ${type} does not exist for entity ${id}.`);
-    }
-    return ASSEMBLAGES[id];
-  }
-
-  /**
-   * Finds all assemblages with a matching type.
-   * @param {string} type - The type of the assemblage.
-   *
-   * @throws {InvalidAssemblageType}
-   * @return {Array} A collection of matching assemblages.
-   */
-  findAssemblagesOfType(type) {
-    if (!this._assemblages[type]) throw new InvalidAssemblageType(`Error: Assemblage type ${type} is not valid.`);
-    return this._assemblages[type];
+    return Assemblage.createInstance();
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -164,12 +97,12 @@ class AssemblageManager {
   /**
    * Static factory method.
    * @param {LogService} logService - The log service for the simulation.
-   * @param {object} templates - The assemblage templates for the simulation.
+   * @param {array} templates - The assemblage templates for the simulation.
    *
-   * @return {AssemblageManager} - A new component manager instance.
+   * @return {AssemblageManager} - A new assemblage manager instance.
    */
   static createInstance(logService, templates) {
-    templates = templates || {};
+    templates = templates || [];
     return new AssemblageManager(logService, templates);
   }
 }

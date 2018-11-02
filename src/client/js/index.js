@@ -5,6 +5,8 @@ import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
 import GameManager from '../../games';
+import DisplayManager from '../../display';
+import InputManager from '../../input';
 import {FRAME_DURATION} from '../../engine/constants';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,12 +49,12 @@ class App {
   //////////////////////////////////////////////////////////////////////////////
 
   constructor() {
-    const MENU_BUTTON = document.getElementById('menuButton');
-    const INFO_BUTTON = document.getElementById('infoButton');
+    const MENU_BUTTON = document.getElementById('menu-button');
+    const INFO_BUTTON = document.getElementById('info-button');
     const LINKS = document.getElementsByClassName('o-nav__menu__item');
 
-    this._navMenu = document.getElementById('navMenu');
-    this._infoPanel = document.getElementById('infoPanel');
+    this._navMenu = document.getElementById('nav-menu');
+    this._infoPanel = document.getElementById('info-panel');
     MENU_BUTTON.addEventListener('click', (event) => {this.toggleMenu(event)});
     INFO_BUTTON.addEventListener('click', (event) => {this.toggleInfoPanel(event)});
 
@@ -80,9 +82,9 @@ class App {
 
    */
   start() {
+    const DISPLAY_MANAGER = DisplayManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE, 'game-wrapper');
+    const INPUT_MANAGER = InputManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE, 'game-wrapper');
     const GAME_MANAGER = GameManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
-
-    GAME_MANAGER.start([], []);
   }
 
   toggleMenu(event) {
@@ -113,6 +115,4 @@ class App {
 
 window.addEventListener('load', (event) => {
   const APP = App.createInstance();
-
-  console.log(FRAME_DURATION);
 });

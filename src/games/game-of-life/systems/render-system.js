@@ -42,7 +42,7 @@ class RenderSystem extends System {
   constructor(messageService) {
     super(messageService);
 
-    const CONTAINER = document.getElementById('canvas-wrapper');
+    const CONTAINER = document.getElementById('game-wrapper');
     const CANVAS = document.createElement('canvas');
 
     CANVAS.height = CONTAINER.clientHeight;

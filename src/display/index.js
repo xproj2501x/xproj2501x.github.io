@@ -10,6 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 import {ScreenAlreadyExists, ScreenNotFound} from './exceptions';
 import Screen from './screen';
+import UUID from '../common/utilities/uuid';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -51,7 +52,7 @@ class DisplayManager {
   /**
    * A collection of screens owned by the display manager.
    * @private
-   * @type {object}
+   * @type {array}
    */
   _screens;
 
@@ -70,24 +71,19 @@ class DisplayManager {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
     this._container = container;
-    this._screens = {};
+    this._screens = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Creates a new screen.
+   * Pushes a new screen to the top of the stack.
    * @public
-   * @param {string} id - The id of the screen.
-   *
-   * @throws {ScreenAlreadyExists}
+   * @param {Screen} screen - The screen to push on to the stack.
    */
-  createScreen(id) {
-    if (this._screens[id]) {
-      throw new ScreenAlreadyExists(`Error: Screen id ${id} is already registered with the display manager.`);
-    }
-    this._screens[id] = Screen.createInstance(id, this._container);
+  pushScreen(screen) {
+
   }
 
   /**
@@ -97,11 +93,9 @@ class DisplayManager {
    *
    * @throws {ScreenNotFound}
    */
-  destroyScreen(id) {
-    if (!this._screens[id]) {
-      throw new ScreenNotFound(`Error: Screen id ${id} is not registered with the display manager.`);
-    }
-    delete this._screens[id];
+  popScreen() {
+    const SCREEN = this._screens.pop();
+
   }
 
   /**

@@ -105,7 +105,7 @@ class Assemblage {
    *
    * @return {Assemblage} A new assemblage instance.
    */
-  static createInstance(id, type, template, state) {
+  static createInstance(entity, type, template, state) {
     for (const KEY in state) {
       if (state.hasOwnProperty(KEY)) {
         if (!template.hasOwnProperty(KEY)) {

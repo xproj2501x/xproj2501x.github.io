@@ -13,49 +13,65 @@ import Component from '../../src/data/component';
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('Component', () => {
+  const ENTITY_ID = 0;
+  const COMPONENT_TYPE = 0;
+  const TEMPLATE = {
+    x: 'number',
+    y: 'number'
+  };
+  const STATE = {
+    x: 0,
+    y: 0
+  };
   let component;
 
   describe('#ctor', () => {
+    component = new Component(ENTITY_ID, COMPONENT_TYPE, STATE);
 
-    it('throw an error if the id parameter is missing', () => {
-      expect(() => new Component()).to.throw();
-    });
-  });
-
-  describe('#ctor', () => {
-
-    it('throw an error if the state parameter is missing', () => {
-      expect(() => new Component(ID)).to.throw();
-    });
-  });
-
-  describe('#ctor', () => {
-    it('should have the id and state passed to the constructor', () => {
-      component = new Component(ID, STATE);
-
-      expect(component.id).to.equal(ID);
-      expect(component.state.foo).to.equal(STATE.foo);
-      expect(component.state.bar).to.equal(STATE.bar);
+    it('should have an id, type, and state', () => {
+      expect(component.id).to.equal(ENTITY_ID);
+      expect(component.type).to.equal(COMPONENT_TYPE);
+      expect(component.state.x).to.equal(STATE.x);
+      expect(component.state.y).to.equal(STATE.y);
     });
   });
 
   describe('#update', () => {
+    beforeEach(() => {
+      component = new Component(ENTITY_ID, COMPONENT_TYPE, STATE);
+    });
+
     it('should update the state of the component', () => {
-      component.update(NEW_STATE);
-      expect(component.state.foo).to.equal(NEW_STATE.foo);
-      expect(component.state.bar).to.equal(NEW_STATE.bar);
+      component.update({x: 1, y: 1});
+      expect(component.state.x).to.equal(1);
+      expect(component.state.y).to.equal(1);
     });
 
     it('should throw an error for an invalid state', () => {
-      expect(() => component.update(INVALID_STATE)).to.throw();
+      expect(() => component.update({z: 1})).to.throw(
+        `Error: Invalid property z for component type ${COMPONENT_TYPE}.`);
     });
   });
 
   describe('#createInstance', () => {
-    it('create a new component', () => {
-      const COMPONENT = Component.createInstance(ID, STATE);
 
-      expect(COMPONENT instanceof Component).to.equal(true);
+    it('should have an id, type, and state', () => {
+      component = Component.createInstance(ENTITY_ID, COMPONENT_TYPE, TEMPLATE, STATE);
+
+      expect(component.id).to.equal(ENTITY_ID);
+      expect(component.type).to.equal(COMPONENT_TYPE);
+      expect(component.state.x).to.equal(STATE.x);
+      expect(component.state.y).to.equal(STATE.y);
+    });
+
+    it('should throw an error for an invalid property in the state', () => {
+      expect(() => Component.createInstance(ENTITY_ID, COMPONENT_TYPE, TEMPLATE, {z: 1})).to.throw(
+        `Error: Property z is not valid for component type ${COMPONENT_TYPE}.`);
+    });
+
+    it('should throw an error for an invalid property type in the state', () => {
+      expect(() => Component.createInstance(ENTITY_ID, COMPONENT_TYPE, TEMPLATE, {x: 'string', y: 0})).to.throw(
+        `Error: Property type string is not valid for property x of component type ${COMPONENT_TYPE}.`);
     });
   });
 
