@@ -10,12 +10,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 import System from '../../../engine/system';
 import {COMPONENT_TYPE} from '../components';
-import {COMMAND, EVENT} from '../../../engine/constants';
+import {ASSEMBLAGE_TYPE} from '../assemblages';
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const GRID_SIZE = 50;
+const HEIGHT = 750;
+const WIDTH = 250;
 const DIRECTIONS = [
   [-1, -1],
   [0, -1],
@@ -67,7 +69,7 @@ class RuleSystem extends System {
    * @constructor
    */
   constructor(logService, messageService) {
-    super(logService, messageService);
+    super(logService, messageService, ASSEMBLAGE_TYPE.CELL);
     this._cycle = 0;
   }
 
@@ -76,15 +78,13 @@ class RuleSystem extends System {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * The update routine for the system.
-   * @param {number} delta
+   * @param {array} assemblages - A collection of assemblages used by system.
    */
   update(assemblages) {
     this._cycle++;
     this._buildGrid(assemblages);
-    if (this._cycle % 10 === 0) {
-      this._buildGrid();
-      for (let idx = 0; idx < GRID_SIZE; idx++) {
-        for (let jdx = 0; jdx < GRID_SIZE; jdx++) {
+      for (let idx = 0; idx < WIDTH; idx++) {
+        for (let jdx = 0; jdx < HEIGHT; jdx++) {
           const POSITION = [idx, jdx];
           const NEIGHBORS = this._findNeighborCells(POSITION);
 
@@ -92,7 +92,7 @@ class RuleSystem extends System {
         }
       }
       this._cleanCells();
-    }
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -106,17 +106,12 @@ class RuleSystem extends System {
     this._cells = [];
     this._cellsToDelete = [];
     this._cellsToAdd = [];
-    for (let KEY in this._assemblages) {
-      if (this._assemblages.hasOwnProperty(KEY)) {
-        const ASSEMBLAGE = this._assemblages[KEY];
+    let position;
 
-        if (ASSEMBLAGE[COMPONENT_TYPE.POSITION] && ASSEMBLAGE[COMPONENT_TYPE.RULE]) {
-          const POSITION = ASSEMBLAGE[COMPONENT_TYPE.POSITION];
-
-          this._cells[POSITION.x + (POSITION.y * GRID_SIZE)] = KEY;
-        }
-      }
-    }
+    assemblages.forEach((assemblage) => {
+      position = assemblage.getComponent(COMPONENT_TYPE.POSITION);
+      this._cells[position.x + (position.y * HEIGHT)] = assemblage;
+    });
   }
 
   /**
@@ -185,14 +180,12 @@ class RuleSystem extends System {
   _cleanCells() {
     this._cellsToDelete.forEach((cell) => {
       const ID = this._cells[cell[0] + (cell[1] * GRID_SIZE)];
-      this._messageService.send(COMMAND.DESTROY_ENTITY, {id: ID});
     });
-    this._messageService.subscribe(EVENT.ENTITY_CREATED, (event) => this.onEntityCreated(event));
     this._cellsToAdd.forEach((cell) => {
       this._currentAssemblage = cell;
-      this._messageService.send(COMMAND.CREATE_ENTITY, {});
+
     });
-    this._messageService.unsubscribe(EVENT.ENTITY_CREATED, (event) => this.onEntityCreated(event));
+
     this._cellsToDelete = [];
     this._cellsToAdd = [];
   }

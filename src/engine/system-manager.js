@@ -91,9 +91,11 @@ class SystemManager {
    * @param {number} delta - The time elapsed since the last call to update.
    */
   update(delta) {
-    console.log('system manager');
+    let assemblages;
+
     this._systems.forEach((system) => {
-      system.update(delta);
+      assemblages = this._dataManager.findAssemblagesOfType(system.key);
+      system.update(assemblages);
     });
   }
 
@@ -118,9 +120,9 @@ class SystemManager {
   static createInstance(logService, messageService, dataManager, systems) {
     const SYSTEMS = [];
 
-    // systems.forEach((system) => {
-    //   SYSTEMS.push(system.createInstance(messageService));
-    // });
+    systems.forEach((system) => {
+      SYSTEMS.push(system.createInstance(logService, messageService));
+    });
     return new SystemManager(logService, messageService, dataManager, SYSTEMS);
   }
 }

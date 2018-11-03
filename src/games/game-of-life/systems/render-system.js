@@ -10,6 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 import System from '../../../engine/system';
 import {COMPONENT_TYPE} from '../components';
+import {ASSEMBLAGE_TYPE} from '../assemblages';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -39,8 +40,8 @@ class RenderSystem extends System {
    * RenderSystem
    * @constructor
    */
-  constructor(messageService) {
-    super(messageService);
+  constructor(logService, messageService) {
+    super(logService, messageService, ASSEMBLAGE_TYPE.CELL);
 
     const CONTAINER = document.getElementById('game-wrapper');
     const CANVAS = document.createElement('canvas');
@@ -74,63 +75,9 @@ class RenderSystem extends System {
     this._context.restore();
   }
 
-  /**
-   * Message handler for the component created and updated events.
-   * @param {object} event - The component created or updated event message.
-   */
-  onComponentCreatedOrUpdated(event) {
-    if (event.type === COMPONENT_TYPE.POSITION || event.type === COMPONENT_TYPE.SPRITE) {
-      this._addOrUpdateAssemblage(event.id, event.type, event.state);
-    }
-  }
-
-  /**
-   * Message handler for the component destroyed event.
-   * @param {object} event - The component destroyed message.
-   */
-  onComponentDestroyed(event) {
-    if (event.type === COMPONENT_TYPE.POSITION || event.type === COMPONENT_TYPE.SPRITE) {
-      this._destroyComponent(event.id, event.type);
-    }
-  }
-
-  onEntityDestroyed(event) {
-    this._destroyAssemblage(event.id);
-  }
-
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Updates an assemblage used by the system.
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the component.
-   * @param {object} state - The state of the component.
-   * @private
-   */
-  _addOrUpdateAssemblage(id, type, state) {
-    const ASSEMBLAGE = this._assemblages[id] || {};
-
-    ASSEMBLAGE[type] = Object.assign({}, state);
-    this._assemblages[id] = ASSEMBLAGE;
-  }
-
-  /**
-   * Removes a component from an assemblage.
-   * @param {string} id - The id of the parent entity.
-   * @param {string} type - The type of the component.
-   * @private
-   */
-  _destroyComponent(id, type) {
-    const ASSEMBLAGE = this._assemblages[id] || {};
-
-    if (type in ASSEMBLAGE) {
-      delete ASSEMBLAGE[type];
-    }
-  }
-  _destroyAssemblage(id) {
-    if (this._assemblages[id]) delete this._assemblages[id];
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods

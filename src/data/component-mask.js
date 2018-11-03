@@ -1,8 +1,8 @@
 /**
- * Assemblage
+ * Component Mask
  * ===
  *
- * @module assemblage
+ * @module componentMask
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,118 +16,118 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
-import {InvalidAssemblageState} from './exceptions';
-
 /**
- * Assemblage
+ * ComponentMask
  * @class
  */
-class Assemblage {
+class ComponentMask {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The id of the parent entity.
+   * The value of the component mask.
    * @private
    * @type {number}
    */
-  _id;
-
-  /**
-   * The type of the assemblage.
-   * @private
-   * @type {number}
-   */
-  _type;
-
-  /**
-   * A collection of components attached to the assemblage.
-   * @private
-   * @type {object}
-   */
-  _state;
+  _value;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Get _id
+   * Get _value
    * @public
    * @readonly
    * @return {number}
    */
-  get id() {
+  get value() {
     return this._id;
   }
 
   /**
-   * Get _type
+   * Get _componentMask
    * @public
    * @readonly
    * @return {number}
    */
-  get type() {
-    return this._type;
+  get componentMask() {
+    return this._componentMask;
   }
 
   /**
-   * Assemblage
+   * ComponentMask
    * @constructor
-   * @param {number} id - The id of the parent entity.
-   * @param {number} type - The type of the assemblage.
-   * @param {object} state - The state of the assemblage.
+   * @param {number} id - The id of the entity.
    */
-  constructor(id, type, state) {
+  constructor(id) {
     this._id = id;
-    this._type = type;
-    this._state = state;
+    this._componentMask = 0;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Gets the component of the specified type.
-   * @param {number} type -
+   * Attaches a component to the entity.
+   * @param {number} type - The type of component to attach to the entity.
    *
-   * @return {object} The state of the component.
+   * @throws {ComponentAlreadyAttachedToComponentMask}
    */
-  getComponent(type) {
-    return this._state[type];
+  attachComponent(type) {
+    if (this._hasComponent(type)) {
+      throw new ComponentAlreadyAttachedToComponentMask(
+        `Error: Component type ${type} is already attached to entity ${this._id}.`);
+    }
+    this._componentMask |= (1 << type);
+  }
+
+  /**
+   * Detaches a component from the entity.
+   * @param {number} type - The type of component to detach from the entity.
+   *
+   * @throws {ComponentNotAttachedToComponentMask}
+   */
+  detachComponent(type) {
+    if (!this._hasComponent(type)) {
+      throw new ComponentNotAttachedToComponentMask(`Error: Component type ${type} is not attached to entity ${this._id}.`);
+    }
+    this._componentMask ^= (1 << type);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   *
+   * @private
+   * @param {number} type - The type of the component.
+   *
+   * @return {number}
+   */
+  _hasComponent(type) {
+    return (this._componentMask >> type) & 1;
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
-   * @param {number} type - The type of the assemblage.
-   * @param {array} template - The template for the assemblage.
-   * @param {array} components - The components for the assemblage.
+   * @param {number} id - The id of the entity.
    *
-   * @return {Assemblage} A new assemblage instance.
+   * @throws {InvalidComponentMaskId}
+   * @return {ComponentMask} - A new entity instance.
    */
-  static createInstance(type, template, components) {
-    const STATE = {};
-    const ID = components[0].id;
-
-    for (let idx = 0; idx < components.length; idx++) {
-      if (components[idx].id !== ID) {
-        throw new Error(`Error: Entity mismatch.`);
-      }
-      STATE[template[idx]] = components[idx].state;
-    }
-    return new Assemblage(ID, type, STATE);
+  static createInstance(id) {
+    if (!id && id !== 0) throw new InvalidComponentMaskId(`Error: entity id cannot be null`);
+    return new ComponentMask(id);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Assemblage;
+export default ComponentMask;

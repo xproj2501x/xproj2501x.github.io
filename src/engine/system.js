@@ -40,10 +40,11 @@ class System {
   _messageService;
 
   /**
+   * The assemblage key for the system.
    * @private
    * @type {number}
    */
-  _componentMask;
+  _key;
 
   /**
    * A collection of assemblages used by the system.
@@ -56,13 +57,13 @@ class System {
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Get _componentMask
+   * Get _key
    * @public
    * @readonly
    * @return {number}
    */
-  get componentMask() {
-    return this._componentMask;
+  get key() {
+    return this._key;
   }
 
   /**
@@ -70,10 +71,12 @@ class System {
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
+   * @param {number} key - The assemblage key for the system.
    */
-  constructor(logService, messageService) {
+  constructor(logService, messageService, key) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
+    this._key = key;
 
   }
 

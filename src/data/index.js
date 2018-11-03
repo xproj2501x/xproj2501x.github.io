@@ -10,6 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 import EntityManager from './entity-manager';
 import ComponentManager from './component-manager';
+import Assemblage from './assemblage';
 import {InvalidAssemblageType} from './exceptions';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -112,10 +113,24 @@ class DataManager {
   findAssemblagesOfType(type) {
     const TEMPLATE = this._findTemplate(type);
     const ASSEMBLAGES = [];
+    const COMPONENTS = [];
 
     TEMPLATE.forEach((componentType) => {
-      ASSEMBLAGES[componentType] = this._componentManager.findComponentsOfType(componentType);
+      COMPONENTS.push(this._componentManager.findComponentsOfType(componentType));
     });
+    for (let idx = 0; idx < COMPONENTS[0].length; idx++) {
+      let components = [];
+
+      for (let jdx = 0; jdx < COMPONENTS.length; jdx++) {
+        if (!COMPONENTS[jdx][idx]) {
+          break;
+        }
+        components.push(COMPONENTS[jdx][idx]);
+      }
+      if (components.length === TEMPLATE.length) {
+        ASSEMBLAGES.push(Assemblage.createInstance(type, TEMPLATE, components));
+      }
+    }
     return ASSEMBLAGES;
   }
 
