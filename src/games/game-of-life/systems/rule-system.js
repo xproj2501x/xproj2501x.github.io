@@ -123,7 +123,7 @@ class RuleSystem extends System {
    * @return {object, null}
    */
   _findCell(x, y) {
-    const KEY = this._cells[x + (y * GRID_SIZE)];
+    const KEY = this._cells[x + (y * HEIGHT)];
 
     if (KEY) {
       return this._assemblages[KEY];
@@ -144,7 +144,7 @@ class RuleSystem extends System {
     DIRECTIONS.forEach((direction) => {
       const X = position[0] + direction[0];
       const Y = position[1] + direction[1];
-      const POSITION = X + (Y * GRID_SIZE);
+      const POSITION = X + (Y * HEIGHT);
 
       if (this._cells[POSITION]) {
         NEIGHBORS.push([X, Y]);
@@ -179,7 +179,7 @@ class RuleSystem extends System {
 
   _cleanCells() {
     this._cellsToDelete.forEach((cell) => {
-      const ID = this._cells[cell[0] + (cell[1] * GRID_SIZE)];
+      const ID = this._cells[cell[0] + (cell[1] * HEIGHT)];
     });
     this._cellsToAdd.forEach((cell) => {
       this._currentAssemblage = cell;
