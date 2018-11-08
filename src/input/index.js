@@ -46,6 +46,18 @@ class InputManager {
    */
   _container;
 
+  /**
+   * @private
+   * @type {Keyboard}
+   */
+  _keyboard;
+
+  /**
+   * @private
+   * @type {Mouse}
+   */
+  _mouse;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
@@ -60,11 +72,30 @@ class InputManager {
   constructor(logService, messageService, container) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
+    this._container = container;
+    document.addEventListener('click', (event) => this.handleInput(event));
+    document.addEventListener('contextmenu', (event) => this.handleInput(event));
+    document.addEventListener('dblclick', (event) => this.handleInput(event));
+    document.addEventListener('keydown', (event) => this.handleInput(event));
+    document.addEventListener('keypress', (event) => this.handleInput(event));
+    document.addEventListener('keyup', (event) => this.handleInput(event));
+    document.addEventListener('mousedown', (event) => this.handleInput(event));
+    document.addEventListener('mouseup', (event) => this.handleInput(event));
+    document.addEventListener('wheel', (event) => this.handleInput(event));
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  start() {
+
+  }
+
+  stop() {
+
+  }
+
   /**
    * Handles input for the simulation.
    * @public
@@ -73,6 +104,14 @@ class InputManager {
   handleInput(event) {
     event.stopPropagation();
     event.preventDefault();
+    if (event instanceof MouseEvent) {
+      console.log('mouse');
+    } else if (event instanceof WheelEvent) {
+      console.log('wheel');
+    } else if (event instanceof KeyboardEvent) {
+      console.log('keyboard');
+    }
+    console.log(event);
   }
 
   //////////////////////////////////////////////////////////////////////////////

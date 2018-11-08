@@ -128,7 +128,7 @@ class DataManager {
         components.push(COMPONENTS[jdx][idx]);
       }
       if (components.length === TEMPLATE.length) {
-        ASSEMBLAGES.push(Assemblage.createInstance(type, TEMPLATE, components));
+        ASSEMBLAGES.push(Assemblage.createInstance(type, TEMPLATE, components, this._componentManager));
       }
     }
     return ASSEMBLAGES;
@@ -142,7 +142,7 @@ class DataManager {
    * @private
    * @param {number} type - The type of assemblage.
    *
-   * @return {object} The assemblage template.
+   * @return {array} The assemblage template.
    * @throws {AssemblageTemplateNotFound}
    */
   _findTemplate(type) {

@@ -50,6 +50,8 @@ class RenderSystem extends System {
     CANVAS.width = CONTAINER.clientWidth;
     CONTAINER.appendChild(CANVAS);
     this._context = CANVAS.getContext('2d');
+    this._x = 100;
+    this._y = 100;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -57,21 +59,22 @@ class RenderSystem extends System {
   //////////////////////////////////////////////////////////////////////////////
   /**
    * The update routine for the system.
-   * @param {number} delta
+   * @param {array} assemblages - A collection of assemblages used by system.
    */
-  update(delta) {
+  update(assemblages) {
     this._context.save();
     this._context.clearRect(0, 0, this._context.canvas.width, this._context.canvas.height);
-    for (const KEY in this._assemblages) {
-      if (this._assemblages.hasOwnProperty(KEY)) {
-        const ASSEMBLAGE = this._assemblages[KEY];
+    let sprite;
+    let position;
+    assemblages.forEach((assemblage) => {
 
+      sprite = assemblage.getComponent(COMPONENT_TYPE.SPRITE);
+      position = assemblage.getComponent(COMPONENT_TYPE.POSITION);
 
-        this._context.fillStyle = ASSEMBLAGE[COMPONENT_TYPE.SPRITE].color;
-        this._context.fillRect((ASSEMBLAGE[COMPONENT_TYPE.POSITION].x * SCALE), (ASSEMBLAGE[COMPONENT_TYPE.POSITION].y * SCALE), SCALE, SCALE);
+      this._context.fillStyle = sprite.color;
+      this._context.fillRect((position.x * SCALE), (position.y * SCALE), SCALE, SCALE);
 
-      }
-    }
+    });
     this._context.restore();
   }
 

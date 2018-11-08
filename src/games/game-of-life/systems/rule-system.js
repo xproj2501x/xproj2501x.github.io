@@ -16,8 +16,8 @@ import {ASSEMBLAGE_TYPE} from '../assemblages';
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const HEIGHT = 750;
-const WIDTH = 250;
+const HEIGHT = 100;
+const WIDTH = 100;
 const DIRECTIONS = [
   [-1, -1],
   [0, -1],
@@ -52,13 +52,11 @@ class RuleSystem extends System {
   _cells;
 
   /**
-   * A collection of cells flagged for deletion.
+   * A collection of cells flagged for update.
    * @private
    * @type {Array}
    */
-  _cellsToDelete;
-
-  _cellsToAdd;
+  _cellsToUpdate;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -83,16 +81,17 @@ class RuleSystem extends System {
   update(assemblages) {
     this._cycle++;
     this._buildGrid(assemblages);
-      for (let idx = 0; idx < WIDTH; idx++) {
-        for (let jdx = 0; jdx < HEIGHT; jdx++) {
-          const POSITION = [idx, jdx];
-          const NEIGHBORS = this._findNeighborCells(POSITION);
+    let cell;
 
-          this._checkRule(POSITION, NEIGHBORS);
-        }
+    for (let idx = 0; idx < WIDTH; idx++) {
+      for (let jdx = 0; jdx < HEIGHT; jdx++) {
+        cell = this._findCell(idx, jdx);
+        let neighbors = this._findNeighbors(cell);
+
+        this._checkRule(cell, neighbors);
       }
-      this._cleanCells();
-
+    }
+    this._cleanCells();
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -104,8 +103,7 @@ class RuleSystem extends System {
    */
   _buildGrid(assemblages) {
     this._cells = [];
-    this._cellsToDelete = [];
-    this._cellsToAdd = [];
+    this._cellsToUpdate = [];
     let position;
 
     assemblages.forEach((assemblage) => {
@@ -123,12 +121,7 @@ class RuleSystem extends System {
    * @return {object, null}
    */
   _findCell(x, y) {
-    const KEY = this._cells[x + (y * HEIGHT)];
-
-    if (KEY) {
-      return this._assemblages[KEY];
-    }
-    return null;
+    return this._cells[x + (y * HEIGHT)] ? this._cells[x + (y * HEIGHT)] : null;
   }
 
   /**
@@ -138,16 +131,19 @@ class RuleSystem extends System {
    *
    * @return {number}
    */
-  _findNeighborCells(position) {
+  _findNeighbors(cell) {
+    const POSITION = cell.getComponent(COMPONENT_TYPE.POSITION);
     const NEIGHBORS = [];
 
     DIRECTIONS.forEach((direction) => {
-      const X = position[0] + direction[0];
-      const Y = position[1] + direction[1];
-      const POSITION = X + (Y * HEIGHT);
+      const NEIGHBOR = this._findCell(POSITION.x + direction[0], POSITION.y + direction[1]);
 
-      if (this._cells[POSITION]) {
-        NEIGHBORS.push([X, Y]);
+      if (NEIGHBOR) {
+        const NEIGHBOR_STATE = NEIGHBOR.getComponent(COMPONENT_TYPE.STATE);
+
+        if (NEIGHBOR_STATE.on) {
+          NEIGHBORS.push(NEIGHBOR);
+        }
       }
     });
     return NEIGHBORS.length;
@@ -159,35 +155,23 @@ class RuleSystem extends System {
    * @param {object} position - The assemblage for the cell at position x, y.
    * @param {number} neighbors - The coordinates for the live neightbors of the cell.
    */
-  _checkRule(position, neighbors) {
-    const CELL = this._findCell(position[0], position[1]);
+  _checkRule(cell, neighbors) {
+    const RULE = cell.getComponent(COMPONENT_TYPE.RULE);
+    const LIFE = parseInt(RULE.life, 2);
+    const DEATH = parseInt(RULE.death, 2);
 
-    if (CELL) {
-      const RULE = CELL[COMPONENT_TYPE.RULE];
-      const LIFE = RULE.life;
-      const DEATH = RULE.death;
-
-      if (DEATH & (1 << neighbors)) {
-        this._cellsToDelete.push(position);
-      }
-    }
-    if (parseInt('000000110', 2) & (1 << neighbors)) {
-      this._cellsToAdd.push(position);
+    if (DEATH & (1 << neighbors)) {
+      this._cellsToUpdate.push(cell);
     }
   }
 
 
   _cleanCells() {
-    this._cellsToDelete.forEach((cell) => {
-      const ID = this._cells[cell[0] + (cell[1] * HEIGHT)];
-    });
-    this._cellsToAdd.forEach((cell) => {
-      this._currentAssemblage = cell;
+    this._cellsToUpdate.forEach((cell) => {
+      const STATE = cell.getComponent(COMPONENT_TYPE.STATE);
 
+      cell.updateComponent(COMPONENT_TYPE.STATE, {on: !STATE.on});
     });
-
-    this._cellsToDelete = [];
-    this._cellsToAdd = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////

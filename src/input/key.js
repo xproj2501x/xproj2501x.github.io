@@ -1,86 +1,76 @@
 /**
- * Game Of Life
+ * Key
  * ===
  *
- * @module gameOfLife
+ * @module inputManager.Key
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMPONENT_TYPE, COMPONENT_TEMPLATES} from './components';
-import {ASSEMBLAGE_TYPE, ASSEMBLAGE_TEMPLATES} from './assemblages';
-import {SYSTEMS} from './systems';
 
 ////////////////////////////////////////////////////////////////////////////////
-// Imports
+// Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const GRID_SIZE = 50;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
-
 /**
- * GameOfLife
+ * Key
  * @class
  */
-class GameOfLife {
+class Key {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @private
+   * @type {number}
+   */
+  _code;
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  _isDown;
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  _altDown;
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  _ctrlDown;
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  _shiftDown;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * GameOfLife
+   * Key
    * @constructor
+   * @param {KeyboardEvent} event - A keyboard event sent to the DOM.
    */
-  constructor() {
+  constructor(event) {
 
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  build(dataManager) {
-    for (let idx = 0; idx < 100; idx++) {
-      for (let jdx = 0; jdx < 100; jdx++) {
-        const CHANCE = Math.floor(Math.random() * Math.floor(100));
-        const SETTINGS = [
-          {
-            x: idx,
-            y: jdx
-          },
-          {
-            life: '000000110',
-            death: '111110010',
-            cycles: 10
-          }
-        ];
-
-        if (CHANCE > 65) {
-          SETTINGS.push({
-            on: true
-          });
-          SETTINGS.push({
-            color: '#F00'
-          });
-        } else {
-          SETTINGS.push({
-            on: false
-          });
-          SETTINGS.push({
-            color: '#FFF'
-          });
-        }
-        dataManager.createAssemblage(ASSEMBLAGE_TYPE.CELL, SETTINGS);
-      }
-    }
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -92,15 +82,16 @@ class GameOfLife {
   /**
    * Static factory method.
    * @static
+   * @param {KeyboardEvent} event - A keyboard event sent to the DOM.
    *
-   * @return {GameOfLife} A new game of life instance.
+   * @return {Key} - A new Key instance.
    */
-  static createInstance() {
-    return new GameOfLife();
+  static createInstance(event) {
+    return new Key(event);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default GameOfLife;
+export default Key;

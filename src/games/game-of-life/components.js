@@ -9,7 +9,8 @@ const COMPONENT_TYPE = {
   TIME: 0,
   POSITION: 1,
   RULE: 2,
-  SPRITE: 3
+  STATE: 3,
+  SPRITE: 4
 };
 
 /**
@@ -30,6 +31,9 @@ const COMPONENT_TEMPLATES = [
     life: 'string',
     death: 'string',
     cycles: 'number'
+  },
+  {
+    on: 'boolean'
   },
   {
     color: 'string'

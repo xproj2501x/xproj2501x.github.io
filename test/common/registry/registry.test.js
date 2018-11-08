@@ -1,36 +1,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMPONENT_TYPE} from './components';
+import {expect} from 'chai';
+import Registry from '../../common/registry';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * Assemblage Type enum
- * @enum {number}
- */
-const ASSEMBLAGE_TYPE = {
-  TIMER: 0,
-  CELL: 1,
-};
 
-/**
- *
- * @type {array}
- */
-const ASSEMBLAGE_TEMPLATES = [
-  [
-    COMPONENT_TYPE.TIME
-  ],
-  [
-    COMPONENT_TYPE.POSITION,
-    COMPONENT_TYPE.RULE,
-    COMPONENT_TYPE.STATE,
-    COMPONENT_TYPE.SPRITE
-  ]
-];
+
 ////////////////////////////////////////////////////////////////////////////////
-// Exports
+// Test
 ////////////////////////////////////////////////////////////////////////////////
-export {ASSEMBLAGE_TEMPLATES, ASSEMBLAGE_TYPE};
+describe('DataManager', () => {
+
+  describe('#ctor', () => {
+
+  });
+
+  describe('#registerClass', () => {
+
+  });
+
+  describe('#resolveClass', () => {
+
+  });
+
+  describe('#createInstance', () => {
+
+  });
+});

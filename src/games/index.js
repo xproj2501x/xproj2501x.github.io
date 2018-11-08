@@ -8,11 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Engine from '../engine';
-import DataManager from '../data';
-import {COMPONENT_TYPE, COMPONENT_TEMPLATES} from './game-of-life/components';
-import {ASSEMBLAGE_TYPE, ASSEMBLAGE_TEMPLATES} from './game-of-life/assemblages';
-import {SYSTEMS} from './game-of-life/systems';
+import GameOfLife from './game-of-life';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -38,13 +34,6 @@ class GameManager {
   _logger;
 
   /**
-   * The log service for the simulation.
-   * @private
-   * @type {LogService}
-   */
-  _logService;
-
-  /**
    * The message service for the application.
    * @private
    * @type {MessageService}
@@ -52,11 +41,11 @@ class GameManager {
   _messageService;
 
   /**
-   * The engine for the simulation.
+   * A collection of games.
    * @private
-   * @type {Engine}
+   * @type {object}
    */
-  _engine;
+  _games;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -67,49 +56,25 @@ class GameManager {
    * @constructor
    * @param {LogService} logService - The log service for the application.
    * @param {MessageService} messageService - The message service for the application.
-   * @param {Engine} engine - The engine for the simulation.
+   * @param {object} games - A collection of games.
    */
-  constructor(logService, messageService) {
+  constructor(logService, messageService, games) {
     this._logger = logService.registerLogger(this.constructor.name);
-    this._logService = logService;
     this._messageService = messageService;
-    this.start(logService);
+    this._games = games;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  start(logService) {
-    const DATA_MANAGER = DataManager.createInstance(
-      logService, this._messageService, COMPONENT_TEMPLATES, ASSEMBLAGE_TEMPLATES);
-    const ENGINE = Engine.createInstance(logService, this._messageService, DATA_MANAGER, SYSTEMS);
-
-    for (let idx = 0; idx < 250; idx++) {
-      for (let jdx = 0; jdx < 750; jdx++) {
-        const CHANCE = Math.floor(Math.random() * Math.floor(100));
-
-        if (CHANCE > 65) {
-          const SETTINGS = [
-            {
-              x: idx,
-              y: jdx
-            },
-            {
-              life: '000000110',
-              death: '111110010',
-              cycles: 10
-            },
-            {
-              color: '#F00'
-            }
-          ];
-
-          DATA_MANAGER.createAssemblage(ASSEMBLAGE_TYPE.CELL, SETTINGS);
-        }
-      }
-    }
-
-    ENGINE.start();
+  /**
+   * Starts a game with the specified id.
+   * @public
+   * @param {string} id - The id of the game.
+   */
+  start(id) {
+    if (!this._games[id]) throw new Error(`Error: invalid game id ${id}.`);
+    const GAME = this._games[id].createInstance();
   }
 
   stop() {
@@ -136,7 +101,11 @@ class GameManager {
    * @return {GameManager} - A new game manager instance.
    */
   static createInstance(logService, messageService) {
-    return new GameManager(logService, messageService);
+    const GAMES = {
+      GAME_OF_LIFE: GameOfLife
+    };
+
+    return new GameManager(logService, messageService, GAMES);
   }
 }
 

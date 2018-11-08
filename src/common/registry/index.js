@@ -1,106 +1,97 @@
 /**
- * Game Of Life
+ * Registry
  * ===
  *
- * @module gameOfLife
+ * @module registry
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMPONENT_TYPE, COMPONENT_TEMPLATES} from './components';
-import {ASSEMBLAGE_TYPE, ASSEMBLAGE_TEMPLATES} from './assemblages';
-import {SYSTEMS} from './systems';
 
 ////////////////////////////////////////////////////////////////////////////////
-// Imports
+// Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const GRID_SIZE = 50;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
-
 /**
- * GameOfLife
+ * Registry
  * @class
  */
-class GameOfLife {
+class Registry {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @private
+   * @type {object}
+   */
+  _dependencies;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-
   /**
-   * GameOfLife
+   * Registry
    * @constructor
    */
   constructor() {
-
+    this._dependencies = {};
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  build(dataManager) {
-    for (let idx = 0; idx < 100; idx++) {
-      for (let jdx = 0; jdx < 100; jdx++) {
-        const CHANCE = Math.floor(Math.random() * Math.floor(100));
-        const SETTINGS = [
-          {
-            x: idx,
-            y: jdx
-          },
-          {
-            life: '000000110',
-            death: '111110010',
-            cycles: 10
-          }
-        ];
-
-        if (CHANCE > 65) {
-          SETTINGS.push({
-            on: true
-          });
-          SETTINGS.push({
-            color: '#F00'
-          });
-        } else {
-          SETTINGS.push({
-            on: false
-          });
-          SETTINGS.push({
-            color: '#FFF'
-          });
-        }
-        dataManager.createAssemblage(ASSEMBLAGE_TYPE.CELL, SETTINGS);
-      }
+  /**
+   * Registers a class with the container
+   * @param {string} name - The name of the class to be registered.
+   * @param {object} func - The class to be registered.
+   * @param {boolean} singleton - Flag to register the class as a singleton (Default: false)
+   */
+  registerClass(name, func, singleton = false) {
+    if (!(name in this._dependencies)) {
+      this._dependencies[name] = func;
     }
   }
 
-  //////////////////////////////////////////////////////////////////////////////
-  // Private Methods
-  //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Resolves a class and returns an instance.
+   * @param {string} name - The name of the class to be resolved.
+   */
+  resolveClass(name) {
+    const CLASS = this._dependencies[name];
+    const FN_ARGS = /^class|function\s*[^\(]*\(\s*([^\)]*)\)/m;
+    const TEXT = CLASS.toString();
+
+    if (TEXT.match(FN_ARGS)[1] !== '') {
+      const DEPENDENCIES = [];
+      const ARGUMENTS = TEXT.match(FN_ARGS)[1].split(', ');
+
+      for (let idx = 0; idx < ARGUMENTS.length; idx++) {
+        DEPENDENCIES.push(this.resolve(ARGUMENTS[idx]));
+      }
+      return new CLASS(...DEPENDENCIES);
+    } else {
+      return new CLASS();
+    }
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method.
-   * @static
-   *
-   * @return {GameOfLife} A new game of life instance.
+   * Static factory method
+   * @return {Registry}
    */
   static createInstance() {
-    return new GameOfLife();
+    return new Registry();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default GameOfLife;
+export default Registry;

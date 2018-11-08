@@ -1,8 +1,8 @@
 /**
- * Queue
+ * Graph Edge
  * ===
  *
- * @module queue
+ * @module graphEdge
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -12,99 +12,90 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
- * Queue
+ * GraphEdge
  * @class
  */
-class Queue {
-
+class GraphEdge {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The start node of the edge.
    * @private
-   * @type {Array}
+   * @type {GraphNode}
    */
-  _data;
+  _startNode;
+
+  /**
+   * The end node of the edge.
+   * @private
+   * @type {GraphNode}
+   */
+  _endNode;
+
+  /**
+   * The weight of the edge.
+   * @private
+   * @type {number}
+   */
+  _weight;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Get _data.length
    * @public
    * @readonly
    *
-   * @return {number} The size of the queue.
+   * @return {string}
    */
-  get size() {
-    return this._data.length;
+  get key() {
+
   }
 
   /**
-   * Queue
+   * GraphEdge
    * @constructor
+   * @param {GraphNode} startNode - The start node of the edge.
+   * @param {GraphNode} endNode - The end node of the edge.
+   * @param {number} weight - The weight of the edge.
    */
-  constructor() {
-    this._data = [];
+  constructor(startNode, endNode, weight) {
+    this._startNode = startNode;
+    this._endNode = endNode;
+    this._weight = weight;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Enqueues an element at the end of the queue.
-   * @public
-   *
-   * @param {object} element - The element to be enqueued.
-   */
-  enqueue(element) {
-    this._data.push(element);
-  }
-
-  /**
-   * Dequeues an element from the front of the queue.
-   * @public
-   *
-   * @return {object} The dequeued element.
-   */
-  dequeue() {
-    return this._data.shift();
-  }
-
-  /**
-   * Returns the first element in the queue without removing it.
-   * @public
-   *
-   * @return {object} The first element in the queue.
-   */
-  peek() {
-    return this._data[0];
-  }
-
-  /**
-   * Resets the queue.
    * @public
    */
-  clear() {
-    this._data = [];
-  }
+  toString() {
 
+  }
+  
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method.
+   * Static factory method
    * @static
+   * @param {GraphNode} startNode - The start node of the edge.
+   * @param {GraphNode} endNode - The end node of the edge.
+   * @param {number} weight - The weight of the edge.
    *
-   * @return {Queue} - A new queue object.
+   * @return {GraphEdge} A new graph edge instance.
    */
   static createInstance() {
-    return new Queue();
+    return new GraphEdge();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Queue;
+export default GraphEdge;

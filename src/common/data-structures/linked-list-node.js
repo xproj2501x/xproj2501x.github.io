@@ -1,8 +1,8 @@
 /**
- * System
+ * Linked List Node
  * ===
  *
- * @module engine.System
+ * @module linkedListNode
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -10,40 +10,37 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
-// Definitions
-////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * System
- * @interface
- */
-class System {
 
+/**
+ * LinkedListNode
+ * @class
+ */
+class LinkedListNode {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The logger for the entity manager.
-   * @private
-   * @type {Logger}
-   */
-  _logger;
-
-  /**
-   * @private
-   * @type {MessageService}
-   */
-  _messageService;
-
-  /**
-   * The assemblage key for the system.
+   * The key for the linked list node.
    * @private
    * @type {number}
    */
   _key;
+
+  /**
+   * The data for the linked list node.
+   * @private
+   * @type {object}
+   */
+  _data;
+
+  /**
+   * The next node in the linked list.
+   * @private
+   * @type {LinkedListNode}
+   */
+  _nextNode;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -59,43 +56,72 @@ class System {
   }
 
   /**
-   * System
-   * @constructor
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {number} key - The assemblage key for the system.
+   * Get _data
+   * @public
+   * @readonly
+   * @return {object}
    */
-  constructor(logService, messageService, key) {
-    this._logger = logService.registerLogger(this.constructor.name);
-    this._messageService = messageService;
-    this._key = key;
+  get data() {
+    return this._data;
+  }
 
+  /**
+   * Get _nextNode
+   * @public
+   * @readonly
+   * @return {LinkedListNode}
+   */
+  get nextNode() {
+    return this._nextNode;
+  }
+
+  /**
+   * Set _nextNode
+   * @public
+   * @param {LinkedListNode} value - The new node to add to the linked list.
+   */
+  set nextNode(value) {
+    this._nextNode = value;
+  }
+
+  /**
+   * LinkedListNode
+   * @constructor
+   * @param {number} key - The key for the linked list node.
+   * @param {object} data - The data for the linked list node.
+   */
+  constructor(key, data) {
+    this._key = key;
+    this._data = data;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Update routine for the system.
    * @public
-   * @abstract
-   * @param {array} assemblages - A collection of assemblages used by system.
    */
-  update(assemblages) {
-    throw Error(`Error: Update called from System base class`);
-  }
+  toString() {
 
-  //////////////////////////////////////////////////////////////////////////////
-  // Private Methods
-  //////////////////////////////////////////////////////////////////////////////
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
-
+  /**
+   * Static factory method
+   * @static
+   * @param {number} key - The key for the linked list node.
+   * @param {object} data - The data for the linked list node.
+   *
+   * @return {LinkedListNode} A new linked list node instance.
+   */
+  static createInstance(key, data) {
+    return new LinkedListNode(key, data);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default System;
+export default LinkedListNode;

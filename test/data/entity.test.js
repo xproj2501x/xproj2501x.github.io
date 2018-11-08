@@ -38,7 +38,7 @@ describe('Entity', () => {
       expect(entity.componentMask).to.equal(1);
     });
 
-    it('should be throw when a component of the specified type is already attached', () => {
+    it('should throw when a component of the specified type is already attached', () => {
       expect(() => entity.attachComponent(COMPONENT_TYPE)).to.throw(
         `Error: Component type ${COMPONENT_TYPE} is already attached to entity ${ENTITY_ID}.`);
     });
@@ -55,7 +55,7 @@ describe('Entity', () => {
       expect(entity.componentMask).to.equal(0);
     });
 
-    it('should be throw when a component of specified type is not attached', () => {
+    it('should throw when a component of specified type is not attached', () => {
       expect(() => entity.detachComponent(COMPONENT_TYPE)).to.throw(
         `Error: Component type ${COMPONENT_TYPE} is not attached to entity ${ENTITY_ID}.`
       );

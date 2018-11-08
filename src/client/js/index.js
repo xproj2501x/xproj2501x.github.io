@@ -5,9 +5,7 @@ import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
 import GameManager from '../../games';
-import DisplayManager from '../../display';
 import InputManager from '../../input';
-import {FRAME_DURATION} from '../../engine/constants';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -44,11 +42,20 @@ class App {
    */
   _infoPanel;
 
+  /**
+   * The game manager for the application.
+   * @private
+   * @type {GameManager}
+   */
+  _gameManager;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   constructor() {
+    this._gameManager = GameManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
+    this._inputManager = InputManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE, 'game-wrapper');
     const MENU_BUTTON = document.getElementById('menu-button');
     const INFO_BUTTON = document.getElementById('info-button');
     const LINKS = document.getElementsByClassName('o-nav__menu__item');
@@ -64,29 +71,20 @@ class App {
         LINKS[KEY].addEventListener('click', (event) => {
           const PATH_NAME = event.target.innerText.toLowerCase();
 
-          window.history.pushState({}, PATH_NAME, window.location.origin + '/' + PATH_NAME);
-          console.log(`push: ${window.location.href}`);
+          window.history.pushState({}, PATH_NAME, window.location.origin + '/' + PATH_NAME.split(' ').join('-'));
+          this._gameManager.start(PATH_NAME.toUpperCase().split(' ').join('_'));
+
         });
       }
     }
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
-    this.start();
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /*
-
-   */
-  start() {
-    const DISPLAY_MANAGER = DisplayManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE, 'game-wrapper');
-    const INPUT_MANAGER = InputManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE, 'game-wrapper');
-    const GAME_MANAGER = GameManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
-  }
-
   toggleMenu(event) {
     this._navMenu.classList.toggle('o-nav--collapsed');
   }

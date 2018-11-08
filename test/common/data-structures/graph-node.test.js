@@ -1,36 +1,36 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMPONENT_TYPE} from './components';
+import {expect} from 'chai';
+import GraphNode from '../../../src/common/data-structures/graph-node';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * Assemblage Type enum
- * @enum {number}
- */
-const ASSEMBLAGE_TYPE = {
-  TIMER: 0,
-  CELL: 1,
-};
 
-/**
- *
- * @type {array}
- */
-const ASSEMBLAGE_TEMPLATES = [
-  [
-    COMPONENT_TYPE.TIME
-  ],
-  [
-    COMPONENT_TYPE.POSITION,
-    COMPONENT_TYPE.RULE,
-    COMPONENT_TYPE.STATE,
-    COMPONENT_TYPE.SPRITE
-  ]
-];
+
 ////////////////////////////////////////////////////////////////////////////////
-// Exports
+// Test
 ////////////////////////////////////////////////////////////////////////////////
-export {ASSEMBLAGE_TEMPLATES, ASSEMBLAGE_TYPE};
+describe('GraphNode', () => {
+
+  describe('#ctor', () => {
+
+  });
+
+  describe('#addEdge', () => {
+
+  });
+
+  describe('#removeEdge', () => {
+
+  });
+
+  describe('#hasEdge', () => {
+
+  });
+
+  describe('#createInstance', () => {
+
+  });
+});

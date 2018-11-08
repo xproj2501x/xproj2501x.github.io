@@ -1,85 +1,71 @@
 /**
- * Game Of Life
+ * Keyboard
  * ===
  *
- * @module gameOfLife
+ * @module inputManager.Keyboard
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMPONENT_TYPE, COMPONENT_TEMPLATES} from './components';
-import {ASSEMBLAGE_TYPE, ASSEMBLAGE_TEMPLATES} from './assemblages';
-import {SYSTEMS} from './systems';
+import Key from './key';
 
 ////////////////////////////////////////////////////////////////////////////////
-// Imports
+// Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const GRID_SIZE = 50;
+const KEY_DOWN = 'keydown';
+const KEY_UP = 'keyup';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
-
 /**
- * GameOfLife
+ * Keyboard
  * @class
  */
-class GameOfLife {
+class Keyboard {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @private
+   * @type {array}
+   */
+  _keys;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @public
+   * @readonly
+   * @return {array}
+   */
+  get keys() {
+    return this._keys;
+  }
 
   /**
-   * GameOfLife
+   * Keyboard
    * @constructor
    */
   constructor() {
-
+    this._keys = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  build(dataManager) {
-    for (let idx = 0; idx < 100; idx++) {
-      for (let jdx = 0; jdx < 100; jdx++) {
-        const CHANCE = Math.floor(Math.random() * Math.floor(100));
-        const SETTINGS = [
-          {
-            x: idx,
-            y: jdx
-          },
-          {
-            life: '000000110',
-            death: '111110010',
-            cycles: 10
-          }
-        ];
+  start() {
+    this._keys = [];
+    document.addEventListener(KEY_DOWN, (event) => this.onKey(event));
+    document.addEventListener(KEY_UP, (event) => this.onKey(event));
+  }
 
-        if (CHANCE > 65) {
-          SETTINGS.push({
-            on: true
-          });
-          SETTINGS.push({
-            color: '#F00'
-          });
-        } else {
-          SETTINGS.push({
-            on: false
-          });
-          SETTINGS.push({
-            color: '#FFF'
-          });
-        }
-        dataManager.createAssemblage(ASSEMBLAGE_TYPE.CELL, SETTINGS);
-      }
-    }
+  stop() {
+    document.removeEventListener(KEY_DOWN, (event) => this.onKey(event));
+    document.removeEventListener(KEY_UP, (event) => this.onKey(event));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -93,14 +79,14 @@ class GameOfLife {
    * Static factory method.
    * @static
    *
-   * @return {GameOfLife} A new game of life instance.
+   * @return {Keyboard} - A new keyboard instance.
    */
   static createInstance() {
-    return new GameOfLife();
+    return new Keyboard();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default GameOfLife;
+export default Keyboard;

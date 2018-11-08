@@ -54,6 +54,7 @@ class MessageService {
    * @param {function} subscriber - The subscriber to be added.
    */
   subscribe(subject, subscriber) {
+    if (typeof subscribe !== 'function') throw new Error(`Error: subscriber is not a function.`);
     if (!this._subscriptions[subject]) {
       this._subscriptions[subject] = [];
     }

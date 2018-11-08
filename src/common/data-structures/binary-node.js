@@ -1,8 +1,8 @@
 /**
- * System
+ * Binary Node
  * ===
  *
- * @module engine.System
+ * @module binaryNode
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -10,48 +10,53 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
-// Definitions
-////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * System
- * @interface
+ * BinaryNode
+ * @class
  */
-class System {
+class BinaryNode {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The logger for the entity manager.
-   * @private
-   * @type {Logger}
-   */
-  _logger;
-
-  /**
-   * @private
-   * @type {MessageService}
-   */
-  _messageService;
-
-  /**
-   * The assemblage key for the system.
    * @private
    * @type {number}
    */
   _key;
 
+  /**
+   * @private
+   * @type {object}
+   */
+  _data;
+
+  /**
+   * @private
+   * @type {BinaryNode}
+   */
+  _parent;
+
+  /**
+   * @private
+   * @type {BinaryNode}
+   */
+  _leftChild;
+
+  /**
+   * @private
+   * @type {BinaryNode}
+   */
+  _rightChild;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Get _key
-   * @public
    * @readonly
+   *
    * @return {number}
    */
   get key() {
@@ -59,43 +64,95 @@ class System {
   }
 
   /**
-   * System
-   * @constructor
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {number} key - The assemblage key for the system.
+   * @readonly
+   *
+   * @return {object}
    */
-  constructor(logService, messageService, key) {
-    this._logger = logService.registerLogger(this.constructor.name);
-    this._messageService = messageService;
-    this._key = key;
+  get data() {
+    return this._data;
+  }
 
+  /**
+   * @readonly
+   *
+   * @return {BinaryNode}
+   */
+  get leftChild() {
+    return this._leftChild;
+  }
+
+  set leftChild(node) {
+    this._leftChild = node;
+  }
+
+  get rightChild() {
+    return this._rightChild;
+  }
+
+  set rightChild(node) {
+    this._rightChild = node;
+  }
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  get isRootNode() {
+    return this._parent === null;
+  }
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  get isRightNode() {
+    return this._parent.rightChild === this;
+  }
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  get isLeftNode() {
+    return this._parent.leftChild === this;
+  }
+
+  /**
+   * BinaryNode
+   * @constructor
+   */
+  constructor(key, data) {
+    this._key = key;
+    this._data = data;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Update routine for the system.
    * @public
-   * @abstract
-   * @param {array} assemblages - A collection of assemblages used by system.
    */
-  update(assemblages) {
-    throw Error(`Error: Update called from System base class`);
-  }
+  toString() {
 
-  //////////////////////////////////////////////////////////////////////////////
-  // Private Methods
-  //////////////////////////////////////////////////////////////////////////////
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
-
+  /**
+   * Static factory method
+   * @static
+   * @param {number} key -
+   * @param {object} data -
+   *
+   * @return {BinaryNode} A new binary node instance.
+   */
+  static createInstance(key, data) {
+    return new BinaryNode(key, data);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default System;
+export default BinaryNode;

@@ -2,7 +2,7 @@
  * Assemblage
  * ===
  *
- * @module assemblage
+ * @module dataManager.Assemblage
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,10 +78,11 @@ class Assemblage {
    * @param {number} type - The type of the assemblage.
    * @param {object} state - The state of the assemblage.
    */
-  constructor(id, type, state) {
+  constructor(id, type, state, componentManager) {
     this._id = id;
     this._type = type;
     this._state = state;
+    this._componentManager = componentManager;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -95,6 +96,10 @@ class Assemblage {
    */
   getComponent(type) {
     return this._state[type];
+  }
+
+  updateComponent(type, state) {
+    this._componentManager.updateComponent(this._id, type, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -113,7 +118,7 @@ class Assemblage {
    *
    * @return {Assemblage} A new assemblage instance.
    */
-  static createInstance(type, template, components) {
+  static createInstance(type, template, components, componentManager) {
     const STATE = {};
     const ID = components[0].id;
 
@@ -123,7 +128,7 @@ class Assemblage {
       }
       STATE[template[idx]] = components[idx].state;
     }
-    return new Assemblage(ID, type, STATE);
+    return new Assemblage(ID, type, STATE, componentManager);
   }
 }
 

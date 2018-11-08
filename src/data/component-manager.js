@@ -1,8 +1,8 @@
 /**
- * ComponentManager
+ * Component Manager
  * ===
  *
- * @module componentManager
+ * @module dataManager.ComponentManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -168,7 +168,7 @@ class ComponentManager {
    * @throws {ComponentNotFound}
    */
   updateComponent(id, type, state) {
-    if (this._components[type][id]) {
+    if (!this._components[type][id]) {
       throw new ComponentNotFound(`Error: Component type ${type} is not attached to entity ${id}.`);
     }
     const COMPONENT = this._components[type][id];

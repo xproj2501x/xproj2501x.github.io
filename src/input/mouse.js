@@ -1,31 +1,26 @@
 /**
- * Game Of Life
+ * Mouse
  * ===
  *
- * @module gameOfLife
+ * @module inputManager.Mouse
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {COMPONENT_TYPE, COMPONENT_TEMPLATES} from './components';
-import {ASSEMBLAGE_TYPE, ASSEMBLAGE_TEMPLATES} from './assemblages';
-import {SYSTEMS} from './systems';
 
 ////////////////////////////////////////////////////////////////////////////////
-// Imports
+// Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const GRID_SIZE = 50;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
-
 /**
- * GameOfLife
+ * Mouse
  * @class
  */
-class GameOfLife {
+class Mouse {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -36,7 +31,7 @@ class GameOfLife {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * GameOfLife
+   * Mouse
    * @constructor
    */
   constructor() {
@@ -46,41 +41,6 @@ class GameOfLife {
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  build(dataManager) {
-    for (let idx = 0; idx < 100; idx++) {
-      for (let jdx = 0; jdx < 100; jdx++) {
-        const CHANCE = Math.floor(Math.random() * Math.floor(100));
-        const SETTINGS = [
-          {
-            x: idx,
-            y: jdx
-          },
-          {
-            life: '000000110',
-            death: '111110010',
-            cycles: 10
-          }
-        ];
-
-        if (CHANCE > 65) {
-          SETTINGS.push({
-            on: true
-          });
-          SETTINGS.push({
-            color: '#F00'
-          });
-        } else {
-          SETTINGS.push({
-            on: false
-          });
-          SETTINGS.push({
-            color: '#FFF'
-          });
-        }
-        dataManager.createAssemblage(ASSEMBLAGE_TYPE.CELL, SETTINGS);
-      }
-    }
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -93,14 +53,14 @@ class GameOfLife {
    * Static factory method.
    * @static
    *
-   * @return {GameOfLife} A new game of life instance.
+   * @return {Mouse} - A new mouse instance.
    */
   static createInstance() {
-    return new GameOfLife();
+    return new Mouse();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default GameOfLife;
+export default Mouse;

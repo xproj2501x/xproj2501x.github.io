@@ -2,7 +2,7 @@
  * System Manager
  * ===
  *
- * @module systemManager
+ * @module engine.SystemManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -97,6 +97,7 @@ class SystemManager {
       assemblages = this._dataManager.findAssemblagesOfType(system.key);
       system.update(assemblages);
     });
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
