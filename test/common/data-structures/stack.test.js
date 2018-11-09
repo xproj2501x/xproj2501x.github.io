@@ -13,18 +13,28 @@ import Stack from '../../../src/common/data-structures/stack';
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('Stack', () => {
+  let stack;
 
   describe('#ctor', () => {
+    stack = new Stack();
+
+    it('should be an instance of Stack', () => {
+      expect(stack instanceof Stack).to.equal(true);
+    });
+
+    it('should have a length of 0', () => {
+      expect(stack.size).to.equal(0);
+    });
+  });
+
+  describe('#peek', () => {
 
   });
 
-  describe('#push', () => {
-    const STACK = new Stack();
+  describe('#clear', () => {
 
-    STACK.push(1);
+    it('should be empty', () => {
 
-    it('should have a length of 1', () => {
-      expect(STACK.length).to.equal(1);
     });
   });
 
@@ -48,16 +58,13 @@ describe('Stack', () => {
     });
   });
 
-  describe('#peek', () => {
+  describe('#push', () => {
     const STACK = new Stack();
 
-  });
+    STACK.push(1);
 
-  describe('#clear', () => {
-    const STACK = new Stack();
-
-    it('should be empty', () => {
-
+    it('should have a length of 1', () => {
+      expect(STACK.length).to.equal(1);
     });
   });
 

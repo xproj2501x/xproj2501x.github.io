@@ -1,95 +1,103 @@
 /**
- * Queue
+ * Scheduler
  * ===
  *
- * @module queue
+ * @module engine.Scheduler
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
+////////////////////////////////////////////////////////////////////////////////
+import EventQueue from './event-queue';
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Queue
+ * Scheduler
  * @class
  */
-class Queue {
+class Scheduler {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
    * @private
-   * @type {Array}
+   * @type {EventQueue}
    */
-  _data;
+  _eventQueue;
+
+  /**
+   * @private
+   * @type {array}
+   */
+  _repeatQueue;
+
+  /**
+   * @private
+   * @type {object}
+   */
+  _currentEvent;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Get _data.length
+   * Get _eventQueue.time
    * @public
    * @readonly
    *
-   * @return {number} The size of the queue.
+   * @return {number}
    */
-  get size() {
-    return this._data.length;
+  get time() {
+    return this._eventQueue.time;
   }
 
   /**
-   * Queue
+   * Scheduler
    * @constructor
    */
   constructor() {
-    this._data = [];
+    this._eventQueue = EventQueue.createInstance();
+    this._repeatQueue = [];
+    this._currentEvent = null;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Resets the queue.
-   * @public
-   */
   clear() {
-    this._data = [];
+    this._eventQueue.clear();
+    this._repeatQueue = [];
+    this._currentEvent = null;
   }
 
-  /**
-   * Dequeues an element from the front of the queue.
-   * @public
-   *
-   * @return {object} The dequeued element.
-   */
   dequeue() {
-    return this._data.shift();
+    this._currentEvent = this._eventQueue.dequeue();
+    return this._currentEvent;
   }
 
   /**
-   * Enqueues an element at the end of the queue.
-   * @public
-   *
-   * @param {object} element - The element to be enqueued.
+   * Enqueues an event in the event queue
+   * @param {object} event
+   * @param {number} time -
+   * @param {boolean} repeat
    */
-  enqueue(element) {
-    this._data.push(element);
+  enqueue(event, time, repeat) {
+    this._eventQueue.enqueue(event, time);
+    if (repeat) {
+      this._repeatQueue.push(event);
+    }
   }
 
-  /**
-   * Returns the first element in the queue without removing it.
-   * @public
-   *
-   * @return {object} The first element in the queue.
-   */
-  peek() {
-    if (!this._data.length) {return null;}
-    return this._data[0];
-  }
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Methods
+  //////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -98,14 +106,15 @@ class Queue {
    * Static factory method.
    * @static
    *
-   * @return {Queue} A new queue instance.
+   * @return {Scheduler} - A new scheduler
+   * instance.
    */
   static createInstance() {
-    return new Queue();
+    return new Scheduler();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Queue;
+export default Scheduler;

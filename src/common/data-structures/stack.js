@@ -37,7 +37,7 @@ class Stack {
    *
    * @return {number} The length of the stack.
    */
-  get length() {
+  get size() {
     return this._data.length;
   }
 
@@ -53,11 +53,20 @@ class Stack {
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Pushes a new element to the top of the stack.
-   * @param {object} element - The element to be added.
+   * Clears the stack
    */
-  push(element) {
-    this._data.push(element);
+  clear() {
+    this._data = [];
+  }
+
+  /**
+   * Returns the first element of the stack if available without removing it.
+   *
+   * @return {object} The first element in the stack
+   */
+  peek() {
+    if (!this._data.length) {return null;}
+    return this._data[0];
   }
 
   /**
@@ -70,11 +79,13 @@ class Stack {
   }
 
   /**
-   * Clears the stack
+   * Pushes a new element to the top of the stack.
+   * @param {object} element - The element to be added.
    */
-  clear() {
-    this._data = [];
+  push(element) {
+    this._data.push(element);
   }
+
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -82,7 +93,7 @@ class Stack {
    * Static factory method
    * @static
    *
-   * @return {Stack} A new stack object.
+   * @return {Stack} A new stack instance.
    */
   static createInstance() {
     return new Stack();

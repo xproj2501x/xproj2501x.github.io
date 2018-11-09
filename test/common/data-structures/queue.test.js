@@ -1,42 +1,48 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import {expect} from 'chai';
 import Queue from '../../../src/common/data-structures/queue';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const CHAI = require('chai');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Test
 ////////////////////////////////////////////////////////////////////////////////
 describe('Queue', () => {
+  let queue;
+
   describe('#ctor', () => {
+    queue = new Queue();
+
+    it('should be an instance of Queue', () => {
+      expect(queue instanceof Queue).to.equal(true);
+    });
+
+    it('should have a size of 0', () => {
+      expect(queue.size).to.equal(0);
+    });
+  });
+
+  describe('#clear', () => {
+
+  });
+
+  describe('#dequeue', () => {
 
   });
 
   describe('#enqueue', () => {
-    const QUEUE = new Queue();
-  });
-
-  describe('#dequeue', () => {
-    const QUEUE = new Queue();
 
   });
 
   describe('#peek', () => {
-    const QUEUE = new Queue();
-
-  });
-
-  describe('#clear', () => {
-    const QUEUE = new Queue();
 
   });
 
   describe('#createInstance', () => {
-    const QUEUE = new Queue();
 
   });
 });

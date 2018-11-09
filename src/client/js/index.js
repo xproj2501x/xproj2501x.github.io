@@ -80,6 +80,8 @@ class App {
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
+
+    this._gameManager.start();
   }
 
   //////////////////////////////////////////////////////////////////////////////

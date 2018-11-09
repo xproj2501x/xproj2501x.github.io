@@ -10,6 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 import {FRAME_DURATION, MAX_SKIP_DURATION} from './constants';
 import SystemManager from './system-manager';
+import Scheduler from './scheduler';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -43,9 +44,15 @@ class Engine {
 
   /**
    * @private
-   * @type {SystemManager}
+   * @type {Scheduler}
    */
-  _systemManager;
+  _scheduler;
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  _isLocked;
 
   /**
    * @private
@@ -99,12 +106,11 @@ class Engine {
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
-   * @param {SystemManager} systemManager - The system manager for the simulation.
    */
-  constructor(logService, messageService, systemManager) {
+  constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
-    this._systemManager = systemManager;
+    this._scheduler = Scheduler.createInstance();
     this._isRunning = false;
     this._time = 0;
   }
@@ -120,6 +126,7 @@ class Engine {
     this._isRunning = true;
     this._startTime = Date.now();
     this._lastTick = this._startTime;
+    this._isLocked = false;
     this._frameId = requestAnimationFrame(() => this._tick());
   }
 
@@ -146,6 +153,7 @@ class Engine {
 
     }
   }
+
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -154,21 +162,23 @@ class Engine {
    * @private
    */
   _tick() {
-    // Needs to call the render loop and draw the next frame every time
-    // If there is not input then the update loop needs to handle only animation / display systems
-    // If there is input then all systems should update
     if (this._isRunning) {
-      const CURRENT_TIME = Date.now();
-      let delta = CURRENT_TIME - this._lastTick;
+      while (!this._isLocked) {
+        const EVENT = this._scheduler.dequeue();
 
-      delta = delta > MAX_SKIP_DURATION ? MAX_SKIP_DURATION : delta;
-      while (delta >= FRAME_DURATION) {
-        this._systemManager.update(FRAME_DURATION);
-        delta -= FRAME_DURATION;
-        this._lastTick += FRAME_DURATION;
+        if (!EVENT) {
+          this._isLocked = true;
+        }
       }
-
-      this._frameId = requestAnimationFrame(() => this._tick());
+    //   const CURRENT_TIME = Date.now();
+    //   let delta = CURRENT_TIME - this._lastTick;
+    //
+    //   delta = delta > MAX_SKIP_DURATION ? MAX_SKIP_DURATION : delta;
+    //   while (!this._isLocked && delta >= FRAME_DURATION) {
+    //     delta -= FRAME_DURATION;
+    //     this._lastTick += FRAME_DURATION;
+    //   }
+    //   this._frameId = requestAnimationFrame(() => this._tick());
     }
   }
 
@@ -180,15 +190,11 @@ class Engine {
    * @static
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
-   * @param {DataManager} dataManager - The data manager for the simulation.
-   * @param {array} systems - The systems used by the simulation.
    *
    * @return {Engine} - A new engine instance.
    */
-  static createInstance(logService, messageService, dataManager, systems) {
-    const SYSTEM_MANAGER = SystemManager.createInstance(logService, messageService, dataManager, systems);
-
-    return new Engine(logService, messageService, SYSTEM_MANAGER);
+  static createInstance(logService, messageService) {
+    return new Engine(logService, messageService);
   }
 }
 

@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import GameOfLife from './game-of-life';
+import Engine from '../engine/';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -41,11 +41,10 @@ class GameManager {
   _messageService;
 
   /**
-   * A collection of games.
    * @private
-   * @type {object}
+   * @type {Engine}
    */
-  _games;
+  _engine;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -56,12 +55,11 @@ class GameManager {
    * @constructor
    * @param {LogService} logService - The log service for the application.
    * @param {MessageService} messageService - The message service for the application.
-   * @param {object} games - A collection of games.
    */
-  constructor(logService, messageService, games) {
+  constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
-    this._games = games;
+    this._engine = Engine.createInstance(logService, messageService);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -70,11 +68,9 @@ class GameManager {
   /**
    * Starts a game with the specified id.
    * @public
-   * @param {string} id - The id of the game.
    */
-  start(id) {
-    if (!this._games[id]) throw new Error(`Error: invalid game id ${id}.`);
-    const GAME = this._games[id].createInstance();
+  start() {
+    this._engine.start();
   }
 
   stop() {
@@ -101,11 +97,7 @@ class GameManager {
    * @return {GameManager} - A new game manager instance.
    */
   static createInstance(logService, messageService) {
-    const GAMES = {
-      GAME_OF_LIFE: GameOfLife
-    };
-
-    return new GameManager(logService, messageService, GAMES);
+    return new GameManager(logService, messageService);
   }
 }
 
