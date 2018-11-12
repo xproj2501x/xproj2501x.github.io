@@ -1,107 +1,83 @@
 /**
- * Display
+ * Movement System
  * ===
  *
- * @module display
+ * @module game.Systems.MovementSystem
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import System from '../../engine/system';
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
-
 /**
- * Display
+ * MovementSystem
  * @class
+ * @extends System
  */
-class Display {
+class MovementSystem extends System {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {HTMLElement}
-   */
-  _container;
-
-  /**
-   * @private
-   * @type {HTMLElement}
-   */
-  _canvas;
-
-  /**
-   * @private
-   * @type {CanvasRenderingContext2D}
-   */
-  _context;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Display
+   * MovementSystem
    * @constructor
-   * @param {HTMLElement} container - The parent container for the display.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {number} key - The assemblage key for the MovementSystem.
    */
-  constructor(container) {
-    this._container = container;
-    this._canvas = document.createElement('canvas');
-    this._context = this._canvas.getContext('2d');
-    this._container.appendChild(this._canvas);
-    this._refresh();
+  constructor(logService, messageService, key) {
+    super(logService, messageService, key);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Draws a collection of sprites on the canvas.
-   * @param {Array} sprites - A collection of sprite objects.
+   * Update routine for the system.
+   * @public
    */
-  render(sprites) {
-    this._refresh();
-    this._context.save();
+  update(assemblages) {
 
-    this._context.restore();
+  }
+
+  handleEvent(event) {
+    
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Clears the canvas and resets the dimensions to the current width and height of the container.
-   * @private
-   */
-  _refresh() {
-    this._context.clearRect(0, 0, this._canvas.height, this._canvas.width);
-    this._canvas.height = this._container.clientHeight;
-    this._canvas.width = this._container.clientWidth;
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method
+   * Static factory method.
    * @static
-   * @param {string} containerId - The id for the container element.
    *
-   * @return {Display} A new display instance.
+   * @return {MovementSystem} A new movement system instance.
    */
-  static createInstance(containerId) {
-    const CONTAINER = document.getElementById(containerId);
+  static createInstance() {
 
-    return new Display(CONTAINER);
   }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Display;
+export default MovementSystem;

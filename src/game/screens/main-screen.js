@@ -1,71 +1,69 @@
 /**
- * Keyboard
+ * Main Screen
  * ===
  *
- * @module inputManager.Keyboard
+ * @module game.Screens.MainScreen
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Key from './key';
+import Screen from '../../user-interface/screen';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const KEY_DOWN = 'keydown';
-const KEY_UP = 'keyup';
-
+const OPTIONS = {
+  height: 60,
+  width: 80,
+  spacing: 16,
+  scale: 1,
+  xOffset: 0,
+  yOffset: 0,
+  fontSize: 15,
+  fontFamily: 'monospace',
+  fontStyle: '',
+  foregroundColor: '#FFF',
+  backgroundColor: '#000'
+};
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Keyboard
+ * MainScreen
  * @class
+ * @extends Screen
  */
-class Keyboard {
+class MainScreen extends Screen {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {array}
-   */
-  _keys;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @public
-   * @readonly
-   * @return {array}
-   */
-  get keys() {
-    return this._keys;
-  }
 
   /**
-   * Keyboard
+   * MainScreen
    * @constructor
+   * @param {string} id - The id of the MainScreen.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the MainScreen.
    */
-  constructor() {
-    this._keys = [];
+  constructor(id, canvas) {
+    super(id, canvas);
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  start() {
-    this._keys = [];
-    document.addEventListener(KEY_DOWN, (event) => this.onKey(event));
-    document.addEventListener(KEY_UP, (event) => this.onKey(event));
-  }
+  /**
+   *
+   * @param input
+   */
+  handleInput(input) {
 
-  stop() {
-    document.removeEventListener(KEY_DOWN, (event) => this.onKey(event));
-    document.removeEventListener(KEY_UP, (event) => this.onKey(event));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -78,15 +76,20 @@ class Keyboard {
   /**
    * Static factory method.
    * @static
+   * @param {string} id - The id of the MainScreen.
+   * @param {HTMLElement} container - The HTML container for the screen.
    *
-   * @return {Keyboard} - A new keyboard instance.
+   * @return {MainScreen} A new main screen instance.
    */
-  static createInstance() {
-    return new Keyboard();
+  static createInstance(id, container) {
+    const CANVAS = document.createElement('canvas');
+
+    container.appendChild(CANVAS);
+    return new MainScreen(id, CANVAS);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Keyboard;
+export default MainScreen;

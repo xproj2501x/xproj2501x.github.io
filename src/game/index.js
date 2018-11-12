@@ -1,76 +1,91 @@
 /**
- * Key
+ * Game
  * ===
  *
- * @module inputManager.Key
+ * @module game
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import DataManager from '../data-manager';
+import Engine from '../engine';
+import UserInterface from '../user-interface';
+import {SCREEN} from './screens';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const CONTAINER_ID = 'game-wrapper';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Key
+ * Game
  * @class
  */
-class Key {
+class Game {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The logger for the class.
    * @private
-   * @type {number}
+   * @type {Logger}
    */
-  _code;
+  _logger;
+
+  /**
+   * The message service for the simulation.
+   * @private
+   * @type {MessageService}
+   */
+  _messageService;
 
   /**
    * @private
-   * @type {boolean}
+   * @type {DataManager}
    */
-  _isDown;
+  _dataManager;
 
   /**
    * @private
-   * @type {boolean}
+   * @type {Engine}
    */
-  _altDown;
+  _engine;
 
   /**
    * @private
-   * @type {boolean}
+   * @type {UserInterface}
    */
-  _ctrlDown;
-
-  /**
-   * @private
-   * @type {boolean}
-   */
-  _shiftDown;
+  _userInterface;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Key
+   * Game
    * @constructor
-   * @param {KeyboardEvent} event - A keyboard event sent to the DOM.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    */
-  constructor(event) {
-
+  constructor(logService, messageService) {
+    this._logger = logService.registerLogger(this.constructor.name);
+    this._messageService = messageService;
+    this._dataManager = DataManager.createInstance(logService, messageService);
+    this._engine = Engine.createInstance(logService, messageService);
+    this._userInterface = UserInterface.createInstance(logService, messageService, CONTAINER_ID);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  start() {
+
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -82,16 +97,17 @@ class Key {
   /**
    * Static factory method.
    * @static
-   * @param {KeyboardEvent} event - A keyboard event sent to the DOM.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
    *
-   * @return {Key} - A new Key instance.
+   * @return {Game} - A new display manager instance.
    */
-  static createInstance(event) {
-    return new Key(event);
+  static createInstance(logService, messageService) {
+    return new Game(logService, messageService);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Key;
+export default Game;

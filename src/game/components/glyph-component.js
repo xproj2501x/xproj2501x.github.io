@@ -1,0 +1,99 @@
+/**
+ * GlyphComponent
+ * ===
+ *
+ * @module game.Components.GlyphComponent
+ */
+
+////////////////////////////////////////////////////////////////////////////////
+// Imports
+////////////////////////////////////////////////////////////////////////////////
+import Component from '../../data-manager/component';
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
+const TEMPLATE = {
+  character: 'string',
+  foregroundColor: 'string',
+  backgroundColor: 'string'
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// Class
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * GlyphComponent
+ * @class
+ * @extends Component
+ */
+class GlyphComponent extends Component {
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Properties
+  //////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Public Properties
+  //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @public
+   * @readonly
+   * @return {string}
+   */
+  get character() {
+    return this.state.character;
+  }
+
+  /**
+   * @public
+   * @readonly
+   * @return {string}
+   */
+  get foregroundColor() {
+    return this.state.foregroundColor;
+  }
+
+  /**
+   * @public
+   * @readonly
+   * @return {string}
+   */
+  get backgroundColor() {
+    return this.state.backgroundColor;
+  }
+
+  /**
+   * GlyphComponent
+   * @constructor
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the GlyphComponent.
+   * @param {object} state - The state of the GlyphComponent.
+   */
+  constructor(id, type, state) {
+    super(id, type, state);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Static Methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * Static factory method.
+   * @static
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the GlyphComponent.
+   * @param {object} template - The template for the GlyphComponent.
+   * @param {object} state - The state of the GlyphComponent.
+   *
+   * @return {GlyphComponent} A new Glyph component instance.
+   */
+  static createInstance(id, type, template, state) {
+    return new GlyphComponent(id, type, state);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Exports
+////////////////////////////////////////////////////////////////////////////////
+export default GlyphComponent;

@@ -4,8 +4,6 @@
 import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
-import GameManager from '../../games';
-import InputManager from '../../input';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -54,8 +52,6 @@ class App {
   //////////////////////////////////////////////////////////////////////////////
 
   constructor() {
-    this._gameManager = GameManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
-    this._inputManager = InputManager.createInstance(LOG_SERVICE, MESSAGE_SERVICE, 'game-wrapper');
     const MENU_BUTTON = document.getElementById('menu-button');
     const INFO_BUTTON = document.getElementById('info-button');
     const LINKS = document.getElementsByClassName('o-nav__menu__item');
@@ -72,16 +68,12 @@ class App {
           const PATH_NAME = event.target.innerText.toLowerCase();
 
           window.history.pushState({}, PATH_NAME, window.location.origin + '/' + PATH_NAME.split(' ').join('-'));
-          this._gameManager.start(PATH_NAME.toUpperCase().split(' ').join('_'));
-
         });
       }
     }
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
-
-    this._gameManager.start();
   }
 
   //////////////////////////////////////////////////////////////////////////////
