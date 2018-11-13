@@ -4,6 +4,7 @@
 import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
+import Game from '../../game';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -43,9 +44,9 @@ class App {
   /**
    * The game manager for the application.
    * @private
-   * @type {GameManager}
+   * @type {Game}
    */
-  _gameManager;
+  _game;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -74,6 +75,8 @@ class App {
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
+
+    this._game = Game.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
   }
 
   //////////////////////////////////////////////////////////////////////////////

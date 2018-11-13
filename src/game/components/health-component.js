@@ -1,8 +1,8 @@
 /**
- * Position Component
+ * Health Component
  * ===
  *
- * @module game.Components.PositionComponent
+ * @module game.Components.HealthComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -14,19 +14,19 @@ import Component from '../../data-manager/component';
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 const TEMPLATE = {
-  x: 'number',
-  y: 'number'
+  value: 'number',
+  damage: 'number'
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * PositionComponent
+ * HealthComponent
  * @class
  * @extends Component
  */
-class PositionComponent extends Component {
+class HealthComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -40,8 +40,8 @@ class PositionComponent extends Component {
    * @reaodnly
    * @return {number}
    */
-  get x() {
-    return this.state.x;
+  get value() {
+    return this.state.value;
   }
 
   /**
@@ -49,12 +49,12 @@ class PositionComponent extends Component {
    * @readonly
    * @return {number}
    */
-  get y() {
-    return this.state.y;
+  get damage() {
+    return this.state.damage;
   }
 
   /**
-   * PositionComponent
+   * HealthComponent
    * @constructor
    * @param {number} id - The id of the parent entity.
    * @param {number} type - The type of the component.
@@ -80,18 +80,18 @@ class PositionComponent extends Component {
    * Static factory method.
    * @static
    * @param {number} id - The id of the parent entity.
-   * @param {number} type - The type of the PositionComponent.
-   * @param {object} template - The template for the PositionComponent.
-   * @param {object} state - The state of the PositionComponent.
+   * @param {number} type - The type of the component.
+   * @param {object} template - The template for the component.
+   * @param {object} state - The state of the component.
    *
-   * @return {PositionComponent} A new position component instance.
+   * @return {HealthComponent} A new health component instance.
    */
   static createInstance(id, type, template, state) {
-    return new PositionComponent(id, type, state);
+    return new HealthComponent(id, type, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default PositionComponent;
+export default HealthComponent;
