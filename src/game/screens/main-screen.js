@@ -13,6 +13,23 @@ import Screen from '../../user-interface/screen';
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const KEY = {
+  // Movement
+  UP: 'w',
+  DOWN: 's',
+  LEFT: 'a',
+  RIGHT: 'd',
+
+  // Other
+  INVENTORY: 'i',
+  QUESTS: 'q',
+  CHARACTER: 'c',
+  JOURNAL: 'j',
+  PICK_UP: 'p',
+  OPEN: 'o'
+
+};
+
 const OPTIONS = {
   height: 60,
   width: 80,
@@ -63,7 +80,27 @@ class MainScreen extends Screen {
    * @param input
    */
   handleInput(input) {
+    let command;
 
+    switch(input.key.toLowerCase()) {
+      case KEY.UP:
+        console.log('up');
+        break;
+      case KEY.DOWN:
+        console.log('down');
+        break;
+      case KEY.LEFT:
+        console.log('left');
+        break;
+      case KEY.RIGHT:
+        console.log('right');
+        break;
+      case KEY.CHARACTER:
+        console.log('character');
+        break;
+      default:
+        break;
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,6 @@
 import {expect} from 'chai';
 import {mock} from 'sinon';
 import EventQueue from '../../src/engine/event-queue';
-import Queue from '../../src/common/data-structures/queue';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
