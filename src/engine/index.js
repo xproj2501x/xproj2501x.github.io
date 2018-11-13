@@ -110,6 +110,7 @@ class Engine {
   constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
+    this._messageService.subscribe('INPUT_COMMAND', (command) => this.handleCommand(command));
     this._scheduler = Scheduler.createInstance();
     this._isRunning = false;
     this._time = 0;
@@ -154,6 +155,14 @@ class Engine {
     }
   }
 
+  handleCommand(command) {
+    if (!this._isLocked) {
+      this._logger.writeLogMessage(`Handling command: ${command}`);
+      this._isLocked = true;
+
+      this._scheduler.enqueue(command.message, 1, false);
+    }
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -163,13 +172,13 @@ class Engine {
    */
   _tick() {
     if (this._isRunning) {
-      while (!this._isLocked) {
+      while (this._isLocked) {
         const EVENT = this._scheduler.dequeue();
 
-        if (!EVENT) {
-          this._isLocked = true;
-        }
+        this._logger.writeLogMessage(`Executing event ${EVENT}`);
+        this._isLocked = false;
       }
+    this._frameId = requestAnimationFrame(() => this._tick());
     //   const CURRENT_TIME = Date.now();
     //   let delta = CURRENT_TIME - this._lastTick;
     //

@@ -25,17 +25,26 @@ class Command {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-
+  _type;
+  _message;
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  get type() {
+    return this._type;
+  }
+
+  get message() {
+    return this._message;
+  }
 
   /**
    * Command
    * @constructor
    */
-  constructor() {
-
+  constructor(type, message) {
+    this._type = type;
+    this._message = message;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -55,8 +64,8 @@ class Command {
    *
    * @return {Command} - A new command instance.
    */
-  static createInstance() {
-    return new Command();
+  static createInstance(type, message) {
+    return new Command(type, message);
   }
 }
 
