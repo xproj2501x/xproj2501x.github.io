@@ -104,12 +104,14 @@ class UserInterface {
     this._messageService = messageService;
     this._container = container;
     this._screens = [];
+    document.addEventListener('keydown', (event) => this.handleInput(event));
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   handleInput(event) {
+    console.log(event);
     const SCREEN = this._screens[this._screens.length - 1];
     const RESULT = SCREEN.handleInput(event);
 

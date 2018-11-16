@@ -5,11 +5,15 @@ import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import UserInterface from '../../user-interface';
 import Engine from '../../engine';
 import MainScreen from '../../game/screens/main-screen';
 =======
 >>>>>>> e5c55aefc011c4cc85ce8fcd177c66915441a001
+=======
+import Game from '../../game';
+>>>>>>> 8de6d57fab7d8a5d6744c7eb7158cbcd2d91e950
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -49,9 +53,9 @@ class App {
   /**
    * The game manager for the application.
    * @private
-   * @type {GameManager}
+   * @type {Game}
    */
-  _gameManager;
+  _game;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -89,6 +93,8 @@ class App {
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
+
+    this._game = Game.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
   }
 
   //////////////////////////////////////////////////////////////////////////////
