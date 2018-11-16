@@ -74,16 +74,10 @@ class DataManager {
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
-   * @param {EntityManager} entityManager - The entity manager for the simulation.
-   * @param {ComponentManager} componentManager - The component manager for the simulation.
-   * @param {array} templates - A collection of assemblage templates for the simulation.
    */
-  constructor(logService, messageService, entityManager, componentManager, templates) {
+  constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
-    this._entityManager = entityManager;
-    this._componentManager = componentManager;
-    this._templates = templates;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -158,16 +152,11 @@ class DataManager {
    * @static
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
-   * @param {array} componentTemplates -
-   * @param {array} assemblageTemplates -
    *
    * @return {DataManager} A new data manager instance.
    */
-  static createInstance(logService, messageService, componentTemplates, assemblageTemplates) {
-    const ENTITY_MANAGER = EntityManager.createInstance(logService);
-    const COMPONENT_MANAGER = ComponentManager.createInstance(logService, componentTemplates);
-
-    return new DataManager(logService, messageService, ENTITY_MANAGER, COMPONENT_MANAGER, assemblageTemplates);
+  static createInstance(logService, messageService) {
+    return new DataManager(logService, messageService);
   }
 }
 

@@ -1,113 +1,109 @@
 /**
- * Game
+ * MainScreen
  * ===
  *
- * @module game
+ * @module game.Screens.MainScreen
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import DataManager from '../data-manager';
-import Engine from '../engine';
-import UserInterface from '../user-interface';
-import {SCREEN} from './screens';
+import Screen from '../../user-interface/screen';
+import Command from '../../common/services/message/command';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const CONTAINER_ID = 'game-wrapper';
+const OPTIONS = {
+  width: 80,
+  height: 25,
+  fontSize: 15,
+  fontFamily: 'monospace'
+};
 
+const KEY = {
+  UP: 'w',
+  DOWN: 's',
+  LEFT: 'a',
+  RIGHT: 'd'
+};
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Game
+ * MainScreen
  * @class
+ * @extends Screen
  */
-class Game {
+class MainScreen extends Screen {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * The logger for the class.
-   * @private
-   * @type {Logger}
-   */
-  _logger;
-
-  /**
-   * The message service for the simulation.
-   * @private
-   * @type {MessageService}
-   */
-  _messageService;
-
-  /**
-   * @private
-   * @type {DataManager}
-   */
-  _dataManager;
-
-  /**
-   * @private
-   * @type {Engine}
-   */
-  _engine;
-
-  /**
-   * @private
-   * @type {UserInterface}
-   */
-  _userInterface;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-
   /**
-   * Game
+   * MainScreen
    * @constructor
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {string} id - The id of the screen.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the screen.
    */
-  constructor(logService, messageService) {
-    this._logger = logService.registerLogger(this.constructor.name);
-    this._messageService = messageService;
-    this._dataManager = DataManager.createInstance(logService, messageService);
-    this._engine = Engine.createInstance(logService, messageService);
-    this._userInterface = UserInterface.createInstance(logService, messageService, CONTAINER_ID);
+  constructor(id, canvas) {
+    super(id, canvas);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  start() {
+  handleInput(input) {
+    let command;
 
+    switch (input) {
+      case KEY.UP:
+        command = Command.createInstance('INPUT_COMMAND', {action: 'MOVE', direction: [0, -1], speed: 1});
+        break;
+      case KEY.DOWN:
+        command = Command.createInstance('INPUT_COMMAND', {action: 'MOVE', direction: [0, 1], speed: 1});
+        break;
+      case KEY.LEFT:
+        command = Command.createInstance('INPUT_COMMAND', {action: 'MOVE', direction: [-1, 0], speed: 1});
+        break;
+      case KEY.RIGHT:
+        command = Command.createInstance('INPUT_COMMAND', {action: 'MOVE', direction: [1, 0], speed: 1});
+        break;
+      default:
+        break;
+    }
+    return command;
   }
-
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+  _refresh() {
 
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {string} id - The id of the screen.
+   * @param {HTMLElement} container - The HTML container for the screen.
    *
-   * @return {Game} - A new display manager instance.
+   * @return {MainScreen} A new screen instance.
    */
-  static createInstance(logService, messageService) {
-    return new Game(logService, messageService);
+  static createInstance(id, container) {
+    const CANVAS = document.createElement('canvas');
+
+    container.appendChild(CANVAS);
+    return new MainScreen(id, CANVAS);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Game;
+export default MainScreen;

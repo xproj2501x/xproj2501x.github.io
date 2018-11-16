@@ -4,9 +4,12 @@
 import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
+<<<<<<< HEAD
 import UserInterface from '../../user-interface';
 import Engine from '../../engine';
 import MainScreen from '../../game/screens/main-screen';
+=======
+>>>>>>> e5c55aefc011c4cc85ce8fcd177c66915441a001
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -55,12 +58,15 @@ class App {
   //////////////////////////////////////////////////////////////////////////////
 
   constructor() {
+<<<<<<< HEAD
     const ELEMENT = document.getElementById('game-wrapper');
 
     this._engine = Engine.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
     this._userInterface = UserInterface.createInstance(LOG_SERVICE, MESSAGE_SERVICE, 'game-wrapper');
     this._userInterface.pushScreen(MainScreen.createInstance('main', ELEMENT));
     this._engine.start();
+=======
+>>>>>>> e5c55aefc011c4cc85ce8fcd177c66915441a001
     const MENU_BUTTON = document.getElementById('menu-button');
     const INFO_BUTTON = document.getElementById('info-button');
     const LINKS = document.getElementsByClassName('o-nav__menu__item');
@@ -77,8 +83,6 @@ class App {
           const PATH_NAME = event.target.innerText.toLowerCase();
 
           window.history.pushState({}, PATH_NAME, window.location.origin + '/' + PATH_NAME.split(' ').join('-'));
-          this._gameManager.start(PATH_NAME.toUpperCase().split(' ').join('_'));
-
         });
       }
     }

@@ -3,8 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 import {expect} from 'chai';
 import {stub} from 'sinon';
-import EntityManager from '../../src/data/entity-manager';
-import Entity from '../../src/data/entity';
+import EntityManager from '../../src/data-manager/entity-manager';
+import Entity from '../../src/data-manager/entity';
 import LogService from '../../src/common/services/log';
 
 ////////////////////////////////////////////////////////////////////////////////

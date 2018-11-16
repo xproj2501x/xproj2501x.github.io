@@ -1,8 +1,8 @@
 /**
- * Mouse
+ * Screen
  * ===
  *
- * @module inputManager.Mouse
+ * @module screen
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,50 +17,94 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Mouse
- * @class
+ * Screen
+ * @interface
  */
-class Mouse {
+class Screen {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * The id of the screen.
+   * @private
+   * @type {string}
+   */
+  _id;
 
+  /**
+   * The canvas element for the screen.
+   * @private
+   * @type {HTMLCanvasElement}
+   */
+  _canvas;
+
+  _context;
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-
   /**
-   * Mouse
+   * Screen
    * @constructor
+   * @param {string} id - The id of the screen.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the screen.
    */
-  constructor() {
-
+  constructor(id, canvas) {
+    this._id = id;
+    this._canvas = canvas;
+    this._context = this._canvas.getContext('2d');
+    this._context.font = '16px monospace';
+    this._context.textAlign = 'center';
+    this._context.textBaseline = 'middle';
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   *
+   * @public
+   * @abstract
+   * @param {object} input
+   *
+   * @return {Command}
+   */
+  handleInput(input) {
 
+  }
+
+  render(sprites) {
+    sprites = sprites || [1];
+    sprites.forEach((sprite) => {
+      this._context.fillText('mnop', 25, 25);
+    });
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+  _refresh() {
 
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
    * @static
+   * @param {string} id - The id of the screen.
+   * @param {HTMLElement} container - The HTML container for the screen.
    *
-   * @return {Mouse} - A new mouse instance.
+   * @return {Screen} A new screen instance.
    */
-  static createInstance() {
-    return new Mouse();
+  static createInstance(id, container) {
+    const CANVAS = document.createElement('canvas');
+
+    container.appendChild(CANVAS);
+    return new Screen(id, CANVAS);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Mouse;
+export default Screen;

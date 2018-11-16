@@ -1,72 +1,72 @@
 /**
- * Keyboard
+ * PositionComponent
  * ===
  *
- * @module inputManager.Keyboard
+ * @module game.Components.PositionComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Key from './key';
+import Component from '../../data-manager/component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const KEY_DOWN = 'keydown';
-const KEY_UP = 'keyup';
+const TEMPLATE = {
+  x: 'number',
+  y: 'number'
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Keyboard
+ * PositionComponent
  * @class
+ * @extends Component
  */
-class Keyboard {
+class PositionComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {array}
-   */
-  _keys;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
    * @public
-   * @readonly
-   * @return {array}
+   * @reaodnly
+   * @return {number}
    */
-  get keys() {
-    return this._keys;
+  get x() {
+    return this.state.x;
   }
 
   /**
-   * Keyboard
-   * @constructor
+   * @public
+   * @readonly
+   * @return {number}
    */
-  constructor() {
-    this._keys = [];
+  get y() {
+    return this.state.y;
+  }
+
+  /**
+   * PositionComponent
+   * @constructor
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
+   */
+  constructor(id, type, state) {
+    super(id, type, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  start() {
-    this._keys = [];
-    document.addEventListener(KEY_DOWN, (event) => this.onKey(event));
-    document.addEventListener(KEY_UP, (event) => this.onKey(event));
-  }
-
-  stop() {
-    document.removeEventListener(KEY_DOWN, (event) => this.onKey(event));
-    document.removeEventListener(KEY_UP, (event) => this.onKey(event));
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -75,18 +75,23 @@ class Keyboard {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the PositionComponent.
+   * @param {object} template - The template for the PositionComponent.
+   * @param {object} state - The state of the PositionComponent.
    *
-   * @return {Keyboard} - A new keyboard instance.
+   * @return {PositionComponent} A new position component instance.
    */
-  static createInstance() {
-    return new Keyboard();
+  static createInstance(id, type, template, state) {
+    return new PositionComponent(id, type, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Keyboard;
+export default PositionComponent;

@@ -1,5 +1,5 @@
 /**
- * MainScreen
+ * Main Screen
  * ===
  *
  * @module game.Screens.MainScreen
@@ -9,23 +9,22 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import Screen from '../../user-interface/screen';
-import Command from '../../common/services/message/command';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 const OPTIONS = {
+  height: 60,
   width: 80,
-  height: 25,
+  spacing: 16,
+  scale: 1,
+  xOffset: 0,
+  yOffset: 0,
   fontSize: 15,
-  fontFamily: 'monospace'
-};
-
-const KEY = {
-  UP: 'w',
-  DOWN: 's',
-  LEFT: 'a',
-  RIGHT: 'd'
+  fontFamily: 'monospace',
+  fontStyle: '',
+  foregroundColor: '#FFF',
+  backgroundColor: '#000'
 };
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -44,19 +43,25 @@ class MainScreen extends Screen {
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * MainScreen
    * @constructor
-   * @param {string} id - The id of the screen.
-   * @param {HTMLCanvasElement} canvas - The canvas element for the screen.
+   * @param {string} id - The id of the MainScreen.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the MainScreen.
    */
   constructor(id, canvas) {
     super(id, canvas);
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   *
+   * @param input
+   */
   handleInput(input) {
     let command;
 
@@ -78,22 +83,21 @@ class MainScreen extends Screen {
     }
     return command;
   }
+
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  _refresh() {
 
-  }
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method.
    * @static
-   * @param {string} id - The id of the screen.
+   * @param {string} id - The id of the MainScreen.
    * @param {HTMLElement} container - The HTML container for the screen.
    *
-   * @return {MainScreen} A new screen instance.
+   * @return {MainScreen} A new main screen instance.
    */
   static createInstance(id, container) {
     const CANVAS = document.createElement('canvas');

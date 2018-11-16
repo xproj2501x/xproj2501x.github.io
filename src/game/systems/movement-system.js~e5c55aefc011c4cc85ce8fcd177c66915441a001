@@ -1,13 +1,14 @@
 /**
- * Key
+ * Movement System
  * ===
  *
- * @module inputManager.Key
+ * @module game.Systems.MovementSystem
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import System from '../../engine/system';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -17,60 +18,45 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Key
+ * MovementSystem
  * @class
+ * @extends System
  */
-class Key {
+class MovementSystem extends System {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {number}
-   */
-  _code;
-
-  /**
-   * @private
-   * @type {boolean}
-   */
-  _isDown;
-
-  /**
-   * @private
-   * @type {boolean}
-   */
-  _altDown;
-
-  /**
-   * @private
-   * @type {boolean}
-   */
-  _ctrlDown;
-
-  /**
-   * @private
-   * @type {boolean}
-   */
-  _shiftDown;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Key
+   * MovementSystem
    * @constructor
-   * @param {KeyboardEvent} event - A keyboard event sent to the DOM.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {number} key - The assemblage key for the MovementSystem.
    */
-  constructor(event) {
-
+  constructor(logService, messageService, key) {
+    super(logService, messageService, key);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Update routine for the system.
+   * @public
+   */
+  update(assemblages) {
+
+  }
+
+  handleEvent(event) {
+    
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -82,16 +68,16 @@ class Key {
   /**
    * Static factory method.
    * @static
-   * @param {KeyboardEvent} event - A keyboard event sent to the DOM.
    *
-   * @return {Key} - A new Key instance.
+   * @return {MovementSystem} A new movement system instance.
    */
-  static createInstance(event) {
-    return new Key(event);
+  static createInstance() {
+
   }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Key;
+export default MovementSystem;
