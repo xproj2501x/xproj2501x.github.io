@@ -9,6 +9,7 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import Screen from '../../user-interface/screen';
+import Command from '../../common/services/message/command';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -69,7 +70,6 @@ class MainScreen extends Screen {
    */
   constructor(id, canvas) {
     super(id, canvas);
-
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,6 @@ class MainScreen extends Screen {
   handleInput(input) {
     let command;
 
-<<<<<<< HEAD
     switch (input) {
       case KEY.UP:
         command = Command.createInstance('INPUT_COMMAND', {action: 'MOVE', direction: [0, -1], speed: 1});
@@ -95,31 +94,11 @@ class MainScreen extends Screen {
         break;
       case KEY.RIGHT:
         command = Command.createInstance('INPUT_COMMAND', {action: 'MOVE', direction: [1, 0], speed: 1});
-=======
-    switch(input.key.toLowerCase()) {
-      case KEY.UP:
-        console.log('up');
-        break;
-      case KEY.DOWN:
-        console.log('down');
-        break;
-      case KEY.LEFT:
-        console.log('left');
-        break;
-      case KEY.RIGHT:
-        console.log('right');
-        break;
-      case KEY.CHARACTER:
-        console.log('character');
->>>>>>> 8de6d57fab7d8a5d6744c7eb7158cbcd2d91e950
         break;
       default:
         break;
     }
-<<<<<<< HEAD
     return command;
-=======
->>>>>>> 8de6d57fab7d8a5d6744c7eb7158cbcd2d91e950
   }
 
   //////////////////////////////////////////////////////////////////////////////
