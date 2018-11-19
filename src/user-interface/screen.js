@@ -32,6 +32,7 @@ const OPTIONS = {
 /**
  * Screen
  * @class
+ * @interface
  */
 class Screen {
 

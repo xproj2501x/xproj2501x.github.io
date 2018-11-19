@@ -4,7 +4,7 @@
 import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
-import Game from '../../game';
+import World from '../../game/models/world';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -41,13 +41,6 @@ class App {
    */
   _infoPanel;
 
-  /**
-   * The game manager for the application.
-   * @private
-   * @type {Game}
-   */
-  _game;
-
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
@@ -75,8 +68,6 @@ class App {
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
-
-    this._game = Game.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -110,4 +101,34 @@ class App {
 
 window.addEventListener('load', (event) => {
   const APP = App.createInstance();
+  const WORLD = World.createInstance();
+  // const STARTING_POPULATION = 150;
+  // const POPULATION = [];
+  // const MATING_POOL = [];
+
+  WORLD.step();
+  WORLD.step();
+  // for (let idx = 0; idx < STARTING_POPULATION; idx++) {
+  //   const DNA = [];
+  //
+  //   for (let jdx = 0; jdx < TARGET.length; jdx++) {
+  //     DNA[idx] = CHARACTERS.substr((Math.floor(Math.random() * CHARACTERS.length)), 1);
+  //   }
+  //   const CREATURE = Creature.createInstance(DNA.join(''));
+  //   let score = 0;
+  //
+  //   POPULATION.push(CREATURE);
+  //   for (let jdx = 0; jdx < CREATURE.genes.length; jdx++) {
+  //     if (CREATURE.genes[jdx] === TARGET[jdx]) {
+  //       score++;
+  //     }
+  //   }
+  //   const FITNESS = score / TARGET.length;
+  //
+  //   for (let jdx = 0; jdx < (FITNESS * 100); jdx++) {
+  //     MATING_POOL.push(CREATURE);
+  //   }
+  //
+  // }
+
 });

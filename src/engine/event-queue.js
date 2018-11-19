@@ -25,6 +25,7 @@ class EventQueue {
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * @private
    * @type {number}
@@ -97,7 +98,7 @@ class EventQueue {
    */
   dequeue() {
     if (!this._events.length) {return null;}
-    const TIME = this._eventTimes.pop();
+    const TIME = this._eventTimes.splice(0, 1)[0];
 
     if (TIME > 0) {
       this._time += TIME;
@@ -105,20 +106,19 @@ class EventQueue {
         this._eventTimes[idx] -= TIME;
       }
     }
-    return this._events.pop();
+    return this._events.splice(0, 1)[0];
   }
 
   /**
    * Enqueues an event based on its time.
    * @public
    * @param {object} event - The event to add to the queue.
-   * @param {number} time - The time the event should occur.
    */
   enqueue(event, time) {
     let index = this._events.length;
 
-    for (let idx = 0; idx < this._eventTimes.length; idx++) {
-      if (this._eventTimes[idx] > time) {
+    for (let idx = 0; idx < this._events.length; idx++) {
+      if (this._eventTimes > time) {
         index = idx;
         break;
       }

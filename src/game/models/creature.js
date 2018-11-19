@@ -1,20 +1,13 @@
 /**
- * Game
+ * Creature
  * ===
  *
- * @module game
+ * @module creature
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import DataManager from '../data-manager';
-import Engine from '../engine';
-import UserInterface from '../user-interface';
-import {SCREEN} from './screens';
-import {COMPONENT, COMPONENT_TYPE} from './components';
-import {ASSEMBLAGE, ASSEMBLAGE_TYPE} from './assemblages';
-import {SYSTEM, SYSTEM_TYPE} from './systems';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -24,70 +17,36 @@ import {SYSTEM, SYSTEM_TYPE} from './systems';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Game
+ * Creature
  * @class
  */
-class Game {
+class Creature {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * The logger for the class.
-   * @private
-   * @type {Logger}
-   */
-  _logger;
-
-  /**
-   * The message service for the simulation.
-   * @private
-   * @type {MessageService}
-   */
-  _messageService;
-
-  /**
-   * @private
-   * @type {DataManager}
-   */
-  _dataManager;
-
-  /**
-   * @private
-   * @type {Engine}
-   */
-  _engine;
-
-  /**
-   * @private
-   * @type {UserInterface}
-   */
-  _userInterface;
+  _genes;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  get genes() {
+    return this._genes;
+  }
 
   /**
-   * Game
+   * Creature
    * @constructor
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
    */
-  constructor(logService, messageService) {
-    this._logger = logService.registerLogger(this.constructor.name);
-    this._messageService = messageService;
-    this._dataManager = DataManager.createInstance(logService, messageService);
-    this._engine = Engine.createInstance(logService, messageService);
-    this._userInterface = UserInterface.createInstance(logService, messageService);
-    this.start();
+  constructor(genes) {
+    this._genes = genes;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  start() {
-    this._engine._update();
+  reproduce(parent) {
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -100,17 +59,14 @@ class Game {
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
    *
-   * @return {Game} - A new display manager instance.
    */
-  static createInstance(logService, messageService) {
-    return new Game(logService, messageService);
+  static createInstance(genes) {
+    return new Creature(genes);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Game;
+export default Creature;

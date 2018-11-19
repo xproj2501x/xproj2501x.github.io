@@ -1,93 +1,92 @@
 /**
- * Game
+ * World
  * ===
  *
- * @module game
+ * @module world
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import DataManager from '../data-manager';
-import Engine from '../engine';
-import UserInterface from '../user-interface';
-import {SCREEN} from './screens';
-import {COMPONENT, COMPONENT_TYPE} from './components';
-import {ASSEMBLAGE, ASSEMBLAGE_TYPE} from './assemblages';
-import {SYSTEM, SYSTEM_TYPE} from './systems';
+import Creature from './creature';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const CHARACTERS = 'abcdefghijklmnopqrstuvwxyz ';
+const TARGET = 'to be or not to be';
+const TOTAL_POPULATION = 150;
+const MUTATION_RATE = 0.01;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Game
+ * World
  * @class
  */
-class Game {
+class World {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * The logger for the class.
-   * @private
-   * @type {Logger}
-   */
-  _logger;
-
-  /**
-   * The message service for the simulation.
-   * @private
-   * @type {MessageService}
-   */
-  _messageService;
-
-  /**
-   * @private
-   * @type {DataManager}
-   */
-  _dataManager;
-
-  /**
-   * @private
-   * @type {Engine}
-   */
-  _engine;
-
-  /**
-   * @private
-   * @type {UserInterface}
-   */
-  _userInterface;
-
+  _generation;
+  _population;
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Game
+   * World
    * @constructor
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
    */
-  constructor(logService, messageService) {
-    this._logger = logService.registerLogger(this.constructor.name);
-    this._messageService = messageService;
-    this._dataManager = DataManager.createInstance(logService, messageService);
-    this._engine = Engine.createInstance(logService, messageService);
-    this._userInterface = UserInterface.createInstance(logService, messageService);
-    this.start();
+  constructor() {
+    this._generation = 0;
+    this._population = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  start() {
-    this._engine._update();
+  step() {
+    if (this._population[this._generation - 1]) {
+      const CURRENT_POPULATION = this._population[this._generation - 1];
+      const MATING_POOL = [];
+
+      for (let idx = 0; idx < CURRENT_POPULATION.length; idx++) {
+        const CREATURE = CURRENT_POPULATION[idx];
+        let score = 0;
+
+        for (let jdx = 0; jdx < CREATURE.genes.length; jdx++) {
+          if (CREATURE.genes[jdx] === TARGET[jdx]) {
+            score++;
+          }
+        }
+        const FITNESS = score / TARGET.length;
+
+        for (let jdx = 0; jdx < (FITNESS * 100); jdx++) {
+          MATING_POOL.push(CREATURE);
+        }
+      }
+      for (let idx = 0; idx < CURRENT_POPULATION.length; idx++) {
+
+      }
+    } else {
+      const CURRENT_POPULATION = [];
+
+      for (let idx = 0; idx < TOTAL_POPULATION; idx++) {
+        const DNA = [];
+
+        for (let jdx = 0; jdx < TARGET.length; jdx++) {
+          DNA[idx] = CHARACTERS.substr((Math.floor(Math.random() * CHARACTERS.length)), 1);
+        }
+        const CREATURE = Creature.createInstance(DNA.join(''));
+
+        CURRENT_POPULATION.push(CREATURE);
+        this._population[this._generation] = CURRENT_POPULATION;
+      }
+    }
+    this._generation++;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -100,17 +99,14 @@ class Game {
   /**
    * Static factory method.
    * @static
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
    *
-   * @return {Game} - A new display manager instance.
    */
-  static createInstance(logService, messageService) {
-    return new Game(logService, messageService);
+  static createInstance() {
+    return new World();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Game;
+export default World;

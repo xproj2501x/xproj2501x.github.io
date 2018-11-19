@@ -1,16 +1,37 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import PositionComponent from './position-component';
+import EnergyComponent from './energy-component';
 import GlyphComponent from './glyph-component';
 import HealthComponent from './health-component';
-import EnergyComponent from './energy-component';
+import PositionComponent from './position-component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+/**
+ * Enum from component type
+ * @readonly
+ * @enum {number}
+ */
+const COMPONENT_TYPE = {
+  ENERGY: 0,
+  GLYPH: 1,
+  HEALTH: 2,
+  POSITION: 3
+};
 
+/**
+ * @constant
+ * @type {array}
+ */
+const COMPONENT = [
+  EnergyComponent,
+  GlyphComponent,
+  HealthComponent,
+  PositionComponent
+];
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {};
+export {COMPONENT, COMPONENT_TYPE};

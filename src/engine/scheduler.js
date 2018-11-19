@@ -77,15 +77,22 @@ class Scheduler {
     this._currentEvent = null;
   }
 
+  /**
+   * Dequeues an item from the scheduler.
+   * @return {object}
+   */
   dequeue() {
-    this._currentEvent = this._eventQueue.dequeue();
-    return this._currentEvent;
+    const EVENT = this._eventQueue.dequeue();
+
+    if (this._repeatQueue.indexOf(EVENT) >= 0) {
+      this._eventQueue.enqueue(EVENT);
+    }
+    return EVENT;
   }
 
   /**
    * Enqueues an event in the event queue
    * @param {object} event
-   * @param {number} time -
    * @param {boolean} repeat
    */
   enqueue(event, time, repeat) {
