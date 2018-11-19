@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import System from '../../engine/system';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -18,7 +17,14 @@ import System from '../../engine/system';
  * @constant
  * @type {number}
  */
-const MAX_LENGTH = 64;
+const SEED_LENGTH = 64;
+
+/**
+ * The maximum length of a result returned from the rng.
+ * @constant
+ * @type {number}
+ */
+const RESULT_LENGTH = 16;
 
 /**
  * The multiplier used when generating a new seed.
@@ -51,7 +57,7 @@ const FORMAT = {
  * @class
  * @implements System
  */
-class PRNGSystem extends System {
+class PRNGSystem {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -70,12 +76,10 @@ class PRNGSystem extends System {
   /**
    * PRNGSystem
    * @constructor
-   * @param {string} initialSeed - The initial value for the prng seed.
+   * @param {string} seed - TThe initial seed for the pseudo random number generator.
    */
-  constructor(initialSeed) {
-    super();
-    this._seed = initialSeed;
-    this._advanceSeed();
+  constructor(seed) {
+    this._seed = seed.substr(seed.length - SEED_LENGTH, SEED_LENGTH);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -89,14 +93,14 @@ class PRNGSystem extends System {
   }
 
   /**
-   * Generates a 32 bit pseudo random number and advances the seed one step.
+   * Returns the first 16 digits of the seed.
    *
    * @return {string}
    */
   getLinearValue() {
-    const RESULT = this._seed.substr(0, MAX_LENGTH);
-
+    const RESULT = this._seed.substr(0, RESULT_LENGTH);
     this._advanceSeed();
+
     return RESULT;
   }
 
@@ -111,7 +115,7 @@ class PRNGSystem extends System {
     const RESULT = MULTIPLIER * parseInt(this._seed, FORMAT.BIN) + ADDEND;
     const RESULT_BIN = RESULT.toString(FORMAT.BIN);
 
-    this._seed = RESULT_BIN.substr(0, RESULT_BIN.length - MAX_LENGTH);
+    this._seed = RESULT_BIN.substr(RESULT_BIN.length - SEED_LENGTH, SEED_LENGTH);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -120,14 +124,14 @@ class PRNGSystem extends System {
   /**
    * Static factory method
    * @static
-   * @param {number} time - A timestamp used to generate the initial seed.
+   * @param {number} seed - The initial seed for the pseudo random number generator.
    *
    * @return {PRNGSystem}
    */
-  static createInstance(time) {
-    const INITIAL_SEED = (Date.now() - time).toString(FORMAT.BIN);
+  static createInstance(seed) {
+    seed = seed || Date.now();
 
-    return new PRNGSystem(INITIAL_SEED);
+    return new PRNGSystem(seed.toString(FORMAT.BIN));
   }
 }
 

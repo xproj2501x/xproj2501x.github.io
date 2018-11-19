@@ -69,6 +69,9 @@ class Log {
     this._data = [];
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Public Methods
+  ////////////////////////////////////////////////////////////////////////////////
   /**
    * Writes a message to the log.
    * @public
@@ -88,9 +91,6 @@ class Log {
     this._data.push(log);
     console.log(log);
   }
-  ////////////////////////////////////////////////////////////////////////////////
-  // Public Methods
-  ////////////////////////////////////////////////////////////////////////////////
 
   /**
    * Clears the log.
@@ -106,7 +106,7 @@ class Log {
   /**
    * Static factory method
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {number} level - The minimum level for log messages.
    *
    * @return {Log} - A new log instance.
    */

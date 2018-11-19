@@ -68,6 +68,7 @@ class Engine {
   constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
+    this._messageService.subscribe('INPUT_COMMAND', (command) => this.handleCommand(command));
     this._scheduler = Scheduler.createInstance();
 
   }
@@ -76,6 +77,14 @@ class Engine {
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
 
+  handleCommand(command) {
+    if (!this._isLocked) {
+      this._logger.writeLogMessage(`Handling command: ${command}`);
+      this._isLocked = true;
+
+      this._scheduler.enqueue(command.message, 1, false);
+    }
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////

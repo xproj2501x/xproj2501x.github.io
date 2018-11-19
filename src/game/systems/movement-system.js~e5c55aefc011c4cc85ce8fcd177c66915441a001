@@ -1,13 +1,14 @@
 /**
- * Command
+ * Movement System
  * ===
  *
- * @module engine.Command
+ * @module game.Systems.MovementSystem
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import System from '../../engine/system';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -17,10 +18,11 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Command
+ * MovementSystem
  * @class
+ * @extends System
  */
-class Command {
+class MovementSystem extends System {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -31,16 +33,30 @@ class Command {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Command
+   * MovementSystem
    * @constructor
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {MessageService} messageService - The message service for the simulation.
+   * @param {number} key - The assemblage key for the MovementSystem.
    */
-  constructor() {
-
+  constructor(logService, messageService, key) {
+    super(logService, messageService, key);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Update routine for the system.
+   * @public
+   */
+  update(assemblages) {
+
+  }
+
+  handleEvent(event) {
+    
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -53,14 +69,15 @@ class Command {
    * Static factory method.
    * @static
    *
-   * @return {Command} - A new command instance.
+   * @return {MovementSystem} A new movement system instance.
    */
   static createInstance() {
-    return new Command();
+
   }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Command;
+export default MovementSystem;

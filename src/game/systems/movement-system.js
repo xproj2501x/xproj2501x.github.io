@@ -2,13 +2,15 @@
  * Movement System
  * ===
  *
- * @module game.Systems.MovementSystem
+ * @module ruleSystem
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import System from '../../engine/system';
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -17,10 +19,10 @@ import System from '../../engine/system';
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
  * MovementSystem
  * @class
- * @extends System
  */
 class MovementSystem extends System {
 
@@ -35,28 +37,23 @@ class MovementSystem extends System {
   /**
    * MovementSystem
    * @constructor
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {number} key - The assemblage key for the MovementSystem.
    */
-  constructor(logService, messageService, key) {
-    super(logService, messageService, key);
+  constructor(logService) {
+    super(logService);
+    this._cycle = 0;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Update routine for the system.
-   * @public
+   * The update routine for the system.
+   * @param {array} assemblages - A collection of assemblages used by system.
    */
-  update(assemblages) {
+  update(event) {
 
   }
 
-  handleEvent(event) {
-    
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -68,13 +65,13 @@ class MovementSystem extends System {
   /**
    * Static factory method.
    * @static
+   * @param {MessageService} messageService - The message service for the simulation.
    *
-   * @return {MovementSystem} A new movement system instance.
+   * @return {MovementSystem} A new game of life instance.
    */
-  static createInstance() {
-
+  static createInstance(messageService) {
+    return new MovementSystem(messageService);
   }
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////

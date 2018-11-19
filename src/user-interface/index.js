@@ -119,10 +119,17 @@ class UserInterface {
   //////////////////////////////////////////////////////////////////////////////
   handleInput(event) {
     const SCREEN = this._screens[this._screens.length - 1];
-    const RESULT = SCREEN.handleInput(event);
+    const RESULT = SCREEN.handleInput(event.key);
 
     if (RESULT) {
-
+      switch (RESULT._type) {
+        case COMMAND.PUSH_SCREEN:
+          break;
+        case COMMAND.POP_SCREEN:
+          break;
+        default:
+          this._messageService.send(RESULT._type, RESULT);
+      }
     }
   }
 
