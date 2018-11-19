@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MILLISECONDS, FRAMES_PER_SECOND, FRAME_DURATION, MAX_FRAME_SKIP, MAX_SKIP_DURATION} from './constants';
+import {COMMAND, MILLISECONDS, FRAMES_PER_SECOND, FRAME_DURATION, MAX_FRAME_SKIP, MAX_SKIP_DURATION} from './constants';
+import Screen from './screen';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const DEFAULT_OPTIONS = {
-  containerId: 'canvas-wrapper',
+const OPTIONS = {
+  containerId: 'game-wrapper',
   height: 60,
   width: 80,
-  spacing: 16,
+  spacing: 4,
   scale: 1,
   fontSize: 15,
   fontFamily: 'monospace',
@@ -112,6 +113,9 @@ class UserInterface {
     this._options = options;
     this._screens = [];
     document.addEventListener('keydown', (event) => this.handleInput(event));
+    this._container = document.getElementById(this._options.containerId);
+    this._canvas = document.createElement('canvas');
+    this._container.appendChild(this._canvas);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -159,8 +163,13 @@ class UserInterface {
    * @param {array} sprites - A collection of sprites to draw to the screen.
    */
   render(sprites) {
-    this._screens.forEach((screen) => {
-      screen.render();
+    this._refresh();
+    const CONTEXT = this._canvas.getContext('2d');
+
+    CONTEXT.fillStyle = '#F00';
+    sprites.forEach((sprite) => {
+      CONTEXT.fillRect(sprite.x * this._options.spacing, sprite.y * this._options.spacing,
+        this._options.spacing, this._options.spacing);
     });
   }
 
@@ -183,7 +192,8 @@ class UserInterface {
     } else {
       spacing = Math.floor(this._container.clientWidth / this._options.width);
     }
-    this._setOptions({spacing: spacing});
+    this._canvas.height = this._options.height * spacing;
+    this._canvas.width = this._options.width * spacing;
   }
 
   /**
@@ -217,8 +227,7 @@ class UserInterface {
    * @return {UserInterface} - A new display manager instance.
    */
   static createInstance(logService, messageService, options) {
-    options = options || DEFAULT_OPTIONS;
-
+    options = options || OPTIONS;
     return new UserInterface(logService, messageService, options);
   }
 }

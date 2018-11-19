@@ -1,75 +1,72 @@
 /**
- * Creature
+ * Energy Component
  * ===
  *
-<<<<<<< HEAD
- * @module creature
-=======
- * @module game.Models.Creature
->>>>>>> e0928f4665218e7e62c7867a1f61bbd75930995d
+ * @module game.Components.EnergyComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import Component from '../../data-manager/component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const MUTATION_RATE = 0.01;
+const TEMPLATE = {
+  value: 'number',
+  damage: 'number'
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Creature
+ * EnergyComponent
  * @class
+ * @extends Component
  */
-class Creature {
+class EnergyComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @private
-   * @type {string}
-   */
-  _genes;
-  _x;
-  _y;
-
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  get genes() {
-    return this._genes;
-  }
-
-  get x() {
-    return this._x;
-  }
-
-  get y() {
-    return this._y;
+  /**
+   * @public
+   * @reaodnly
+   * @return {number}
+   */
+  get value() {
+    return this.state.value;
   }
 
   /**
-   * Creature
-   * @constructor
+   * @public
+   * @readonly
+   * @return {number}
    */
-  constructor(genes, x, y) {
-    this._genes = genes;
-    this._x = x;
-    this._y = y;
+  get damage() {
+    return this.state.damage;
+  }
+
+  /**
+   * EnergyComponent
+   * @constructor
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
+   */
+  constructor(id, type, state) {
+    super(id, type, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  reproduce(creature) {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -78,18 +75,23 @@ class Creature {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} template - The template for the component.
+   * @param {object} state - The state of the component.
    *
-   * @return {Creature} A new screen instance.
+   * @return {EnergyComponent} A new energy component instance.
    */
-  static createInstance(genes, x, y) {
-    return new Creature(genes, x, y);
+  static createInstance(id, type, template, state) {
+    return new EnergyComponent(id, type, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Creature;
+export default EnergyComponent;

@@ -1,75 +1,86 @@
 /**
- * Creature
+ * Genes Component
  * ===
  *
-<<<<<<< HEAD
- * @module creature
-=======
- * @module game.Models.Creature
->>>>>>> e0928f4665218e7e62c7867a1f61bbd75930995d
+ * @module game.Components.GenesComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import Component from '../../data-manager/component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const MUTATION_RATE = 0.01;
+const TEMPLATE = {
+  value: 'number',
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Creature
+ * GenesComponent
  * @class
+ * @extends Component
  */
-class Creature {
+class GenesComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @private
-   * @type {string}
-   */
-  _genes;
-  _x;
-  _y;
-
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  get genes() {
-    return this._genes;
+  /**
+   * @public
+   * @reaodnly
+   * @return {number}
+   */
+  get value() {
+    return this.state.value;
   }
 
-  get x() {
-    return this._x;
+  get strength() {
+    return parseInt(this.state.value.substr(0, 8), 2);
   }
 
-  get y() {
-    return this._y;
+  get endurance() {
+    return parseInt(this.state.value.substr(0, 8), 2);
+  }
+
+  get intelligence() {
+
+  }
+
+  get speed() {
+
+  }
+
+  get perception() {
+
+  }
+
+  get aggression() {
+
   }
 
   /**
-   * Creature
+   * GenesComponent
    * @constructor
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
    */
-  constructor(genes, x, y) {
-    this._genes = genes;
-    this._x = x;
-    this._y = y;
+  constructor(id, type, state) {
+    super(id, type, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  reproduce(creature) {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -78,18 +89,23 @@ class Creature {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} template - The template for the component.
+   * @param {object} state - The state of the component.
    *
-   * @return {Creature} A new screen instance.
+   * @return {GenesComponent} A new energy component instance.
    */
-  static createInstance(genes, x, y) {
-    return new Creature(genes, x, y);
+  static createInstance(id, type, template, state) {
+    return new GenesComponent(id, type, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Creature;
+export default GenesComponent;

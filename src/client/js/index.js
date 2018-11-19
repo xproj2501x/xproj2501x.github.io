@@ -6,7 +6,6 @@ import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
 import Game from '../../game';
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,6 +68,9 @@ class App {
     window.onpopstate = () => {
       console.log(`pop: ${window.location.href}`);
     };
+
+    this._game = Game.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
+    this._game.step();
   }
 
   //////////////////////////////////////////////////////////////////////////////

@@ -28,11 +28,11 @@ class Assemblage {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The id of the parent entity.
+   * The parent entity.
    * @private
    * @type {number}
    */
-  _id;
+  _entity;
 
   /**
    * The type of the assemblage.
@@ -40,13 +40,6 @@ class Assemblage {
    * @type {number}
    */
   _type;
-
-  /**
-   * A collection of components attached to the assemblage.
-   * @private
-   * @type {object}
-   */
-  _state;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -58,7 +51,7 @@ class Assemblage {
    * @return {number}
    */
   get id() {
-    return this._id;
+    return this._entity.id;
   }
 
   /**
@@ -78,11 +71,9 @@ class Assemblage {
    * @param {number} type - The type of the assemblage.
    * @param {object} state - The state of the assemblage.
    */
-  constructor(id, type, state, componentManager) {
-    this._id = id;
+  constructor(entity, type) {
+    this._entity = entity;
     this._type = type;
-    this._state = state;
-    this._componentManager = componentManager;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -95,11 +86,11 @@ class Assemblage {
    * @return {object} The state of the component.
    */
   getComponent(type) {
-    return this._state[type];
+    return this._entity.findComponent(type);
   }
 
   updateComponent(type, state) {
-    this._componentManager.updateComponent(this._id, type, state);
+    this._entity.updateComponent(type, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -118,17 +109,9 @@ class Assemblage {
    *
    * @return {Assemblage} A new assemblage instance.
    */
-  static createInstance(type, template, components, componentManager) {
-    const STATE = {};
-    const ID = components[0].id;
+  static createInstance(entity, type) {
 
-    for (let idx = 0; idx < components.length; idx++) {
-      if (components[idx].id !== ID) {
-        throw new Error(`Error: Entity mismatch.`);
-      }
-      STATE[template[idx]] = components[idx].state;
-    }
-    return new Assemblage(ID, type, STATE, componentManager);
+    return new Assemblage(entity, type);
   }
 }
 

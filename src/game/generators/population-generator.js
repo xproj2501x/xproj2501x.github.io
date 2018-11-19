@@ -1,76 +1,68 @@
 /**
- * Creature
+ * Population Generator
  * ===
  *
-<<<<<<< HEAD
- * @module creature
-=======
- * @module game.Models.Creature
->>>>>>> e0928f4665218e7e62c7867a1f61bbd75930995d
+ * @module game.Generators.PopulationGenerator
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-
+import {COMPONENT_TYPE} from '../components';
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const MUTATION_RATE = 0.01;
-
+/**
+  * The default setting for the maxmimum population.
+  * @const
+  @type {number}
+ */
+const MAX_POPULATON = 150;
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Creature
+ * PopulationGenerator
  * @class
  */
-class Creature {
+class PopulationGenerator {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  _prng;
 
-  /**
-   * @private
-   * @type {string}
-   */
-  _genes;
-  _x;
-  _y;
+  _maxPopulation;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-  get genes() {
-    return this._genes;
-  }
-
-  get x() {
-    return this._x;
-  }
-
-  get y() {
-    return this._y;
-  }
-
   /**
-   * Creature
+   * PopulationGenerator
    * @constructor
    */
-  constructor(genes, x, y) {
-    this._genes = genes;
-    this._x = x;
-    this._y = y;
+  constructor(prng, maxPopulation) {
+    this._prng = prng;
+    this._maxPopulation = maxPopulation || MAX_POPULATON;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  reproduce(creature) {
+  generateCreatures() {
+    const CREATURES = [];
 
+    for (let idx = 0; idx < this._maxPopulation; idx++) {
+      const CREATURE = [];
+      const LAST_HALF = this._prng.getLinearValue();
+      const GENES = this._prng.getLinearValue() + LAST_HALF;
+
+      CREATURE.push([COMPONENT_TYPE.GENES, {value: GENES}]);
+
+      CREATURES.push(CREATURE);
+    }
+    return CREATURES;
   }
-
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -82,14 +74,14 @@ class Creature {
    * Static factory method.
    * @static
    *
-   * @return {Creature} A new screen instance.
+   * @return {PopulationGenerator} A new screen instance.
    */
   static createInstance(genes, x, y) {
-    return new Creature(genes, x, y);
+    return new PopulationGenerator(genes, x, y);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Creature;
+export default PopulationGenerator;

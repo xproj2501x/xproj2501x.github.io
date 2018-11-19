@@ -5,33 +5,27 @@ import EnergyComponent from './energy-component';
 import GlyphComponent from './glyph-component';
 import HealthComponent from './health-component';
 import PositionComponent from './position-component';
+import GenesComponent from './genes-component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * Enum from component type
- * @readonly
- * @enum {number}
- */
 const COMPONENT_TYPE = {
-  ENERGY: 0,
+  POSITION : 0,
   GLYPH: 1,
   HEALTH: 2,
-  POSITION: 3
+  ENERGY: 3,
+  GENES: 4
 };
 
-/**
- * @constant
- * @type {array}
- */
 const COMPONENT = [
-  EnergyComponent,
+  PositionComponent,
   GlyphComponent,
   HealthComponent,
-  PositionComponent
+  EnergyComponent,
+  GenesComponent
 ];
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {COMPONENT, COMPONENT_TYPE};
+export {COMPONENT_TYPE, COMPONENT};
