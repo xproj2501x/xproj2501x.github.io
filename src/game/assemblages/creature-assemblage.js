@@ -1,129 +1,81 @@
 /**
- * PRNG System
+ * Creature Assemblage
  * ===
  *
- * @module prngSystem
+ * @module game.Models.CreatureAssemblage
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import Assemblage from '../../data-manager/assemblage';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * The maximum length for a seed value.
- * @constant
- * @type {number}
- */
-const SEED_LENGTH = 64;
-
-const OUTPUT_LENGTH = 16;
-
-/**
- * The multiplier used when generating a new seed.
- * @type {number}
- */
-const MULTIPLIER = 0x5D588B656C078965;
-
-/**
- * The addend used when generating a new seed.
- * @type {number}
- */
-const ADDEND = 0x0000000000269EC3;
-
-/**
- *
- * @constant
- * @enum {number}
- */
-const FORMAT = {
-  BIN: 2,
-  DEC: 10,
-  HEX: 16
-};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * PRNGSystem
+ * CreatureAssemblage
  * @class
- * @implements System
  */
-class PRNGSystem {
+class CreatureAssemblage extends Assemblage {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * The seed value for the pseudo random number generator.
-   * @private
-   * @type {string}
-   */
-  _seed;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  get genes() {
+    return this._genes;
+  }
+
+  get x() {
+    return this._x;
+  }
+
+  get y() {
+    return this._y;
+  }
 
   /**
-   * PRNGSystem
+   * CreatureAssemblage
    * @constructor
-   * @param {string} seed - The initial value for the prng seed.
    */
-  constructor(seed) {
-    this._seed = seed.substr(0, seed.length - SEED_LENGTH);
-    this._advanceSeed();
+  constructor(entity, type) {
+    super(entity, type);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Updates the state
-   */
-  update() {
-    this._advanceSeed();
+  reproduce(creature) {
+
   }
 
-  getLinearValue() {
-    return this._advanceSeed();
-  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Advances the seed value using a linear congruential formula.
-   * @private
-   */
-  _advanceSeed() {
-    const RESULT = MULTIPLIER * parseInt(this._seed, FORMAT.BIN) + ADDEND;
-    const RESULT_BIN = RESULT.toString(FORMAT.BIN);
-
-    this._seed = RESULT_BIN.substr(0, RESULT_BIN.length - SEED_LENGTH);
-    return this._seed.substr(0, OUTPUT_LENGTH);
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method
+   * Static factory method.
    * @static
-   * @param {number} seed - A timestamp used to generate the initial seed.
    *
-   * @return {PRNGSystem}
+   * @return {CreatureAssemblage} A new screen instance.
    */
-  static createInstance(seed) {
-    seed = seed || Date.now();
-
-    return new PRNGSystem(seed.toString(FORMAT.BIN));
+  static createInstance(genes, x, y) {
+    return new CreatureAssemblage(genes, x, y);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default PRNGSystem;
+export default CreatureAssemblage;

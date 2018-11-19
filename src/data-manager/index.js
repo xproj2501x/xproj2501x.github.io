@@ -91,10 +91,11 @@ class DataManager {
   createAssemblage(type, settings) {
     const TEMPLATE = this._findTemplate(type);
     const ENTITY = this._entityManager.createEntity();
+    let component;
 
     for (let idx = 0; idx < TEMPLATE.length; idx++) {
-      this._componentManager.createComponent(ENTITY.id, TEMPLATE[idx], settings[idx]);
-      ENTITY.attachComponent(TEMPLATE[idx]);
+      component = this._componentManager.createComponent(ENTITY.id, TEMPLATE[idx], settings[idx]);
+      ENTITY.attachComponent(component);
     }
   }
 

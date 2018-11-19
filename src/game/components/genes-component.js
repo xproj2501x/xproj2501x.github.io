@@ -1,129 +1,111 @@
 /**
- * PRNG System
+ * Genes Component
  * ===
  *
- * @module prngSystem
+ * @module game.Components.GenesComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import Component from '../../data-manager/component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * The maximum length for a seed value.
- * @constant
- * @type {number}
- */
-const SEED_LENGTH = 64;
-
-const OUTPUT_LENGTH = 16;
-
-/**
- * The multiplier used when generating a new seed.
- * @type {number}
- */
-const MULTIPLIER = 0x5D588B656C078965;
-
-/**
- * The addend used when generating a new seed.
- * @type {number}
- */
-const ADDEND = 0x0000000000269EC3;
-
-/**
- *
- * @constant
- * @enum {number}
- */
-const FORMAT = {
-  BIN: 2,
-  DEC: 10,
-  HEX: 16
+const TEMPLATE = {
+  value: 'number',
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * PRNGSystem
+ * GenesComponent
  * @class
- * @implements System
+ * @extends Component
  */
-class PRNGSystem {
+class GenesComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * The seed value for the pseudo random number generator.
-   * @private
-   * @type {string}
-   */
-  _seed;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @public
+   * @reaodnly
+   * @return {number}
+   */
+  get value() {
+    return this.state.value;
+  }
+
+  get strength() {
+    return parseInt(this.state.value.substr(0, 8), 2);
+  }
+
+  get endurance() {
+    return parseInt(this.state.value.substr(0, 8), 2);
+  }
+
+  get intelligence() {
+
+  }
+
+  get speed() {
+
+  }
+
+  get perception() {
+
+  }
+
+  get aggression() {
+
+  }
 
   /**
-   * PRNGSystem
+   * GenesComponent
    * @constructor
-   * @param {string} seed - The initial value for the prng seed.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} state - The state of the component.
    */
-  constructor(seed) {
-    this._seed = seed.substr(0, seed.length - SEED_LENGTH);
-    this._advanceSeed();
+  constructor(id, type, state) {
+    super(id, type, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Updates the state
-   */
-  update() {
-    this._advanceSeed();
-  }
 
-  getLinearValue() {
-    return this._advanceSeed();
-  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Advances the seed value using a linear congruential formula.
-   * @private
-   */
-  _advanceSeed() {
-    const RESULT = MULTIPLIER * parseInt(this._seed, FORMAT.BIN) + ADDEND;
-    const RESULT_BIN = RESULT.toString(FORMAT.BIN);
-
-    this._seed = RESULT_BIN.substr(0, RESULT_BIN.length - SEED_LENGTH);
-    return this._seed.substr(0, OUTPUT_LENGTH);
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Static factory method
-   * @static
-   * @param {number} seed - A timestamp used to generate the initial seed.
-   *
-   * @return {PRNGSystem}
-   */
-  static createInstance(seed) {
-    seed = seed || Date.now();
 
-    return new PRNGSystem(seed.toString(FORMAT.BIN));
+  /**
+   * Static factory method.
+   * @static
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of the component.
+   * @param {object} template - The template for the component.
+   * @param {object} state - The state of the component.
+   *
+   * @return {GenesComponent} A new energy component instance.
+   */
+  static createInstance(id, type, template, state) {
+    return new GenesComponent(id, type, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default PRNGSystem;
+export default GenesComponent;

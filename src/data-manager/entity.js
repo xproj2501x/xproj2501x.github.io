@@ -39,6 +39,8 @@ class Entity {
    */
   _componentMask;
 
+  _components;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
@@ -81,12 +83,13 @@ class Entity {
    *
    * @throws {ComponentAlreadyAttachedToEntity}
    */
-  attachComponent(type) {
-    if (this._hasComponent(type)) {
+  attachComponent(component) {
+    if (this._hasComponent(component.type)) {
       throw new ComponentAlreadyAttachedToEntity(
-        `Error: Component type ${type} is already attached to entity ${this._id}.`);
+        `Error: Component type ${component.type} is already attached to entity ${this._id}.`);
     }
-    this._componentMask |= (1 << type);
+    this._components[component.type] = component;
+    this._componentMask |= (1 << component.type);
   }
 
   /**
@@ -99,7 +102,16 @@ class Entity {
     if (!this._hasComponent(type)) {
       throw new ComponentNotAttachedToEntity(`Error: Component type ${type} is not attached to entity ${this._id}.`);
     }
+    this._components[type] = null;
     this._componentMask ^= (1 << type);
+  }
+
+  findComponent(type) {
+    return this._components[type];
+  }
+
+  updateComponent(type, state) {
+
   }
 
   //////////////////////////////////////////////////////////////////////////////

@@ -5,12 +5,27 @@ import PositionComponent from './position-component';
 import GlyphComponent from './glyph-component';
 import HealthComponent from './health-component';
 import EnergyComponent from './energy-component';
+import GenesComponent from './genes-component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const COMPONENT_TYPE = {
+  POSITION : 0,
+  GLYPH: 1,
+  HEALTH: 2,
+  ENERGY: 3,
+  GENES: 4
+};
 
+const COMPONENT = [
+  PositionComponent,
+  GlyphComponent,
+  HealthComponent,
+  EnergyComponent,
+  GenesComponent
+];
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {};
+export {COMPONENT_TYPE, COMPONENT};

@@ -8,16 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {MILLISECONDS, FRAMES_PER_SECOND, FRAME_DURATION, MAX_FRAME_SKIP, MAX_SKIP_DURATION} from './constants';
+import {COMMAND, MILLISECONDS, FRAMES_PER_SECOND, FRAME_DURATION, MAX_FRAME_SKIP, MAX_SKIP_DURATION} from './constants';
 import Screen from './screen';
-
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 const OPTIONS = {
+  containerId: 'game-wrapper',
   height: 60,
   width: 80,
-  spacing: 16,
+  spacing: 4,
   scale: 1,
   fontSize: 15,
   fontFamily: 'monospace',
@@ -105,18 +105,26 @@ class UserInterface {
     this._container = container;
     this._screens = [];
     document.addEventListener('keydown', (event) => this.handleInput(event));
+    this._canvas = document.createElement('canvas');
+    this._container.appendChild(this._canvas);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   handleInput(event) {
-    console.log(event);
     const SCREEN = this._screens[this._screens.length - 1];
-    const RESULT = SCREEN.handleInput(event);
+    const RESULT = SCREEN.handleInput(event.key);
 
     if (RESULT) {
-
+      switch (RESULT._type) {
+        case COMMAND.PUSH_SCREEN:
+          break;
+        case COMMAND.POP_SCREEN:
+          break;
+        default:
+          this._messageService.send(RESULT._type, RESULT);
+      }
     }
   }
 
@@ -146,8 +154,12 @@ class UserInterface {
    * @param {array} sprites - A collection of sprites to draw to the screen.
    */
   render(sprites) {
-    this._screens.forEach((screen) => {
-      screen.render();
+    this._refresh();
+    const CONTEXT = this._canvas.getContext('2d');
+
+    CONTEXT.fillStyle = '#F00';
+    sprites.forEach((sprite) => {
+      CONTEXT.fillRect(sprite.x * OPTIONS.spacing, sprite.y * OPTIONS.spacing, OPTIONS.spacing, OPTIONS.spacing);
     });
   }
 
@@ -159,11 +171,15 @@ class UserInterface {
   }
 
   _refresh() {
+    let spacing;
+
     if (this._container.clientHeight > this._container.clientWidth) {
-      const SPACING = Math.floor(this._container.clientHeight / this._options.height);
+      spacing = Math.floor(this._container.clientHeight / OPTIONS.height);
     } else {
-      const SPACING = Math.floor(this._container.clientWidth / this._options.width);
+      spacing = Math.floor(this._container.clientWidth / OPTIONS.width);
     }
+    this._canvas.height = OPTIONS.height * spacing;
+    this._canvas.width = OPTIONS.width * spacing;
   }
 
   /**
@@ -192,12 +208,11 @@ class UserInterface {
    * @static
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
-   * @param {string} containerId - The id for the HTML container element.
    *
    * @return {UserInterface} - A new display manager instance.
    */
-  static createInstance(logService, messageService, containerId) {
-    const CONTAINER = document.getElementById(containerId);
+  static createInstance(logService, messageService) {
+    const CONTAINER = document.getElementById(OPTIONS.containerId);
 
     return new UserInterface(logService, messageService, CONTAINER);
   }
