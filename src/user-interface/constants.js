@@ -2,7 +2,6 @@
  * Constants
  * ===
  *
-<<<<<<< HEAD
  * @module userInterface.Constants
  */
 

@@ -39,6 +39,10 @@ class Entity {
    */
   _componentMask;
 
+  /**
+   * @private
+   * @type {array}
+   */
   _components;
 
   //////////////////////////////////////////////////////////////////////////////
