@@ -9,13 +9,13 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import DataManager from '../data-manager';
+import ComponentManager from '../data-manager/component-manager';
 import Engine from '../engine';
 import UserInterface from '../user-interface';
-import {SCREEN} from './screens';
-import {COMPONENT, COMPONENT_TYPE} from './components';
-import {ASSEMBLAGE, ASSEMBLAGE_TYPE} from './assemblages';
-import {SYSTEM, SYSTEM_TYPE} from './systems';
+import PRNG from '../common/math/prng';
+import GameBuilder from './builders/game-builder';
 import Creature from './models/creature';
+import {COMPONENTS} from './components';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -63,11 +63,12 @@ class Game {
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
+   * @param {DataManager} dataManager - The data manager for the simulation.
    */
-  constructor(logService, messageService) {
+  constructor(logService, messageService, dataManager) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
-    this._dataManager = DataManager.createInstance(logService, messageService);
+    this._dataManager = dataManager;
     this._engine = Engine.createInstance(logService, messageService);
     this._userInterface = UserInterface.createInstance(logService, messageService);
     this._population = [];
@@ -134,7 +135,13 @@ class Game {
    * @return {Game} - A new display manager instance.
    */
   static createInstance(logService, messageService) {
-    return new Game(logService, messageService);
+    const COMPONENT_MANAGER = ComponentManager.createInstance(logService, COMPONENTS);
+    const DATA_MANAGER = DataManager.createInstance(logService, messageService, COMPONENT_MANAGER);
+    const RANDOM_GENERATOR = PRNG.createInstance();
+    const GAME_BUILDER = GameBuilder.createInstance(RANDOM_GENERATOR, DATA_MANAGER);
+
+    GAME_BUILDER.build();
+    return new Game(logService, messageService, DATA_MANAGER);
   }
 }
 

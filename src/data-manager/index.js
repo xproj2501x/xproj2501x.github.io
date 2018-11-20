@@ -74,36 +74,37 @@ class DataManager {
    * @constructor
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
+   * @param {ComponentManager} componentManager - The component manager for the simulation.
    */
-  constructor(logService, messageService) {
+  constructor(logService, messageService, componentManager) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
+    this._entityManager = EntityManager.createInstance(logService);
+    this._componentManager = componentManager;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Creates an entity from an assemblage template.
-   * @param {number} type - The type of assemblage to create.
-   * @param {array} settings - The settings for the assemblage.
+   * Creates an entity with the specified components.
+   * @param {array} components - The settings for the components to attach to the entity.
    */
-  createAssemblage(type, settings) {
-    const TEMPLATE = this._findTemplate(type);
+  createEntity(components) {
     const ENTITY = this._entityManager.createEntity();
-    let component;
 
-    for (let idx = 0; idx < TEMPLATE.length; idx++) {
-      component = this._componentManager.createComponent(ENTITY.id, TEMPLATE[idx], settings[idx]);
-      ENTITY.attachComponent(component);
-    }
+    components.forEach((component) => {
+      const COMPONENT = this._componentManager.createComponent(ENTITY.id, component.type, component.state);
+
+      ENTITY.attachComponent(COMPONENT);
+    });
   }
 
   /**
    * Finds all entities with a specified group of components.
    * @param {number} type - The type of assemblage to find.
    *
-   * @retrun {object} A collection of assemblages.
+   * @return {object} A collection of assemblages.
    */
   findAssemblagesOfType(type) {
     const TEMPLATE = this._findTemplate(type);
@@ -153,11 +154,12 @@ class DataManager {
    * @static
    * @param {LogService} logService - The log service for the simulation.
    * @param {MessageService} messageService - The message service for the simulation.
+   * @param {ComponentManager} componentManager - The component manager for the simulation.
    *
    * @return {DataManager} A new data manager instance.
    */
-  static createInstance(logService, messageService) {
-    return new DataManager(logService, messageService);
+  static createInstance(logService, messageService, componentManager) {
+    return new DataManager(logService, messageService, componentManager);
   }
 }
 

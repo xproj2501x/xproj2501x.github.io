@@ -1,141 +1,116 @@
 /**
- * PRNG System
+ * Game Builder
  * ===
  *
- * @module prngSystem
+ * @module game.Builders.GameBuilder
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import PopulationBuilder from './population-builder';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * The maximum length for a seed value.
- * @constant
- * @type {number}
- */
-const SEED_LENGTH = 64;
-
-/**
- * The maximum length of a result returned from the rng.
- * @constant
- * @type {number}
- */
-const RESULT_LENGTH = 16;
-
-/**
- * The multiplier used when generating a new seed.
- * @type {number}
- */
-const MULTIPLIER = 0x5D588B656C078965;
-
-/**
- * The addend used when generating a new seed.
- * @type {number}
- */
-const ADDEND = 0x0000000000269EC3;
-
-/**
- *
- * @constant
- * @enum {number}
- */
-const FORMAT = {
-  BIN: 2,
-  DEC: 10,
-  HEX: 16
+const DEFAULT_OPTIONS = {
+  maxPopulation: 150,
+  worldHeight: 60,
+  worldWidth: 80
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * PRNGSystem
+ * GameBuilder
  * @class
- * @implements System
  */
-class PRNG {
+class GameBuilder {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The seed value for the pseudo random number generator.
    * @private
-   * @type {string}
+   * @type {PRNG}
    */
-  _seed;
+  _prng;
+
+  /**
+   * @private
+   * @type {DataManager}
+   */
+  _dataManager;
+
+  /**
+   * @private
+   * @type {object}
+   */
+  _options;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
-
   /**
-   * PRNGSystem
+   * GameBuilder
    * @constructor
-   * @param {string} seed - TThe initial seed for the pseudo random number generator.
    */
-  constructor(seed) {
-    this._seed = seed.substr(seed.length - SEED_LENGTH, SEED_LENGTH);
+  constructor(prng, dataManager, options) {
+    this._prng = prng;
+    this._dataManager = dataManager;
+    this._options = options;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Updates the state
-   */
-  update() {
-    this._advanceSeed();
-  }
-
-  /**
-   * Returns the first 16 digits of the seed.
    *
-   * @return {string}
    */
-  getLinearValue() {
-    const RESULT = this._seed.substr(0, RESULT_LENGTH);
-    this._advanceSeed();
-
-    return RESULT;
+  build() {
+    this._buildCreatures();
   }
+
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Advances the seed value using a linear congruential formula.
-   * @private
-   */
-  _advanceSeed() {
-    const RESULT = MULTIPLIER * parseInt(this._seed, FORMAT.BIN) + ADDEND;
-    const RESULT_BIN = RESULT.toString(FORMAT.BIN);
+  _buildWorld() {
 
-    this._seed = RESULT_BIN.substr(RESULT_BIN.length - SEED_LENGTH, SEED_LENGTH);
+  }
+
+  _buildCreatures() {
+    const BUILDER = PopulationBuilder.createInstance(this._prng, this._options);
+    const CREATURES = BUILDER.build();
+
+    this._createEntities(CREATURES);
+  }
+
+  _createEntities(entities) {
+    entities.forEach((entity) => {
+      this._dataManager.createEntity(entity);
+    });
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Static factory method
+   * Static factory method.
    * @static
-   * @param {number} seed - The initial seed for the pseudo random number generator.
+   * @param {PRNG} prng - The pseudo random number generator for the simulation.
+   * @param {object} options - The options for the builder.
    *
-   * @return {PRNG}
+   * @return {GameBuilder} A new game builder instance.
    */
-  static createInstance(seed) {
-    seed = seed || Date.now();
-
-    return new PRNG(seed.toString(FORMAT.BIN));
+  static createInstance(prng, dataManager, options) {
+    options = options || DEFAULT_OPTIONS;
+    return new GameBuilder(prng, dataManager, options);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default PRNG;
+export default GameBuilder;

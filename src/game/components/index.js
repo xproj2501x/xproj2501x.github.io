@@ -18,7 +18,7 @@ const COMPONENT_TYPE = {
   GENES: 4
 };
 
-const COMPONENT = [
+const COMPONENTS = [
   PositionComponent,
   GlyphComponent,
   HealthComponent,
@@ -28,4 +28,4 @@ const COMPONENT = [
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export {COMPONENT_TYPE, COMPONENT};
+export {COMPONENT_TYPE, COMPONENTS};

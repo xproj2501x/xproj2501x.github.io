@@ -14,7 +14,11 @@ import Screen from './screen';
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const OPTIONS = {
+/**
+ *
+ *
+ */
+const DEFAULT_OPTIONS = {
   containerId: 'game-wrapper',
   height: 60,
   width: 80,
@@ -227,7 +231,7 @@ class UserInterface {
    * @return {UserInterface} - A new display manager instance.
    */
   static createInstance(logService, messageService, options) {
-    options = options || OPTIONS;
+    options = options || DEFAULT_OPTIONS;
     return new UserInterface(logService, messageService, options);
   }
 }

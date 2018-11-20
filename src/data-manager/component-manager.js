@@ -83,17 +83,14 @@ class ComponentManager {
    * @throws {ComponentAlreadyExists}
    */
   createComponent(id, type, state) {
-    const TEMPLATE = this._findTemplate(type);
-
     if (this._components[type][id]) {
       throw new ComponentAlreadyExists(`Error: Component type ${type} already attached to entity ${id}.`);
     }
-    for (const KEY in TEMPLATE) {
-      if (TEMPLATE.hasOwnProperty(KEY) && !state.hasOwnProperty(KEY)) {
-        throw new InvalidComponentState(`Error: Property ${KEY} missing for component type ${type}.`);
-      }
-    }
-    this._components[type][id] = Component.createInstance(id, type, TEMPLATE, state);
+    const TEMPLATE = this._findTemplate(type);
+    const COMPONENT = TEMPLATE.createInstance(id, type, state);
+
+    this._components[type][id] = COMPONENT;
+    return COMPONENT;
   }
 
   /**

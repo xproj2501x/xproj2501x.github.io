@@ -18,7 +18,7 @@ describe('DataManager', () => {
 
   });
 
-  describe('#createAssemblage', () => {
+  describe('#createEntity', () => {
 
   });
 

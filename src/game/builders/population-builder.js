@@ -1,54 +1,87 @@
 /**
- * Population Generator
+ * Population Builder
  * ===
  *
- * @module game.Generators.PopulationGenerator
+ * @module game.Builders.PopulationBuilder
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import {COMPONENT_TYPE} from '../components';
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
-  * The default setting for the maxmimum population.
-  * @const
-  @type {number}
- */
-const MAX_POPULATON = 150;
+
+const DEFAULT_OPTIONS = {
+  maxPopulation: 150,
+  worldHeight: 60,
+  worldWidth: 80
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * PopulationGenerator
+ * PopulationBuilder
  * @class
  */
-class PopulationGenerator {
+class PopulationBuilder {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @private
+   * @type {PRNG}
+   */
   _prng;
 
-  _maxPopulation;
+  /**
+   * @private
+   * @type {object}
+   */
+  _options;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * PopulationGenerator
+   * PopulationBuilder
    * @constructor
    */
-  constructor(prng, maxPopulation) {
+  constructor(prng, options) {
     this._prng = prng;
-    this._maxPopulation = maxPopulation || MAX_POPULATON;
+    this._options = options;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   *
+   * @return {array}
+   */
+  build() {
+    const CREATURES = [];
+
+    for (let idx = 0; idx < this._options.maxPopulation; idx++) {
+      const CREATURE = [];
+      const LAST_HALF = this._prng.getLinearValue();
+      const GENES = this._prng.getLinearValue() + LAST_HALF;
+
+      CREATURE.push({type: COMPONENT_TYPE.GENES, state: {value: GENES}});
+      const X = Math.floor(Math.random() * this._options.worldWidth);
+      const Y = Math.floor(Math.random() * this._options.worldHeight);
+
+      CREATURE.push({type: COMPONENT_TYPE.POSITION, state: {x: X, y: Y}});
+      CREATURES.push(CREATURE);
+    }
+    return CREATURES;
+  }
+
+
   generateCreatures() {
     const CREATURES = [];
 
@@ -63,6 +96,7 @@ class PopulationGenerator {
     }
     return CREATURES;
   }
+
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
@@ -73,15 +107,18 @@ class PopulationGenerator {
   /**
    * Static factory method.
    * @static
+   * @param {PRNG} prng - The pseudo random number generator for the simulation.
+   * @param {object} options - The options for the builder.
    *
-   * @return {PopulationGenerator} A new screen instance.
+   * @return {PopulationBuilder} A new population builder instance.
    */
-  static createInstance(genes, x, y) {
-    return new PopulationGenerator(genes, x, y);
+  static createInstance(prng, options) {
+    options = options || DEFAULT_OPTIONS;
+    return new PopulationBuilder(prng, options);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default PopulationGenerator;
+export default PopulationBuilder;

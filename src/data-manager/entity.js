@@ -71,6 +71,7 @@ class Entity {
    */
   constructor(id) {
     this._id = id;
+    this._components = [];
     this._componentMask = 0;
   }
 
