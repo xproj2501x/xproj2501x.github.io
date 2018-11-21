@@ -1,8 +1,800 @@
 [
   {
     "id": 1,
-    "name": "raw wood",
-    "internalName": "raw-wood",
-
+    "name": "Raw Wood"
+  },
+  {
+    "id": 1,
+    "name": "Coal"
+  },
+  {
+    "id": 1,
+    "name": "Stone"
+  },
+  {
+    "id": 1,
+    "name": "Iron Ore"
+  },
+  {
+    "id": 1,
+    "name": "Copper Ore"
+  },
+  {
+    "id": 1,
+    "name": "Uranium Ore"
+  },
+  {
+    "id": 1,
+    "name": "Raw Fish"
+  },
+  {
+    "id": 1,
+    "name": "Crude Oil"
+  },
+  {
+    "id": 1,
+    "name": "Light Oil"
+  },
+  {
+    "id": 1,
+    "name": "Lubricant"
+  },
+  {
+    "id": 1,
+    "name": "Heavy Oil"
+  },
+  {
+    "id": 1,
+    "name": "Petroleum Gas"
+  },
+  {
+    "id": 1,
+    "name": "Sulfuric Acid"
+  },
+  {
+    "id": 1,
+    "name": "Water"
+  },
+  {
+    "id": 1,
+    "name": "Steam"
+  },
+  {
+    "id": 1,
+    "name": "Wood"
+  },
+  {
+    "id": 1,
+    "name": "Iron Plate"
+  },
+  {
+    "id": 1,
+    "name": "Copper Plate"
+  },
+  {
+    "id": 1,
+    "name": "Solid Fuel"
+  },
+  {
+    "id": 1,
+    "name": "Steel Plate"
+  },
+  {
+    "id": 1,
+    "name": "Plastic Bar"
+  },
+  {
+    "id": 1,
+    "name": "Sulfur"
+  },
+    Battery"
+  },
+  {
+    "id": 1,
+    "name": "Explosives"
+  },
+  {
+    "id": 1,
+    "name": "Copper Cable"
+  },
+  {
+    "id": 1,
+    "name": "Iron Stick"
+  },
+  {
+    "id": 1,
+    "name": "Iron Gear Wheel"
+  },
+  {
+    "id": 1,
+    "name": "Electronic Circuit"
+  },
+  {
+    "id": 1,
+    "name": "Advanced Circuit"
+  },
+  {
+    "id": 1,
+    "name": "Processing Unit"
+  },
+  {
+    "id": 1,
+    "name": "Engine Unit"
+  },
+  {
+    "id": 1,
+    "name": "Electric Engine Unit"
+  },
+  {
+    "id": 1,
+    "name": "Flying Robot Frame"
+  },
+  {
+    "id": 1,
+    "name": "Satellite"
+  },
+  {
+    "id": 1,
+    "name": "Rocket Part"
+  },
+  {
+    "id": 1,
+    "name": "Rocket Control Unit"
+  },
+  {
+    "id": 1,
+    "name": "Low Density Structure"
+  },
+  {
+    "id": 1,
+    "name": "Rocket Fuel"
+  },
+  {
+    "id": 1,
+    "name": "Nuclear Fuel"
+  },
+  {
+    "id": 1,
+    "name": "Uranium-235"
+  },
+  {
+    "id": 1,
+    "name": "Uranium-238"
+  },
+  {
+    "id": 1,
+    "name": "Used Up Uranium Fuel Cell"
+  },
+  {
+    "id": 1,
+    "name": "Science Pack 1"
+  },
+  {
+    "id": 1,
+    "name": "Science Pack 2"
+  },
+  {
+    "id": 1,
+    "name": "Science Pack 3"
+  },
+  {
+    "id": 1,
+    "name": "Military Science Pack"
+  },
+  {
+    "id": 1,
+    "name": "Production Science Pack"
+  },
+  {
+    "id": 1,
+    "name": "Wooden Chest"
+  },
+  {
+    "id": 1,
+    "name": "Iron Chest"
+  },
+  {
+    "id": 1,
+    "name": "Steel Chest"
+  },
+  {
+    "id": 1,
+    "name": "Storage Tank"
+  },
+  {
+    "id": 1,
+    "name": "Transport Belt"
+  },
+  {
+    "id": 1,
+    "name": "Fast Transport Belt"
+  },
+  {
+    "id": 1,
+    "name": "Express Transport Belt"
+  },
+  {
+    "id": 1,
+    "name": "Underground Belt"
+  },
+  {
+    "id": 1,
+    "name": "Fast Underground Belt"
+  },
+  {
+    "id": 1,
+    "name": "Express Underground Belt"
+  },
+  {
+    "id": 1,
+    "name": "Splitter"
+  },
+  {
+    "id": 1,
+    "name": "Fast Splitter"
+  },
+  {
+    "id": 1,
+    "name": "Express Splitter"
+  },
+  {
+    "id": 1,
+    "name": "Burner Inserter"
+  },
+  {
+    "id": 1,
+    "name": "Inserter"
+  },
+  {
+    "id": 1,
+    "name": "Long Handed Inserter"
+  },
+  {
+    "id": 1,
+    "name": "Fast Inserter"
+  },
+  {
+    "id": 1,
+    "name": "Filter Inserter"
+  },
+  {
+    "id": 1,
+    "name": "Stack Inserter"
+  },
+  {
+    "id": 1,
+    "name": "Stack Filter Inserter"
+  },
+  {
+    "id": 1,
+    "name": "Small Electric Pole"
+  },
+  {
+    "id": 1,
+    "name": "Medium Electric Pole"
+  },
+  {
+    "id": 1,
+    "name": "Big Electric Pole"
+  },
+  {
+    "id": 1,
+    "name": "Substation"
+  },
+  {
+    "id": 1,
+    "name": "Pipe"
+  },
+  {
+    "id": 1,
+    "name": "Pipe to Ground"
+  },
+  {
+    "id": 1,
+    "name": "Pump"
+  },
+  {
+    "id": 1,
+    "name": "Rail"
+  },
+  {
+    "id": 1,
+    "name": "Train Stop"
+  },
+  {
+    "id": 1,
+    "name": "Rail Signal"
+  },
+  {
+    "id": 1,
+    "name": "Rail Chain Signal"
+  },
+  {
+    "id": 1,
+    "name": "Locomotive"
+  },
+  {
+    "id": 1,
+    "name": "Cargo Wagon"
+  },
+  {
+    "id": 1,
+    "name": "Fluid Wagon"
+  },
+  {
+    "id": 1,
+    "name": "Artillery Wagon"
+  },
+  {
+    "id": 1,
+    "name": "Car"
+  },
+  {
+    "id": 1,
+    "name": "Tank"
+  },
+  {
+    "id": 1,
+    "name": "Logistic Robot"
+  },
+  {
+    "id": 1,
+    "name": "Construction Robot"
+  },
+  {
+    "id": 1,
+    "name": "Active Provider Chest"
+  },
+  {
+    "id": 1,
+    "name": "Passive Provider Chest"
+  },
+  {
+    "id": 1,
+    "name": "Storage Chest"
+  },
+  {
+    "id": 1,
+    "name": "Buffer Chest"
+  },
+  {
+    "id": 1,
+    "name": "Requester Chest"
+  },
+  {
+    "id": 1,
+    "name": "Roboport"
+  },
+  {
+    "id": 1,
+    "name": "Lamp"
+  },
+  {
+    "id": 1,
+    "name": "Red Wire"
+  },
+  {
+    "id": 1,
+    "name": "Green Wire"
+  },
+  {
+    "id": 1,
+    "name": "Arithmetic Combinator"
+  },
+  {
+    "id": 1,
+    "name": "Decider Combinator"
+  },
+  {
+    "id": 1,
+    "name": "Constant Combinator"
+  },
+  {
+    "id": 1,
+    "name": "Power Switch"
+  },
+  {
+    "id": 1,
+    "name": "Programmable Speaker"
+  },
+  {
+    "id": 1,
+    "name": "Stone Brick"
+  },
+  {
+    "id": 1,
+    "name": "Concrete"
+  },
+  {
+    "id": 1,
+    "name": "Hazard Concrete"
+  },
+  {
+    "id": 1,
+    "name": "Refined Concrete"
+  },
+  {
+    "id": 1,
+    "name": "Refined Hazard Concrete"
+  },
+  {
+    "id": 1,
+    "name": "Landfill"
+  },
+  {
+    "id": 1,
+    "name": "Cliff Explosives"
+  },
+  {
+    "id": 1,
+    "name": "Iron Axe"
+  },
+  {
+    "id": 1,
+    "name": "Steel Axe"
+  },
+  {
+    "id": 1,
+    "name": "Repair Pack"
+  },
+  {
+    "id": 1,
+    "name": "Blueprint"
+  },
+  {
+    "id": 1,
+    "name": "Deconstruction Planner"
+  },
+  {
+    "id": 1,
+    "name": "Blueprint Book"
+  },
+  {
+    "id": 1,
+    "name": "Boiler"
+  },
+  {
+    "id": 1,
+    "name": "Steam Engine"
+  },
+  {
+    "id": 1,
+    "name": "Steam Turbine"
+  },
+  {
+    "id": 1,
+    "name": "Solar Panel"
+  },
+  {
+    "id": 1,
+    "name": "Accumulator"
+  },
+  {
+    "id": 1,
+    "name": "Nuclear Reactor"
+  },
+  {
+    "id": 1,
+    "name": "Heat Exchanger"
+  },
+  {
+    "id": 1,
+    "name": "Heat Pipe"
+  },
+  {
+    "id": 1,
+    "name": "Burner Mining Drill"
+  },
+  {
+    "id": 1,
+    "name": "Electric Mining Drill"
+  },
+  {
+    "id": 1,
+    "name": "Offshore Pump"
+  },
+  {
+    "id": 1,
+    "name": "Pumpjack"
+  },
+  {
+    "id": 1,
+    "name": "Stone Furnace"
+  },
+  {
+    "id": 1,
+    "name": "Steel Furnace"
+  },
+  {
+    "id": 1,
+    "name": "Electric Furnace"
+  },
+  {
+    "id": 1,
+    "name": "Assembling Machine 1"
+  },
+  {
+    "id": 1,
+    "name": "Assembling Machine 2"
+  },
+  {
+    "id": 1,
+    "name": "Assembling Machine 3"
+  },
+  {
+    "id": 1,
+    "name": "Oil Refinery"
+  },
+  {
+    "id": 1,
+    "name": "Chemical Plant"
+  },
+  {
+    "id": 1,
+    "name": "Centrifuge"
+  },
+  {
+    "id": 1,
+    "name": "Lab"
+  },
+  {
+    "id": 1,
+    "name": "Beacon"
+  },
+  {
+    "id": 1,
+    "name": "Speed Module"
+  },
+  {
+    "id": 1,
+    "name": "Speed Module 2"
+  },
+  {
+    "id": 1,
+    "name": "Speed Module 3"
+  },
+  {
+    "id": 1,
+    "name": "Efficiency Module"
+  },
+  {
+    "id": 1,
+    "name": "Efficiency Module 2"
+  },
+  {
+    "id": 1,
+    "name": "Efficiency Module 3"
+  },
+  {
+    "id": 1,
+    "name": "Productivity Module"
+  },
+  {
+    "id": 1,
+    "name": "Productivity Module 2"
+  },
+  {
+    "id": 1,
+    "name": "Productivity Module 3"
+  },
+  {
+    "id": 1,
+    "name": "Pistol"
+  },
+  {
+    "id": 1,
+    "name": "Submachine Gun"
+  },
+  {
+    "id": 1,
+    "name": "Shotgun"
+  },
+  {
+    "id": 1,
+    "name": "Combat Shotgun"
+  },
+  {
+    "id": 1,
+    "name": "Rocket Launcher"
+  },
+  {
+    "id": 1,
+    "name": "Flamethrower"
+  },
+  {
+    "id": 1,
+    "name": "Landmine"
+  },
+  {
+    "id": 1,
+    "name": "Firearm Magazine"
+  },
+  {
+    "id": 1,
+    "name": "Piercing Rounds Magazine"
+  },
+  {
+    "id": 1,
+    "name": "Uranium Rounds Magazine"
+  },
+  {
+    "id": 1,
+    "name": "Shotgun Shells"
+  },
+  {
+    "id": 1,
+    "name": "Piercing Shotgun Shells"
+  },
+  {
+    "id": 1,
+    "name": "Cannon Shell"
+  },
+  {
+    "id": 1,
+    "name": "Explosive Cannon Shell"
+  },
+  {
+    "id": 1,
+    "name": "Uranium Cannon Shell"
+  },
+  {
+    "id": 1,
+    "name": "Explosive Uranium Cannon Shell"
+  },
+  {
+    "id": 1,
+    "name": "Artillery Shell"
+  },
+  {
+    "id": 1,
+    "name": "Rocket"
+  },
+  {
+    "id": 1,
+    "name": "Explosive Rocket"
+  },
+  {
+    "id": 1,
+    "name": "Atomic Bomb"
+  },
+  {
+    "id": 1,
+    "name": "Flamethrower Ammo"
+  },
+  {
+    "id": 1,
+    "name": "Grenade"
+  },
+  {
+    "id": 1,
+    "name": "Cluster Grenade"
+  },
+  {
+    "id": 1,
+    "name": "Poison Capsule"
+  },
+  {
+    "id": 1,
+    "name": "Slowdown Capsule"
+  },
+  {
+    "id": 1,
+    "name": "Defender Capsule"
+  },
+  {
+    "id": 1,
+    "name": "Distractor Capsule"
+  },
+  {
+    "id": 1,
+    "name": "Destroyer Capsule"
+  },
+  {
+    "id": 1,
+    "name": "Discharge Defense Remote"
+  },
+  {
+    "id": 1,
+    "name": "Artillery Targeting Remote"
+  },
+  {
+    "id": 1,
+    "name": "Light Armor"
+  },
+  {
+    "id": 1,
+    "name": "Heavy Armor"
+  },
+  {
+    "id": 1,
+    "name": "Modular Armor"
+  },
+  {
+    "id": 1,
+    "name": "Power Armor"
+  },
+  {
+    "id": 1,
+    "name": "Power Armor MK2"
+  },
+  {
+    "id": 1,
+    "name": "Portable Solar Panel"
+  },
+  {
+    "id": 1,
+    "name": "Portable Fusion Reactor"
+  },
+  {
+    "id": 1,
+    "name": "Energy Shield"
+  },
+  {
+    "id": 1,
+    "name": "Energy Shield MK2"
+  },
+  {
+    "id": 1,
+    "name": "Personal Battery"
+  },
+  {
+    "id": 1,
+    "name": "Personal Battery MK2"
+  },
+  {
+    "id": 1,
+    "name": "Personal Laser Defense"
+  },
+  {
+    "id": 1,
+    "name": "Discharge Defense"
+  },
+  {
+    "id": 1,
+    "name": "Exoskeleton"
+  },
+  {
+    "id": 1,
+    "name": "Personal Roboport"
+  },
+  {
+    "id": 1,
+    "name": "Personal Roboport MK2"
+  },
+  {
+    "id": 1,
+    "name": "Night Vision"
+  },
+  {
+    "id": 1,
+    "name": "Stone Wall"
+  },
+  {
+    "id": 1,
+    "name": "Gate"
+  },
+  {
+    "id": 1,
+    "name": "Gun Turret"
+  },
+  {
+    "id": 1,
+    "name": "Laser Turret"
+  },
+  {
+    "id": 1,
+    "name": "Flamethrower Turret"
+  },
+  {
+    "id": 1,
+    "name": "Artillery Turret"
+  },
+  {
+    "id": 1,
+    "name": "Radar"
+  },
+  {
+    "id": 1,
+    "name": "Rocket Silo"
   }
 ]
