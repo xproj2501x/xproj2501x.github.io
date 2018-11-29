@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "",
+    "ingredients": [
+      {
+        "item": "",
+        "quantity": 0
+      }
+    ],
+    "output": {
+      "item": "",
+      "quantity": 0,
+      "time": 0
+    }
+  }
+]

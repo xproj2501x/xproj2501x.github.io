@@ -1,14 +1,22 @@
 [
   {
     "id": 1,
-    "name": "Raw Wood"
+    "name": "Raw Wood",
+    "internalName": "raw-wood",
+    "stack": {
+      "size": 0
+    },
+    "sprite": {
+      "filename": "",
+      "size": ""
+    }
   },
   {
-    "id": 1,
+    "id": 2,
     "name": "Coal"
   },
   {
-    "id": 1,
+    "id": 3,
     "name": "Stone"
   },
   {

@@ -1,8 +1,8 @@
 /**
- * Size Component
+ * Sprite Component
  * ===
  *
- * @module game.Components.SizeComponent
+ * @module game.Components.SpriteComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -23,11 +23,11 @@ const TEMPLATE = {
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * SizeComponent
+ * SpriteComponent
  * @class
  * @extends Component
  */
-class SizeComponent extends Component {
+class SpriteComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -37,11 +37,11 @@ class SizeComponent extends Component {
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * SizeComponent
+   * SpriteComponent
    * @constructor
    * @param {number} id - The id of the parent entity.
-   * @param {number} type - The type of the SizeComponent.
-   * @param {object} state - The state of the SizeComponent.
+   * @param {number} type - The type of the SpriteComponent.
+   * @param {object} state - The state of the SpriteComponent.
    */
   constructor(id, type, state) {
     super(id, type, state);
@@ -55,18 +55,18 @@ class SizeComponent extends Component {
    * Static factory method.
    * @static
    * @param {number} id - The id of the parent entity.
-   * @param {number} type - The type of the SizeComponent.
-   * @param {object} template - The template for the SizeComponent.
-   * @param {object} state - The state of the SizeComponent.
+   * @param {number} type - The type of the SpriteComponent.
+   * @param {object} template - The template for the SpriteComponent.
+   * @param {object} state - The state of the SpriteComponent.
    *
-   * @return {SizeComponent} A new size component instance.
+   * @return {SpriteComponent} A new sprite component instance.
    */
   static createInstance(id, type, template, state) {
-    return new SizeComponent(id, type, state);
+    return new SpriteComponent(id, type, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default SizeComponent;
+export default SpriteComponent;

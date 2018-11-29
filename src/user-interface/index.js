@@ -84,12 +84,6 @@ class UserInterface {
 
   /**
    * @private
-   * @type {boolean}
-   */
-  _isAnimating;
-
-  /**
-   * @private
    * @type {number}
    */
   _frameId;

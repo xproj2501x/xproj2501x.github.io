@@ -10,7 +10,9 @@
     "lint": "eslint --ignore-path .eslintignore --max-warnings 100 --format compact src/**/*.js"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "factorio-blueprint": "^2.1.10",
+    "pako": "^1.0.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

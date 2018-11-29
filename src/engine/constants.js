@@ -29,7 +29,7 @@ const FRAMES_PER_SECOND = 60;
  * @default
  * @type {number}
  */
-const FRAME_DURATION = MILLISECONDS / FRAMES_PER_SECOND;
+const FRAME_DURATION = parseInt((MILLISECONDS / FRAMES_PER_SECOND).toFixed(2), 10);;
 
 /**
  * The maximum number of frames to skip.

@@ -10,12 +10,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 import {FRAME_DURATION, MAX_SKIP_DURATION} from './constants';
 import SystemManager from './system-manager';
-import Scheduler from './scheduler';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-const TURN_LENGTH = 1000;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
@@ -45,15 +43,11 @@ class Engine {
 
   /**
    * @private
-   * @type {Scheduler}
-   */
-  _scheduler;
-
-  /**
-   * @private
    * @type {boolean}
    */
   _isLocked;
+
+  _frameId;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -68,38 +62,42 @@ class Engine {
   constructor(logService, messageService) {
     this._logger = logService.registerLogger(this.constructor.name);
     this._messageService = messageService;
-    this._messageService.subscribe('INPUT_COMMAND', (command) => this.handleCommand(command));
-    this._scheduler = Scheduler.createInstance();
-
+    this._isRunning = false;
+    this._time = 0;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-
-  handleCommand(command) {
-    if (!this._isLocked) {
-      this._logger.writeLogMessage(`Handling command: ${command}`);
-      this._isLocked = true;
-
-      this._scheduler.enqueue(command.message, 1, false);
-    }
+  /**
+   * Starts the engine for the simulation.
+   * @public
+   */
+  start() {
+    this._isRunning = true;
+    this._lastTick = Date.now();
+    this._frameId = requestAnimationFrame(() => {
+      this._tick();
+    });
   }
+
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  _update() {
-    this._scheduler.enqueue('A', 1, true);
-    this._scheduler.enqueue('B', 3, false);
+  _tick() {
+    if (this._isRunning) {
+      const CURRENT_TIME = Date.now();
+      let delta = CURRENT_TIME - this._lastTick;
 
-    console.log(`event: ${this._scheduler.dequeue()}`);
-    console.log(`time: ${this._scheduler.time}`);
-
-    console.log(`event: ${this._scheduler.dequeue()}`);
-    console.log(`time: ${this._scheduler.time}`);
-
-    console.log(`event: ${this._scheduler.dequeue()}`);
-    console.log(`time: ${this._scheduler.time}`);
+      delta = delta > MAX_SKIP_DURATION ? MAX_SKIP_DURATION : delta;
+      if (delta >= FRAME_DURATION) {
+        this._time += FRAME_DURATION;
+        this._lastTick = CURRENT_TIME;
+      }
+      this._frameId = requestAnimationFrame(() => {
+        this._tick();
+      });
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
