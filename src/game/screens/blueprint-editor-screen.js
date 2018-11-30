@@ -1,28 +1,57 @@
 /**
- * Movement System
+ * Blueprint Editor Screen
  * ===
  *
- * @module game.Systems.MovementSystem
+ * @module game.Screens.BlueprintEditorScreen
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import System from '../../engine/system';
+import Screen from '../../user-interface/screen';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const KEY = {
+  // Movement
+  UP: 'w',
+  DOWN: 's',
+  LEFT: 'a',
+  RIGHT: 'd',
 
+  // Other
+  INVENTORY: 'i',
+  QUESTS: 'q',
+  CHARACTER: 'c',
+  JOURNAL: 'j',
+  PICK_UP: 'p',
+  OPEN: 'o'
+
+};
+
+const OPTIONS = {
+  height: 60,
+  width: 80,
+  spacing: 16,
+  scale: 1,
+  xOffset: 0,
+  yOffset: 0,
+  fontSize: 15,
+  fontFamily: 'monospace',
+  fontStyle: '',
+  foregroundColor: '#FFF',
+  backgroundColor: '#000'
+};
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * MovementSystem
+ * BlueprintEditorScreen
  * @class
- * @extends System
+ * @extends Screen
  */
-class MovementSystem extends System {
+class BlueprintEditorScreen extends Screen {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -33,34 +62,37 @@ class MovementSystem extends System {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * MovementSystem
+   * BlueprintEditorScreen
    * @constructor
-   * @param {LogService} logService - The log service for the simulation.
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {number} key - The assemblage key for the MovementSystem.
+   * @param {string} id - The id of the BlueprintEditorScreen.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the BlueprintEditorScreen.
    */
-  constructor(logService, messageService, key) {
-    super(logService, messageService, key);
+  constructor(id, canvas) {
+    super(id, canvas);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Update routine for the system.
-   * @public
+   *
+   * @param input
    */
-  update(assemblages) {
+  handleInput(input) {
 
   }
 
-  handleEvent(event) {
-    
-  }
+  render(sprites) {
+    sprites.forEach((sprite) => {
 
+    });
+  }
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+  _drawOverlay() {
+
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -68,16 +100,20 @@ class MovementSystem extends System {
   /**
    * Static factory method.
    * @static
+   * @param {string} id - The id of the BlueprintEditorScreen.
+   * @param {HTMLElement} container - The HTML container for the screen.
    *
-   * @return {MovementSystem} A new movement system instance.
+   * @return {BlueprintEditorScreen} A new blueprint editor screen instance.
    */
-  static createInstance() {
+  static createInstance(id, container) {
+    const CANVAS = document.createElement('canvas');
 
+    container.appendChild(CANVAS);
+    return new BlueprintEditorScreen(id, CANVAS);
   }
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default MovementSystem;
+export default BlueprintEditorScreen;

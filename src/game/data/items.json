@@ -2,30 +2,85 @@
   {
     "id": 1,
     "name": "Raw Wood",
-    "internalName": "raw-wood",
+    "type": "item",
+    "subgroup": "raw resource",
     "stack": {
-      "size": 0
+      "size": 50
     },
     "sprite": {
       "filename": "",
-      "size": ""
+      "size": 0,
+      "x": 0,
+      "y": 0
+    },
+    "fuel": {
+      "type": "chemical",
+      "value": "4MJ"
     }
   },
   {
     "id": 2,
-    "name": "Coal"
+    "name": "Coal",
+    "type": "item",
+    "subgroup": "raw resource",
+    "stack": {
+      "size": 50
+    },
+    "sprite": {
+      "filename": "",
+      "size": 0,
+      "x": 0,
+      "y": 0
+    },
+    "fuel": {
+      "type": "chemical",
+      "value": "8MJ"
+    }
   },
   {
     "id": 3,
-    "name": "Stone"
+    "name": "Stone",
+    "type": "item",
+    "subgroup": "raw resource",
+    "stack": {
+      "size": 50
+    },
+    "sprite": {
+      "filename": "",
+      "size": 0,
+      "x": 0,
+      "y": 0
+    }
   },
   {
-    "id": 1,
-    "name": "Iron Ore"
+    "id": 4,
+    "name": "Iron Ore",
+    "type": "item",
+    "subgroup": "raw resource",
+    "stack": {
+      "size": 50
+    },
+    "sprite": {
+      "filename": "",
+      "size": 0,
+      "x": 0,
+      "y": 0
+    }
   },
   {
-    "id": 1,
-    "name": "Copper Ore"
+    "id": 5,
+    "name": "Copper Ore",
+    "type": "item",
+    "subgroup": "raw resource",
+    "stack": {
+      "size": 50
+    },
+    "sprite": {
+      "filename": "",
+      "size": 0,
+      "x": 0,
+      "y": 0
+    }
   },
   {
     "id": 1,
@@ -95,7 +150,9 @@
     "id": 1,
     "name": "Sulfur"
   },
-    Battery"
+  {
+    "id": 1,
+    "name": "Battery"
   },
   {
     "id": 1,

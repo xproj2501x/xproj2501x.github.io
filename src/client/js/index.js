@@ -5,6 +5,7 @@ import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
 import Engine from '../../engine';
+import UserInterface from '../../user-interface';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions

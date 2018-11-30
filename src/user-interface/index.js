@@ -86,12 +86,6 @@ class UserInterface {
    * @private
    * @type {number}
    */
-  _frameId;
-
-  /**
-   * @private
-   * @type {number}
-   */
   _lastRenderTime;
 
   //////////////////////////////////////////////////////////////////////////////
@@ -160,15 +154,11 @@ class UserInterface {
    * Runs the render routine for each screen in the display.
    * @param {array} sprites - A collection of sprites to draw to the screen.
    */
-  render(sprites) {
+  render() {
     this._refresh();
     const CONTEXT = this._canvas.getContext('2d');
 
-    CONTEXT.fillStyle = '#F00';
-    sprites.forEach((sprite) => {
-      CONTEXT.fillRect(sprite.x * this._options.spacing, sprite.y * this._options.spacing,
-        this._options.spacing, this._options.spacing);
-    });
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -192,24 +182,6 @@ class UserInterface {
     }
     this._canvas.height = this._options.height * spacing;
     this._canvas.width = this._options.width * spacing;
-  }
-
-  /**
-   *
-   * @private
-   */
-  _tick() {
-    if (this._isRunning) {
-      const CURRENT_TIME = Date.now();
-      let delta = CURRENT_TIME - this._lastRenderTime;
-
-      delta = delta > MAX_SKIP_DURATION ? MAX_SKIP_DURATION : delta;
-      while (delta >= FRAME_DURATION) {
-        delta -= FRAME_DURATION;
-
-      }
-      this._frameId = requestAnimationFrame(() => this._tick());
-    }
   }
 
   //////////////////////////////////////////////////////////////////////////////

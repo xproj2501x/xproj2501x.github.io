@@ -26,13 +26,13 @@ class Blueprint {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
 
-  _id;
+  _item;
 
   /**
    * @private
    * @type {string}
    */
-  _name;
+  _label;
 
   /**
    * @private

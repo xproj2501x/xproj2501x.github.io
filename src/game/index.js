@@ -71,7 +71,6 @@ class Game {
     this._dataManager = dataManager;
     this._engine = Engine.createInstance(logService, messageService);
     this._userInterface = UserInterface.createInstance(logService, messageService);
-    this._population = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////

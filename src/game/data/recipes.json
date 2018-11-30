@@ -1,17 +1,53 @@
 [
   {
     "id": 1,
-    "name": "",
+    "name": "Copper Plate",
+    "type": "recipe",
+    "category": "smelting",
+    "time": 3.5,
     "ingredients": [
       {
-        "item": "",
-        "quantity": 0
+        "item": "Copper Ore",
+        "quantity": 1
       }
     ],
     "output": {
-      "item": "",
-      "quantity": 0,
-      "time": 0
+      "item": "Copper Plate",
+      "quantity": 1
     }
-  }
+  },
+  {
+    "id": 2,
+    "name": "Iron Plate",
+    "type": "recipe",
+    "category": "smelting",
+    "time": 3.5,
+    "ingredients": [
+      {
+        "item": "Iron Ore",
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "item": "Iron Plate",
+      "quantity": 1
+    }
+  },
+  {
+    "id": 3,
+    "name": "Brick",
+    "type": "recipe",
+    "category": "smelting",
+    "time": 3.5,
+    "ingredients": [
+      {
+        "item": "Stone",
+        "quantity": 2
+      }
+    ],
+    "output": {
+      "item": "Brick",
+      "quantity": 1
+    }
+  },
 ]
