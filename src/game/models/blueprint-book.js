@@ -1,8 +1,8 @@
 /**
- * Blueprint
+ * BlueprintBook
  * ===
  *
- * @module game.Models.Blueprint
+ * @module game.Models.BlueprintBook
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,16 +17,20 @@
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Blueprint
+ * BlueprintBook
  * @class
  */
-class Blueprint {
+class BlueprintBook {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
 
-  _item;
+  /**
+   * @private
+   * @type {number}
+   */
+  _version;
 
   /**
    * @private
@@ -36,35 +40,26 @@ class Blueprint {
 
   /**
    * @private
-   * @type {array}
+   * @type {number}
    */
-  _icons;
+  _activeIndex;
 
   /**
    * @private
    * @type {array}
    */
-  _entities;
-
-  /**
-   * @private
-   * @type {array}
-   */
-  _tiles;
-
+  _blueprints;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Blueprint
+   * BlueprintBook
    * @constructor
    */
   constructor() {
-    this._icons = [];
-    this._entities = [];
-    this._tiles = [];
+    this._blueprints = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -82,14 +77,14 @@ class Blueprint {
    * Static factory method.
    * @static
    *
-   * @return {Blueprint} A new blueprint instance.
+   * @return {BlueprintBook} A new BlueprintBook instance.
    */
   static createInstance() {
-    return new Blueprint();
+    return new BlueprintBook();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default Blueprint;
+export default BlueprintBook;

@@ -4,7 +4,7 @@
     "name": "Copper Plate",
     "type": "recipe",
     "category": "smelting",
-    "time": 3.5,
+    "speed": 3.5,
     "ingredients": [
       {
         "item": "Copper Ore",
@@ -21,7 +21,7 @@
     "name": "Iron Plate",
     "type": "recipe",
     "category": "smelting",
-    "time": 3.5,
+    "speed": 3.5,
     "ingredients": [
       {
         "item": "Iron Ore",
@@ -38,7 +38,7 @@
     "name": "Brick",
     "type": "recipe",
     "category": "smelting",
-    "time": 3.5,
+    "speed": 3.5,
     "ingredients": [
       {
         "item": "Stone",
@@ -47,6 +47,110 @@
     ],
     "output": {
       "item": "Brick",
+      "quantity": 1
+    }
+  },
+  {
+    "id": 4,
+    "name": "Wood",
+    "type": "recipe",
+    "speed": 0.5,
+    "ingredients": [
+      {
+        "item": "Raw Wood",
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "item": "Wood",
+      "quantity": 2
+    }
+  },
+  {
+    "id": 5,
+    "name": "Wooden Chest",
+    "type": "recipe",
+    "speed": 0.5,
+    "ingredients": [
+      {
+        "item": "Wood",
+        "quantity": 4
+      }
+    ],
+    "output": {
+      "item": "Wooden Chest",
+      "quantity": 1
+    }
+  },
+  {
+    "id": 6,
+    "name": "Iron Stick",
+    "type": "recipe",
+    "speed": 0.5,
+    "ingredients": [
+      {
+        "item": "Iron Plate",
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "item": "Iron Stick",
+      "quantity": 2
+    }
+  },
+  {
+    "id": 7,
+    "name": "Iron Axe",
+    "type": "recipe",
+    "speed": 0.5,
+    "ingredients": [
+      {
+        "item": "Iron Stick",
+        "quantity": 2
+      },
+      {
+        "item": "Iron Plate",
+        "quantity": 3
+      }
+    ],
+    "output": {
+      "item": "Iron Axe",
+      "quantity": 2
+    }
+  },
+  {
+    "id": 8,
+    "name": "Stone Furnace",
+    "type": "recipe",
+    "speed": 0.5,
+    "ingredients": [
+      {
+        "item": "Stone",
+        "quantity": 5
+      }
+    ],
+    "output": {
+      "item": "Stone Furnace",
+      "quantity": 1
+    }
+  },
+  {
+    "id": 9,
+    "name": "Boiler",
+    "type": "recipe",
+    "speed": 0.5,
+    "ingredients": [
+      {
+        "item": "Stone Furnace",
+        "quantity": 1
+      },
+      {
+        "item": "Pipe",
+        "quantity": 4
+      }
+    ],
+    "output": {
+      "item": "Boiler",
       "quantity": 1
     }
   },
