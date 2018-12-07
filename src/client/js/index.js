@@ -4,8 +4,7 @@
 import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import MessageService from '../../common/services/message';
-import Engine from '../../engine';
-import UserInterface from '../../user-interface';
+import Game from '../../game';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -42,6 +41,8 @@ class App {
    */
   _infoPanel;
 
+  _game;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
@@ -51,6 +52,7 @@ class App {
     const INFO_BUTTON = document.getElementById('info-button');
     const LINKS = document.getElementsByClassName('o-nav__menu__item');
 
+    this._game = Game.createInstance(LOG_SERVICE, MESSAGE_SERVICE);
     this._navMenu = document.getElementById('nav-menu');
     this._infoPanel = document.getElementById('info-panel');
     MENU_BUTTON.addEventListener('click', (event) => {this.toggleMenu(event)});

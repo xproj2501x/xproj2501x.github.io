@@ -31,6 +31,9 @@ const DEFAULT_OPTIONS = {
   backgroundColor: '#000'
 };
 
+// #3c3c3c - grid
+// #282828 - background
+
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
@@ -68,6 +71,15 @@ class UserInterface {
    * @type {HTMLElement}
    */
   _container;
+
+  /**
+   * @private
+   * @type {HTMLCanvasElement}
+   */
+  _canvas;
+
+
+  _context;
 
   /**
    * A collection of screens owned by the display manager.
@@ -108,6 +120,8 @@ class UserInterface {
     this._container = document.getElementById(this._options.containerId);
     this._canvas = document.createElement('canvas');
     this._container.appendChild(this._canvas);
+    this._context = this._canvas.getContext('2d');
+    this.render();
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -156,8 +170,7 @@ class UserInterface {
    */
   render() {
     this._refresh();
-    const CONTEXT = this._canvas.getContext('2d');
-
+    this._drawGrid();
 
   }
 
@@ -173,15 +186,30 @@ class UserInterface {
   }
 
   _refresh() {
-    let spacing;
-
+    this._context.clearRect(0, 0, this._options.width, this._options.height);
     if (this._container.clientHeight > this._container.clientWidth) {
-      spacing = Math.floor(this._container.clientHeight / this._options.height);
+      this._options.spacing = Math.floor(this._container.clientHeight / this._options.height);
     } else {
-      spacing = Math.floor(this._container.clientWidth / this._options.width);
+      this._options.spacing = Math.floor(this._container.clientWidth / this._options.width);
     }
-    this._canvas.height = this._options.height * spacing;
-    this._canvas.width = this._options.width * spacing;
+    this._canvas.height = this._options.height * this._options.spacing;
+    this._canvas.width = this._options.width * this._options.spacing;
+    this._context.fillStyle = '#282828';
+    this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+  }
+
+  _drawGrid() {
+    for (let idx = 0; idx < this._canvas.width; idx += this._options.spacing) {
+      this._context.moveTo(idx, 0);
+      this._context.lineTo(idx, this._canvas.height);
+    }
+    for (let idx = 0; idx < this._canvas.height; idx += this._options.spacing) {
+      this._context.moveTo(0, idx);
+      this._context.lineTo(this._canvas.width, idx);
+    }
+    this._context.lineWidth = 3;
+    this._context.strokeStyle = '#3c3c3c';
+    this._context.stroke();
   }
 
   //////////////////////////////////////////////////////////////////////////////
