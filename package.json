@@ -10,7 +10,12 @@
     "lint": "eslint --ignore-path .eslintignore --max-warnings 100 --format compact src/**/*.js"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "body-parser": "latest",
+    "compression": "latest",
+    "cors": "latest",
+    "express": "latest",
+    "mongoose": "latest",
+    "simplex-noise": "^2.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
