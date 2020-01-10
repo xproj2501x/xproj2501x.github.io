@@ -1,144 +1,123 @@
 /**
- * Ajax Service
+ * EntityManager
  * ===
  *
- * @module common.Services.AjaxService
+ * @module EntityManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import Entity from './entity';
+import {EntityNotFoundError} from './errors';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * API Methods
- * @enum {string}
- */
-const METHOD = {
-  DELETE: 'DELETE',
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT'
-};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * AjaxService
+ * EntityManager
  * @class
  */
-class AjaxService {
+class EntityManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * A collection of entities used by the simulation.
+   * @private
+   * @type {Entity[]}
+   */
+  _entities;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * AjaxService
+   * EntityManager
    * @constructor
    */
   constructor() {
-
+    this._entities = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Sends a delete request to the specified resource.
+   * Creates a new entity.
    * @public
-   * @param {object} options - The options for the request.
    *
-   * @return {Promise}
+   * @return {Entity}
    */
-  delete(options) {
-    return this._send(METHOD.DELETE, options);
+  createEntity() {
+    const ID = this._entities.length;
+    const ENTITY = Entity.createInstance(ID);
+
+    this._entities.push(ENTITY);
+    return ENTITY;
   }
 
   /**
-   * Sends a get request to the specified resource.
+   * Finds the entity with the matching id.
    * @public
-   * @param {object} options - The options for the request.
+   * @param {number} id -
    *
-   * @return {Promise}
+   * @return {Entity}
    */
-  get(options) {
-    return this._send(METHOD.GET, options);
+  findEntity(id) {
+    if (!this._entities[id]) throw new EntityNotFoundError(`Entity id ${id} does not exist`);
+    return this._entities[id];
   }
 
   /**
-   * Sends a post request to the specified resource.
+   * Finds all entities with a matching key.
    * @public
-   * @param {object} options - The options for the request.
+   * @param {number} key -
    *
-   * @return {Promise}
+   * @return {number[]}
    */
-  post(options) {
-    return this._send(METHOD.POST, options);
+  findEntitiesWithKey(key) {
+    return this._entities.filter((entity) => {
+      return ((entity.key & key) === key);
+    }).map((entity) => {return entity.id;});
   }
 
   /**
-   * Sends a put request to the specified resource.
+   * Destroys the entity with a matching id.
    * @public
-   * @param {object} options - The options for the request.
-   *
-   * @return {Promise}
+   * @param {number} id -
    */
-  put(options) {
-    return this._send(METHOD.PUT, options);
+  destroyEntity(id) {
+    if (!this._entities[id]) throw new EntityNotFoundError(`Entity id ${id} does not exist`);
+    this._entities[id] = null;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Sends a request to the specified resource.
-   * @private
-   * @param {string} method - The request method.
-   * @param {object} options - The options for the request.
-   *
-   * @return {Promise}
-   */
-  async _send(method, options) {
-    let result;
-
-    await fetch(options.uri, {
-      method: method,
-      headers: options.headers,
-      body: JSON.stringify(options.body)
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.error) {
-          throw new Error(json.error);
-        }
-        result = json;
-      });
-    return result;
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
    *
-   * @return {AjaxService} - A new ajax service instance.
+   * @return {EntityManager}
    */
   static createInstance() {
-    return new AjaxService();
+    return new EntityManager();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default AjaxService;
+export default EntityManager;

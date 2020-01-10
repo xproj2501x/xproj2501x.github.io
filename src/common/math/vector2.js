@@ -2,7 +2,7 @@
  * Vector2
  * ===
  *
- * @module vector2
+ * @module common.Math.Vector2
  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -23,136 +23,251 @@ class Vector2 {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The x coordinate for the vector.
+   * The x coordinate of the vector.
    * @protected
    * @type {number}
    */
-  _xCoordinate;
+  _x;
 
   /**
-   * The y coordinate for the vector.
+   * The y coordinate of the vector.
    * @protected
    * @type {number}
    */
-  _yCoordinate;
+  _y;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Get this._xCoordinate
+   * The x coordinate of the vector.
+   * @public
+   * @readonly
+   * @return {number}
+   */
+  get x() {
+    return this._x;
+  }
+
+  /**
+   * The y coordinate of the vector.
+   * @public
+   * @readonly
+   * @return {number}
+   */
+  get y() {
+    return this._y;
+  }
+
+  /**
    * @public
    * @readonly
    *
    * @return {number}
    */
-  get xCoordinate() {
-    return this._xCoordinate;
+  get magnitudeSquared() {
+    return (this._x * this._x) + (this._y * this._y);
   }
 
   /**
-   * Get this._yCoordinate
-   * @public
-   * @readonly
-   *
-   * @return {number}
-   */
-  get yCoordinate() {
-    return this._yCoordinate;
-  }
-
-  /**
-   * The magnitude of the vector
+   * The magnitude of the vector.
    * @public
    * @readonly
    *
    * @return {number}
    */
   get magnitude() {
-    return Math.abs(Math.sqrt((this._x * this._x) + (this._y * this._y)));
+    return Math.sqrt(this.magnitudeSquared);
+  }
+
+  /**
+   * @public
+   * @readonly
+   *
+   * @return {Vector2}
+   */
+  get unit() {
+    return Vector2.createInstance(this._x / this.magnitude, this._y / this.magnitude);
+  }
+
+  /**
+   * @public
+   * @readonly
+   * @return {Vector2}
+   */
+  get normal() {
+    return Vector2.createInstance(this._y, -this._x);
   }
 
   /**
    * Vector2
    * @constructor
-   * @param {number} xCoordinate - The x coordinate for the vector.
-   * @param {number} yCoordinate - The y coordinate for the vector.
+   * @param {number} x - The x coordinate of the vector.
+   * @param {number} y - The y coordinate of the vector.
    */
-  constructor(xCoordinate, yCoordinate) {
-    this._xCoordinate = xCoordinate;
-    this._yCoordinate = yCoordinate;
+  constructor(x, y) {
+    this._x = x;
+    this._y = y;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Adds a vector2 object to this.
+   * Adds a
    * @public
    * @param {Vector2} vector - The vector to add.
-   *
-   * @return {Vector2} A new vector2 instance.
    */
   add(vector) {
-    return Vector2.createInstance(this._xCoordinate + vector.xCoordinate, this._yCoordinate + vector.yCoordinate);
+    this._x += vector.x;
+    this._y += vector.y;
   }
 
   /**
-   * Subtracts a vector2 object from this.
+   *
    * @public
    * @param {Vector2} vector - The vector to subtract.
-   *
-   * @return {Vector2} A new vector2 instance.
    */
   subtract(vector) {
-    return Vector2.createInstance(this._xCoordinate - vector.xCoordinate, this._yCoordinate - vector.yCoordinate);
+    this._x -= vector.x;
+    this._y -= vector.y;
   }
 
   /**
-   * Multiplies the vector by a scalar value.
+   *
    * @public
    * @param {number} scalar - The scalar to multiply.
+   */
+  multiply(scalar) {
+    this._x *= scalar;
+    this._y *= scalar;
+  }
+
+  /**
+   *
+   * @public
+   * @param {Vector2} vector
+   */
+  piecewiseMultiply(vector) {
+    this._x *= vector.x;
+    this._y *= vector.y;
+  }
+
+  /**
+   *
+   * @public
+   * @param {number} scalar - The scalar to divide.
+   */
+  divide(scalar) {
+    this._x /= scalar;
+    this._y /= scalar;
+  }
+
+  /**
+   *
+   * @public
+   * @param {Vector2} vector -
+   */
+  piecewiseDivide(vector) {
+    this._x /= vector.x;
+    this._y /= vector.y;
+  }
+
+  /**
+   * Limits the magnitude of the vector the specified value.
+   * @param {number} max - the maximum value for the magnitude.
+   */
+  limit(max) {
+    if (this.magnitudeSquared > (max * max)) {
+      this.divide(this.magnitude);
+      this.multiply(max);
+    }
+  }
+
+  /**
+   *
+   * @public
+   * @param {Vector2} vector -
+   *
+   * @return {number}
+   */
+  distanceTo(vector) {
+    return Math.sqrt(Math.pow((this._x - vector.x), 2) + Math.pow((this._y - vector.y), 2));
+  }
+
+  /**
+   *
+   * @public
+   * @param {Vector2} vector -
+   *
+   * @return {number}
+   */
+  dot(vector) {
+    return (this._x * vector.x) + (this._y * vector.y);
+  }
+
+  /**
+   *
+   * @public
+   * @param {Vector2} vector -
+   *
+   * @return {number}
+   */
+  angleTo(vector) {
+    return Math.acos(this.dot(vector) / (this.magnitude * vector.magnitude));
+  }
+
+  /**
+   *
+   * @public
+   * @param {Vector2} vector -
+   *
+   * @return {boolean}
+   */
+  equals(vector) {
+    return (this._x === vector.x) && (this._y === vector.y);
+  }
+
+  /**
+   * Creates a new clone of the vector.
+   * @public
    *
    * @return {Vector2}
    */
-  multiply(scalar) {
-    return Vector2.create(this._xCoordinate * scalar, this._yCoordinate * scalar);
+  clone() {
+    return Vector2.createInstance(this._x, this._y);
   }
 
   /**
-   * Divides the vector by a scalar value.
    * @public
-   * @param {number} scalar - The scalar to divide.
    *
-   * @return {Vector2} A new vector2 instance.
+   * @return {number[]}
    */
-  divide(scalar) {
-    return Vector2.createInstance(this._xCoordinate / scalar, this._yCoordinate / scalar);
+  toArray() {
+    return [this._x, this._y];
   }
 
   /**
-   * Creates a copy of the vector.
    * @public
    *
-   * @return {Vector2} A new vector2 instance.
+   * @return {string}
    */
-  copy() {
-    return Vector2.createInstance(this._xCoordinate, this._yCoordinate);
+  toString() {
+    return `${this._x},${this._y}`;
   }
-
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
    * Static factory method
    * @static
-   * @param {number} xCoordinate - The x coordinate for the vector.
-   * @param {number} yCoordinate - The y coordinate for the vector.
+   * @param {number} x - The x coordinate of the vector.
+   * @param {number} y - The y coordinate of the vector.
    *
-   * @return {Vector2} A new vector2 instance.
+   * @return {Vector2}
    */
-  static createInstance(xCoordinate, yCoordinate) {
-    return new Vector2(xCoordinate, yCoordinate);
+  static createInstance(x, y) {
+    return new Vector2(x, y);
   }
 }
 

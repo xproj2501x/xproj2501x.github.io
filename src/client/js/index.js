@@ -2,9 +2,9 @@
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
 import '../css/_site.scss';
-import Display from './display';
 import GameOfLife from '../../games/game-of-life';
 import LogService from '../../common/services/log';
+import UserInterface from '../../user-interface';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -78,9 +78,7 @@ class App {
 
    */
   start() {
-    const GAME_OF_LIFE = GameOfLife.createInstance();
-
-    GAME_OF_LIFE.start();
+    const USER_INTEFACE = UserInterface.createInstance(LOG_SERVICE);
   }
 
   toggleMenu(event) {

@@ -1,15 +1,14 @@
 /**
- * Log Service
+ * Entity
  * ===
  *
- * @module logService
+ * @module Entity
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
+import {ComponentAlreadyExistsError, ComponentNotFoundError} from './errors';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -18,67 +17,99 @@ import Logger from './logger';
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
- * LogService
+ * Entity
  * @class
  */
-class LogService {
+class Entity {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The id of the entity.
    * @private
-   * @type {Log}
+   * @type {number}
    */
-  _log;
+  _id;
 
   /**
+   * The key of the entity.
    * @private
-   * @type {object}
+   * @type {number}
    */
-  _loggers;
+  _key;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Get _id
+   * @public
+   * @readonly
+   *
+   * @return {number}
+   */
+  get id() {
+    return this._id;
+  }
 
   /**
-   * LogService
-   * @constructor
-   * @param {Log} log - The log for the application.
+   * Get _key
+   * @public
+   * @readonly
+   * @return {number}
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  get key() {
+    return this._key;
+  }
+
+  /**
+   * Entity
+   * @constructor
+   * @param {number} id - The id of the entity.
+   */
+  constructor(id) {
+    this._id = id;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Registers a new logger with the service.
+   * Attaches a component type to the entity.
    * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
+   * @param {number} type - The type of component to attach.
    */
-  register(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    LOGGER.writeInfoLog(`Logger registered for ${context}`);
-    return LOGGER;
+  attachComponent(type) {
+    if (this.hasComponent(type)) {
+      throw new ComponentAlreadyExistsError(`Component type ${type} already attached to entity ${this._id}.`);
+    }
+    this._key |= (1 << type);
   }
 
   /**
-   * Removes a logger from the service.
+   * Detaches a component type from the entity.
    * @public
-   * @param {string} context - The context of the logger to be removed.
+   * @param {number} type - The type of component to detach.
    */
-  remove(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
+  detachComponent(type) {
+    if (!this.hasComponent(type)) {
+      throw new ComponentNotFoundError(`Component type ${type} is not attached to entity ${this._id}.`);
+    }
+    this._key ^= (1 << type);
+  }
+
+  /**
+   * Verifies that the component type is attached to the entity.
+   * @public
+   * @param {number} type - The type of component to check.
+   *
+   * @return {boolean}
+   */
+  hasComponent(type) {
+    return Boolean(this._key & (1 << type));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -88,21 +119,20 @@ class LogService {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {number} id - The id of the entity.
    *
-   * @return {LogService} - A new log service instance.
+   * @return {Entity} .
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
-
-    return new LogService(LOG);
+  static createInstance(id) {
+    return new Entity(id);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default Entity;

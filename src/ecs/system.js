@@ -1,15 +1,13 @@
 /**
- * Log Service
+ * System
  * ===
  *
- * @module logService
+ * @module engine.System
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -19,66 +17,55 @@ import Logger from './logger';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * System
  * @class
  */
-class LogService {
+class System {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * @private
-   * @type {Log}
-   */
-  _log;
-
-  /**
+   * Type definition for data used by the system.
    * @private
    * @type {object}
    */
-  _loggers;
+  _type;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Get _type;
+   * @public
+   * @readonly
+   * @return {object}
+   */
+  get type() {
+    return this._type;
+  }
 
   /**
-   * LogService
+   * System
    * @constructor
-   * @param {Log} log - The log for the application.
+   * @param {object} type - Type definition for data used by the system.
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  constructor(type) {
+    if (new.target === System) throw new Error('Error: Cannot construct system instance directly.');
+    this._type = type;
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Registers a new logger with the service.
+   * Update routine for the system.
    * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
+   * @abstract
    */
-  register(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    LOGGER.writeInfoLog(`Logger registered for ${context}`);
-    return LOGGER;
-  }
-
-  /**
-   * Removes a logger from the service.
-   * @public
-   * @param {string} context - The context of the logger to be removed.
-   */
-  remove(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
+  update() {
+    throw new Error(`Error: Update method called from system base class`);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -88,21 +75,10 @@ class LogService {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Static factory method.
-   * @static
-   * @param {int} level - The minimum level for log messages.
-   *
-   * @return {LogService} - A new log service instance.
-   */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
 
-    return new LogService(LOG);
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default System;

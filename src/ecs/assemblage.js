@@ -1,15 +1,13 @@
 /**
- * Log Service
+ * Assemblage
  * ===
  *
- * @module logService
+ * @module ecs.Assemblage
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -19,67 +17,60 @@ import Logger from './logger';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * Assemblage
  * @class
  */
-class LogService {
+class Assemblage {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The id of the parent entity.
    * @private
-   * @type {Log}
+   * @type {number}
    */
-  _log;
+  _id;
+
+  /**
+   * The key of the parent entity.
+   * @private
+   * @type {number}
+   */
+  _key;
 
   /**
    * @private
-   * @type {object}
+   * @type {Component[]}
    */
-  _loggers;
+  _components;
+
+  /**
+   * @private
+   * @type {Event[]}
+   */
+  _events;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * LogService
+   * Assemblage
    * @constructor
-   * @param {Log} log - The log for the application.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} key - The key of the parent entity.
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  constructor(id, key) {
+    this._id = id;
+    this._key = key;
+    this._components = [];
+    this._events = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Registers a new logger with the service.
-   * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
-   */
-  register(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    LOGGER.writeInfoLog(`Logger registered for ${context}`);
-    return LOGGER;
-  }
-
-  /**
-   * Removes a logger from the service.
-   * @public
-   * @param {string} context - The context of the logger to be removed.
-   */
-  remove(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -88,21 +79,21 @@ class LogService {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {number} id - The id of the parent entity.
+   * @param {number} key - The key of the parent entity.
    *
-   * @return {LogService} - A new log service instance.
+   * @return {Assemblage} .
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
-
-    return new LogService(LOG);
+  static createInstance(id, key) {
+    return new Assemblage(id, key);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default Assemblage;

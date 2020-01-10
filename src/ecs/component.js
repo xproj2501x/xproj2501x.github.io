@@ -1,0 +1,144 @@
+/**
+ * Component
+ * ===
+ *
+ * @module Component
+ */
+
+////////////////////////////////////////////////////////////////////////////////
+// Imports
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Class
+////////////////////////////////////////////////////////////////////////////////
+import {InvalidComponentStateError} from './errors';
+
+/**
+ * Component
+ * @class
+ */
+class Component {
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Properties
+  //////////////////////////////////////////////////////////////////////////////
+  /**
+   * The id of the parent entity.
+   * @private
+   * @type {number}
+   */
+  _id;
+
+  /**
+   * The type of component.
+   * @private
+   * @type {number}
+   */
+  _type;
+
+  /**
+   * The state of the component
+   * @private
+   * @type {object}
+   */
+  _state;
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Public Properties
+  //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Get _id
+   * @public
+   * @readonly
+   *
+   * @return {number}
+   */
+  get entityId() {
+    return this._id;
+  }
+
+  /**
+   * Get _type
+   * @public
+   * @readonly
+   * @return {number}
+   */
+  get type() {
+    return this._type;
+  }
+
+
+  /**
+   * Get _state
+   * @public
+   * @readonly
+   *
+   * @return {object}
+   */
+  get state() {
+    return Object.assign({}, this._state);
+  }
+
+  /**
+   * Component
+   * @constructor
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of component.
+   * @param {object} state - The state of the component.
+   */
+  constructor(id, type, state) {
+    this._id = id;
+    this._type = type;
+    this._state = state;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Public Methods
+  //////////////////////////////////////////////////////////////////////////////
+  /**
+   * Updates the state of the component.
+   * @public
+   * @param {object} state - The new state of the component.
+   *
+   * @throws {InvalidComponentStateError}
+   */
+  update(state) {
+    for (const KEY in state) {
+      if (!this._state.hasOwnProperty(KEY)) {
+        throw new InvalidComponentStateError(`Invalid property ${KEY} for component type ${this.constructor.name}`);
+      }
+    }
+    this._state = Object.assign({}, this._state, state);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Static Methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * Static factory method.
+   * @static
+   * @param {number} id - The id of the parent entity.
+   * @param {number} type - The type of component.
+   * @param {object} state - The state of the component.
+   *
+   * @return {Component} .
+   */
+  static createInstance(id, type, state) {
+    return new Component(id, type, state);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Exports
+////////////////////////////////////////////////////////////////////////////////
+export default Component;

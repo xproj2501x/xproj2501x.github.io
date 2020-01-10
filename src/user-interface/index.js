@@ -1,89 +1,101 @@
 /**
- * Log Service
+ * User Interface
  * ===
  *
- * @module logService
+ * @module userInterface
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+const DEFAULT = {
+  WIDTH: 100,
+  HEIGHT: 75,
+  UNIT: 12,
+  SCALE: 1,
+  PARENT: 'app'
+};
 
+const INPUT_EVENTS = [
+  'keypress',
+  'keydown',
+  'keyup',
+  'click',
+  'dblclick',
+  'mousedown',
+  'mouseup',
+  'wheel',
+  'mousemove',
+  'contextmenu'
+];
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * UserInterface
  * @class
  */
-class LogService {
+class UserInterface {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The logger for the class.
    * @private
-   * @type {Log}
+   * @type {Logger}
    */
-  _log;
-
-  /**
-   * @private
-   * @type {object}
-   */
-  _loggers;
+  _logger;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * LogService
+   * UserInterface
    * @constructor
-   * @param {Log} log - The log for the application.
+   * @param {LogService} logService - The log service for the simulation.
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  constructor(logService) {
+    this._logger = logService.register(this.constructor.name);
+    INPUT_EVENTS.forEach((event) => {
+      document.addEventListener(event, (event) => this._handleInput(event));
+    });
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Registers a new logger with the service.
-   * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
-   */
-  register(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    LOGGER.writeInfoLog(`Logger registered for ${context}`);
-    return LOGGER;
+  enter() {
+    INPUT_EVENTS.forEach((event) => {
+      document.addEventListener(event, (event) => this._handleInput(event));
+    });
   }
 
-  /**
-   * Removes a logger from the service.
-   * @public
-   * @param {string} context - The context of the logger to be removed.
-   */
-  remove(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
+  exit() {
+    INPUT_EVENTS.forEach((event) => {
+      document.removeEventListener(event, (event) => this._handleInput(event));
+    });
   }
-
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+
+  /**
+   *
+   * @param {object} event -
+   * @private
+   */
+  _handleInput(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+  }
+
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -91,18 +103,16 @@ class LogService {
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {LogService} logService -
    *
-   * @return {LogService} - A new log service instance.
+   * @return {UserInterface} - A new display manager instance.
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
-
-    return new LogService(LOG);
+  static createInstance(logService) {
+    return new UserInterface(logService);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default UserInterface;

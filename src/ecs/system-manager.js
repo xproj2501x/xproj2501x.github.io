@@ -1,15 +1,13 @@
 /**
- * Log Service
+ * SystemManager
  * ===
  *
- * @module logService
+ * @module engine.SystemManager
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -19,66 +17,70 @@ import Logger from './logger';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * SystemManager
  * @class
  */
-class LogService {
+class SystemManager {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
+   * The logger for the class.
    * @private
-   * @type {Log}
+   * @type {Logger}
    */
-  _log;
+  _logger;
 
   /**
    * @private
-   * @type {object}
+   * @type {StateManager}
    */
-  _loggers;
+  _stateManager;
+
+  /**
+   * A collection of systems used in the simulation.
+   * @type {System[]}
+   */
+  _systems;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * LogService
+   * SystemManager
    * @constructor
-   * @param {Log} log - The log for the application.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {StateManager} stateManager -
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  constructor(logService, stateManager) {
+    this._logger = logService.register(this.constructor.name);
+    this._stateManager = stateManager;
+    this._systems = [];
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Registers a new logger with the service.
-   * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
-   */
-  register(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    LOGGER.writeInfoLog(`Logger registered for ${context}`);
-    return LOGGER;
+  registerSystem(system) {
+    this._systems.push(system);
+    this._logger.writeInfoLog(`${system.constructor.name} registered.`);
   }
 
-  /**
-   * Removes a logger from the service.
-   * @public
-   * @param {string} context - The context of the logger to be removed.
-   */
-  remove(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
+  update() {
+    this._systems.forEach((system) => {
+      const SYSTEM_DATA = this._stateManager.getSystemData(system.type);
+      const RESULTS = system.update(SYSTEM_DATA);
+
+      RESULTS.forEach((result) => {
+        if (result.action === 'update') {
+          this._stateManager.updateEntity(result.id, [{type: result.type, state: result.state}]);
+        } else if (result.action === 'delete') {
+          this._stateManager.destroyComponent(result.id, result.type);
+        }
+      });
+    });
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -88,21 +90,27 @@ class LogService {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {StateManager} stateManager -
+   * @param {object[]} systems - A collection of templates for the systems used by the simulation.
    *
-   * @return {LogService} - A new log service instance.
+   * @return {SystemManager} A new system manager instance.
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
+  static createInstance(logService, stateManager, systems) {
+    const SYSTEM_MANAGER = new SystemManager(logService, stateManager);
 
-    return new LogService(LOG);
+    systems.forEach((system) => {
+      SYSTEM_MANAGER.registerSystem(system.createInstance());
+    });
+    return SYSTEM_MANAGER;
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default SystemManager;

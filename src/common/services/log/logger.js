@@ -17,7 +17,6 @@
  * @enum {string}
  */
 const LEVEL = {
-  LOG: 'LOG',
   INFO: 'INFO',
   DEBUG: 'DEBUG',
   WARN: 'WARN',
@@ -69,20 +68,11 @@ class Logger {
   // Public Methods
   ////////////////////////////////////////////////////////////////////////////////
   /**
-   * Writes a log message to the log.
-   * @public
-   * @param {string} message - The message to be written.
-   */
-  writeLogMessage(message) {
-    this._log.writeMessage(this._context, LEVEL.LOG, message);
-  }
-
-  /**
    * Writes a debug message to the log.
    * @public
    * @param {string} message - The message to be written.
    */
-  writeDebugMessage(message) {
+  writeDebugLog(message) {
     this._log.writeMessage(this._context, LEVEL.DEBUG, message);
   }
 
@@ -91,7 +81,7 @@ class Logger {
    * @public
    * @param {string} message - The message to be written.
    */
-  writeWarningMessage(message) {
+  writeWarningLog(message) {
     this._log.writeMessage(this._context, LEVEL.WARN, message);
   }
 
@@ -100,7 +90,7 @@ class Logger {
    * @public
    * @param {string} message - The message to be written.
    */
-  writeInfoMessage(message) {
+  writeInfoLog(message) {
     this._log.writeMessage(this._context, LEVEL.INFO, message);
   }
 
@@ -109,7 +99,7 @@ class Logger {
    * @public
    * @param {string} message - The message to be written.
    */
-  writeErrorMessage(message) {
+  writeErrorLog(message) {
     this._log.writeMessage(this._context, LEVEL.ERROR, message);
   }
 

@@ -1,36 +1,40 @@
 /**
- * Ajax Service
+ * Movement System
  * ===
  *
- * @module common.Services.AjaxService
+ * @module games.Targeting.Systems.MovementSystem
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import System from '../../../ecs/system';
+import {COMPONENT} from '../components';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * API Methods
- * @enum {string}
- */
-const METHOD = {
-  DELETE: 'DELETE',
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT'
+const DATA = {
+  resources: ['map'],
+  components: [
+    COMPONENT.POSITION,
+    COMPONENT.VELOCITY,
+    COMPONENT.ACCELERATION
+  ]
 };
+
+const MAX_SPEED = 8;
+const MAX_FORCE = 0.2;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * AjaxService
+ * MovementSystem
  * @class
+ * @extends System
  */
-class AjaxService {
+class MovementSystem extends System {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
@@ -41,88 +45,35 @@ class AjaxService {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * AjaxService
+   * MovementSystem
    * @constructor
    */
   constructor() {
-
+    super(DATA);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * Sends a delete request to the specified resource.
+   * Update routine for the system.
    * @public
-   * @param {object} options - The options for the request.
+   * @param {object} systemData -
    *
-   * @return {Promise}
+   * @return {object[]}
    */
-  delete(options) {
-    return this._send(METHOD.DELETE, options);
-  }
+  update(systemData) {
+    const RESULTS = [];
 
-  /**
-   * Sends a get request to the specified resource.
-   * @public
-   * @param {object} options - The options for the request.
-   *
-   * @return {Promise}
-   */
-  get(options) {
-    return this._send(METHOD.GET, options);
-  }
+    systemData.entities.forEach((entity) => {
 
-  /**
-   * Sends a post request to the specified resource.
-   * @public
-   * @param {object} options - The options for the request.
-   *
-   * @return {Promise}
-   */
-  post(options) {
-    return this._send(METHOD.POST, options);
-  }
-
-  /**
-   * Sends a put request to the specified resource.
-   * @public
-   * @param {object} options - The options for the request.
-   *
-   * @return {Promise}
-   */
-  put(options) {
-    return this._send(METHOD.PUT, options);
+    });
+    return RESULTS;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Sends a request to the specified resource.
-   * @private
-   * @param {string} method - The request method.
-   * @param {object} options - The options for the request.
-   *
-   * @return {Promise}
-   */
-  async _send(method, options) {
-    let result;
-
-    await fetch(options.uri, {
-      method: method,
-      headers: options.headers,
-      body: JSON.stringify(options.body)
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.error) {
-          throw new Error(json.error);
-        }
-        result = json;
-      });
-    return result;
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -131,14 +82,14 @@ class AjaxService {
    * Static factory method.
    * @static
    *
-   * @return {AjaxService} - A new ajax service instance.
+   * @return {MovementSystem} A new Movement system instance.
    */
   static createInstance() {
-    return new AjaxService();
+    return new MovementSystem();
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default AjaxService;
+export default MovementSystem;

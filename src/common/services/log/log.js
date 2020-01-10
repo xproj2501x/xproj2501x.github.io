@@ -27,8 +27,7 @@ const LOG_LEVEL = {
   WARN: 1,
   DEBUG: 2,
   INFO: 3,
-  LOG: 4,
-  SILENT: 5
+  SILENT: 4
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,6 +68,9 @@ class Log {
     this._data = [];
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Public Methods
+  ////////////////////////////////////////////////////////////////////////////////
   /**
    * Writes a message to the log.
    * @public
@@ -77,7 +79,7 @@ class Log {
    * @param {object} message - The message to be written.
    */
   writeMessage(context, level, message) {
-    if (LOG_LEVEL[level] < this._level) return;
+    if (LOG_LEVEL[level] <= this._level) return;
     let log = `[${level}][${Date.now()}][${context}]: `;
 
     if (typeof message === 'object') {
@@ -88,9 +90,6 @@ class Log {
     this._data.push(log);
     console.log(log);
   }
-  ////////////////////////////////////////////////////////////////////////////////
-  // Public Methods
-  ////////////////////////////////////////////////////////////////////////////////
 
   /**
    * Clears the log.
@@ -106,7 +105,7 @@ class Log {
   /**
    * Static factory method
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {number} level - The minimum level for log messages.
    *
    * @return {Log} - A new log instance.
    */

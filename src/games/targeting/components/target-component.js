@@ -1,15 +1,14 @@
 /**
- * Log Service
+ * Target Component
  * ===
  *
- * @module logService
+ * @module games.Targeting.Components.TargetComponent
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import Log from './log';
-import Logger from './logger';
+import Component from '../../../ecs/component';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -19,67 +18,51 @@ import Logger from './logger';
 // Class
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * LogService
+ * TargetComponent
  * @class
+ * @extends Component
  */
-class LogService {
+class TargetComponent extends Component {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * @private
-   * @type {Log}
-   */
-  _log;
-
-  /**
-   * @private
-   * @type {object}
-   */
-  _loggers;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
+  /**
+   * @public
+   * @readonly
+   * @return {number}
+   */
+  get x() {
+    return this.state.x;
+  }
 
   /**
-   * LogService
-   * @constructor
-   * @param {Log} log - The log for the application.
+   * @public
+   * @readonly
+   * @return {number}
    */
-  constructor(log) {
-    this._loggers = {};
-    this._log = log;
+  get y() {
+    return this.state.y;
+  }
+
+  /**
+   * TargetComponent
+   * @constructor
+   * @param {number} type - The type of component.
+   * @param {number} entityId - The id of the parent entity.
+   * @param {object} state - The state of the component.
+   */
+  constructor(type, entityId, state) {
+    super(type, entityId, state);
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Registers a new logger with the service.
-   * @public
-   * @param {string} context - The context of the instance registering with the logger.
-   *
-   * @return {Logger} - A new logger instance.
-   */
-  register(context) {
-    const LOGGER = Logger.createInstance(context, this._log);
-
-    this._loggers[context] = LOGGER;
-    LOGGER.writeInfoLog(`Logger registered for ${context}`);
-    return LOGGER;
-  }
-
-  /**
-   * Removes a logger from the service.
-   * @public
-   * @param {string} context - The context of the logger to be removed.
-   */
-  remove(context) {
-    if (!(context in this._loggers)) throw new Error(`Context ${context} is not registered with the log service`);
-    delete this._loggers[context];
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
@@ -88,21 +71,22 @@ class LogService {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
    * @static
-   * @param {int} level - The minimum level for log messages.
+   * @param {number} type - The type of component.
+   * @param {number} entityId - The id of the parent entity.
+   * @param {object} state - The state of the component.
    *
-   * @return {LogService} - A new log service instance.
+   * @return {TargetComponent} A new Target component instance.
    */
-  static createInstance(level) {
-    const LOG = Log.createInstance(level);
-
-    return new LogService(LOG);
+  static createInstance(type, entityId, state) {
+    return new TargetComponent(type, entityId, state);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////////////////
-export default LogService;
+export default TargetComponent;

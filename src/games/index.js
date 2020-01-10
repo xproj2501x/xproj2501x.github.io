@@ -32,15 +32,14 @@ class GameManager {
    */
   _logger;
 
-  /**
-   * The message service for the application.
-   * @private
-   * @type {MessageService}
-   */
-  _messageService;
-
   _games;
-  
+
+  /**
+   * @private
+   * @type {boolean}
+   */
+  _isRunning;
+
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
   //////////////////////////////////////////////////////////////////////////////
@@ -49,20 +48,43 @@ class GameManager {
    * GameManager
    * @constructor
    * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
    */
-  constructor(logService, messageService) {
+  constructor(logService) {
     this._logger = logService.registerLogger(this.constructor.name);
-    this._messageService = messageService;
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
+  start() {
+    this._isRunning = true;
+    requestAnimationFrame(() => this._tick());
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
+  _tick() {
+    if (this._isRunning) {
+      const CURRENT_TIME = Date.now();
+
+      this._delta += CURRENT_TIME - this._lastRefresh;
+      if (this._delta >= MAX_SKIP_DURATION) {
+        // this._logger.writeErrorLog(`Delta ${this._delta} is greater than max frame duration ${MAX_SKIP_DURATION}`);
+      }
+      while (this._delta > FRAME_DURATION) {
+        // this._logger.writeInfoLog(`Updating...`);
+        this._delta -= FRAME_DURATION;
+      }
+      // this._logger.writeInfoLog(`Rendering...`);
+      this._engine.update();
+      this.render();
+      this._lastRefresh = CURRENT_TIME;
+      // this._logger.writeInfoLog(`Last refresh: ${this._lastRefresh}`);
+
+      requestAnimationFrame(() => this._tick());
+    }
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
@@ -71,12 +93,11 @@ class GameManager {
    * Static factory method.
    * @static
    * @param {LogService} logService - The log service for the application.
-   * @param {MessageService} messageService - The message service for the application.
    *
    * @return {GameManager} - A new game manager instance.
    */
-  static createInstance(logService, messageService) {
-    return new GameManager(logService, messageService);
+  static createInstance(logService) {
+    return new GameManager(logService);
   }
 }
 
