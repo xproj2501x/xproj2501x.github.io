@@ -173,6 +173,12 @@ class Vector2 {
     this._y /= vector.y;
   }
 
+  normalize() {
+    if (this.magnitude !== 0) {
+      this.multiply(1 / this.magnitude);
+    }
+  }
+
   /**
    * Limits the magnitude of the vector the specified value.
    * @param {number} max - the maximum value for the magnitude.
@@ -182,6 +188,11 @@ class Vector2 {
       this.divide(this.magnitude);
       this.multiply(max);
     }
+  }
+
+  setMagnitude(value) {
+    this.normalize();
+    this.multiply(value);
   }
 
   /**
@@ -258,6 +269,19 @@ class Vector2 {
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+  static add(vector1, vector2) {
+
+  }
+
+  static subtract(vector1, vector2) {
+    return vector1.clone()
+      .subtract(vector2);
+  }
+
+  static multiply(vector1, vector2) {
+
+  }
+
   /**
    * Static factory method
    * @static

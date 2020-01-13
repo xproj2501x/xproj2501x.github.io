@@ -62,9 +62,7 @@ class UserInterface {
    */
   constructor(logService) {
     this._logger = logService.register(this.constructor.name);
-    INPUT_EVENTS.forEach((event) => {
-      document.addEventListener(event, (event) => this._handleInput(event));
-    });
+
   }
 
   //////////////////////////////////////////////////////////////////////////////

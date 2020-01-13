@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
+import StateManager from '../ecs';
+import Engine from '../engine';
+import {COMPONENT, COMPONENT_TEMPLATES} from './targeting/components';
+import {SYSTEM_TEMPLATES} from './targeting/systems';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -16,6 +20,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
  * GameManager
  * @class
@@ -32,7 +37,9 @@ class GameManager {
    */
   _logger;
 
-  _games;
+  _stateManager;
+
+  _engine;
 
   /**
    * @private
@@ -49,8 +56,10 @@ class GameManager {
    * @constructor
    * @param {LogService} logService - The log service for the application.
    */
-  constructor(logService) {
-    this._logger = logService.registerLogger(this.constructor.name);
+  constructor(logService, stateManager, engine) {
+    this._logger = logService.register(this.constructor.name);
+    this._stateManager = stateManager;
+    this._engine = engine;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -58,6 +67,24 @@ class GameManager {
   //////////////////////////////////////////////////////////////////////////////
   start() {
     this._isRunning = true;
+    this._stateManager.buildEntity([
+      {
+        type: COMPONENT.POSITION,
+        state: {x: 0, y: 0}
+      },
+      {
+        type: COMPONENT.TARGET,
+        state: {x: 250, y: 250}
+      },
+      {
+        type: COMPONENT.VELOCITY,
+        state: {x: 0, y: 0}
+      },
+      {
+        type: COMPONENT.ACCELERATION,
+        state: {x: 0, y: 0}
+      },
+    ]);
     requestAnimationFrame(() => this._tick());
   }
 
@@ -65,25 +92,31 @@ class GameManager {
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
   _tick() {
-    if (this._isRunning) {
-      const CURRENT_TIME = Date.now();
+    this._engine.update();
+    this._render();
+    requestAnimationFrame(() => this._tick());
+  }
 
-      this._delta += CURRENT_TIME - this._lastRefresh;
-      if (this._delta >= MAX_SKIP_DURATION) {
-        // this._logger.writeErrorLog(`Delta ${this._delta} is greater than max frame duration ${MAX_SKIP_DURATION}`);
-      }
-      while (this._delta > FRAME_DURATION) {
-        // this._logger.writeInfoLog(`Updating...`);
-        this._delta -= FRAME_DURATION;
-      }
-      // this._logger.writeInfoLog(`Rendering...`);
-      this._engine.update();
-      this.render();
-      this._lastRefresh = CURRENT_TIME;
-      // this._logger.writeInfoLog(`Last refresh: ${this._lastRefresh}`);
+  _render() {
+    const CONTAINER = document.getElementById('canvas-wrapper');
+    const CANVAS = document.createElement('canvas');
+    const ENTITY = this._stateManager.getSystemData({
+      resources: [],
+      components: [
+        COMPONENT.POSITION
+      ]
+    }).entities[0];
 
-      requestAnimationFrame(() => this._tick());
-    }
+    CANVAS.width = CONTAINER.clientWidth;
+    CANVAS.height = CONTAINER.clientHeight;
+    CONTAINER.removeEventListener('click', (event) => {console.log(event);});
+    CONTAINER.addEventListener('click', (event) => {console.log(event);});
+    const CONTEXT = CANVAS.getContext('2d');
+
+    CONTEXT.fillStyle = `rgb(0, 0, 0)`;
+    CONTEXT.fillRect(ENTITY[COMPONENT.POSITION].x, ENTITY[COMPONENT.POSITION].y, 10, 10);
+    if (CONTAINER.firstChild) CONTAINER.removeChild(CONTAINER.firstChild);
+    CONTAINER.appendChild(CANVAS);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -97,7 +130,10 @@ class GameManager {
    * @return {GameManager} - A new game manager instance.
    */
   static createInstance(logService) {
-    return new GameManager(logService);
+    const STATE_MANAGER = StateManager.createInstance(logService, COMPONENT_TEMPLATES);
+    const ENGINE = Engine.createInstance(logService, STATE_MANAGER, SYSTEM_TEMPLATES);
+
+    return new GameManager(logService, STATE_MANAGER, ENGINE);
   }
 }
 

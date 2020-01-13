@@ -8,11 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Imports
 ////////////////////////////////////////////////////////////////////////////////
-import {FRAME_DURATION, MAX_FRAME_SKIP} from './constants';
-import EntityManager from './entity-manager';
-import ComponentManager from './component-manager';
-import AssemblageManager from './assemblage-manager';
-import SystemManager from './system-manager';
+import SystemManager from '../ecs/system-manager';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -21,6 +17,7 @@ import SystemManager from './system-manager';
 ////////////////////////////////////////////////////////////////////////////////
 // Class
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
  * Engine
  * @class
@@ -31,59 +28,23 @@ class Engine {
   // Private Properties
   //////////////////////////////////////////////////////////////////////////////
   /**
-   * The message service for the simulation.
+   * The logger for the class.
    * @private
-   * @type {MessageService}
+   * @type {Logger}
    */
-  _messageService;
-
-  /**
-   * The entity manager for the simulation.
-   * @private
-   * @type {EntityManager}
-   */
-  _entityManager;
+  _logger;
 
   /**
    * @private
-   * @type {ComponentManager}
+   * @type {Boolean}
    */
-  _componentManager;
+  _isLocked;
 
   /**
    * @private
    * @type {SystemManager}
    */
   _systemManager;
-
-  /**
-   * @private
-   * @type {AssemblageManager}
-   */
-  _assemblageManager;
-
-  /**
-   * @private
-   * @type {Boolean}
-   */
-  _isRunning;
-
-  /**
-   * @private
-   * @type {int}
-   */
-  _time;
-
-  /**
-   * @private
-   * @type {int}
-   */
-  _lastTick;
-
-  /**
-   * @private
-   */
-  _frameId;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Properties
@@ -92,100 +53,51 @@ class Engine {
   /**
    * Engine
    * @constructor
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {object} managers - Manager services for the simulation.
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {SystemManager} systemManager -
    */
-  constructor(messageService, managers) {
-    this._messageService = messageService;
-    this._entityManager = managers.entityManager;
-    this._componentManager = managers.componentManager;
-    this._assemblageManager = managers.assemblageManager
-    this._systemManager = managers.systemManager;
-    this._isRunning = false;
-    this._time = 0;
+  constructor(logService, systemManager) {
+    this._logger = logService.register(this.constructor.name);
+    this._isLocked = false;
+    this._systemManager = systemManager;
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Public Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   * Starts the engine for the simulation.
-   * @public
-   */
-  start() {
-    this._isRunning = true;
-    this._lastTick = Date.now();
-    this._frameId = requestAnimationFrame(() => {
-      this._tick();
-    });
+  update() {
+    if (this._isLocked) {
+      console.log(`engine is currently locked, ignoring action`);
+      return null;
+    }
+    this._isLocked = true;
+    this._systemManager.update();
+    this._isLocked = false;
   }
-
-  /**
-   * Stops the engine.
-   */
-  stop() {
-    this._isRunning = false;
-    cancelAnimationFrame(this._frameId);
-  }
-
   //////////////////////////////////////////////////////////////////////////////
   // Private Methods
   //////////////////////////////////////////////////////////////////////////////
-  /**
-   *
-   * @private
-   */
-  _tick() {
-    // Needs to call the render loop and draw the next frame every time
-    // If there is not input then the update loop needs to handle only animation / display systems
-    // If there is input then all systems should update
-    if (this._isRunning) {
-      const CURRENT_TIME = Date.now();
-      let delta = CURRENT_TIME - this._lastTick;
 
-      delta = delta > MAX_FRAME_SKIP ? MAX_FRAME_SKIP : delta;
-      if (delta >= FRAME_DURATION) {
-        this._update(delta);
-        this._render(delta);
-        this._lastTick = CURRENT_TIME;
-      }
-      this._frameId = requestAnimationFrame(() => {
-        this._tick();
-      });
-    }
-  }
-
-  _update(delta) {
-    while (delta >= FRAME_DURATION) {
-      this._systemManager.update(delta);
-      delta -= FRAME_DURATION;
-    }
-  }
-
-  _render(interpolation) {
-
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Static Methods
   //////////////////////////////////////////////////////////////////////////////
+
   /**
    * Static factory method.
-   * @static
-   * @param {MessageService} messageService - The message service for the simulation.
-   * @param {object} configuration -
    *
-   * @return {Engine} - A new engine instance.
+   * @static
+   * @param {LogService} logService - The log service for the simulation.
+   * @param {StateManager} stateManager -
+   * @param {Array} systems -
+   *
+   * @return {Engine}
    */
-  static createInstance(messageService, configuration) {
-    const MANAGERS = {
-      entityManager: EntityManager.createInstance(messageService),
-      componentManager: ComponentManager.createInstance(messageService, configuration.componentTemplates),
-      assemblageManager: AssemblageManager.createInstance(messageService, configuration.assemblageTemplates),
-      systemManager: SystemManager.createInstance(messageService, configuration.systems)
-    };
+  static createInstance(logService, stateManager, systems) {
+    const SYSTEM_MANAGER = SystemManager.createInstance(logService, stateManager, systems);
 
-    return new Engine(messageService, MANAGERS);
+    return new Engine(logService, SYSTEM_MANAGER);
   }
 }
 
