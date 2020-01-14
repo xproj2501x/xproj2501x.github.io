@@ -4,6 +4,7 @@
 import '../css/_site.scss';
 import LogService from '../../common/services/log';
 import GameManager from '../../games';
+import AbstractGame from '../../games/abstract-game';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -85,7 +86,7 @@ class App {
   }
 
   toggleInfoPanel(event) {
-    this._infoPanel.classList.toggle('o-info-panel--collapsed');
+    this._infoPanel.classList.toggle('o-info--collapsed');
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -108,7 +109,5 @@ class App {
 
 window.addEventListener('load', (event) => {
   const APP = App.createInstance();
-  const GAME_MANAGER = GameManager.createInstance(LOG_SERVICE);
 
-  GAME_MANAGER.start();
 });

@@ -1,0 +1,57 @@
+.o-app {
+  background: $gray-bright;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 64px auto 64px;
+  grid-template-areas:
+    "header header header"
+    "nav content info"
+    "footer footer footer";
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.o-header {
+  background: $white;
+  box-shadow: $box-shadow-6px;
+  grid-area: header;
+  padding: $gutter;
+  z-index: 2;
+}
+
+.o-nav {
+  background-color: $gray-dark;
+  color: $gray-bright;
+  grid-area: nav;
+  transition: all 300ms linear;
+  width: 256px;
+
+  &--collapsed {
+    width: 0;
+  }
+}
+
+.o-content {
+  grid-area: content;
+  padding: $gutter;
+  width: 100%;
+}
+
+.o-info {
+  grid-area: info;
+  padding: $gutter;
+  transition: all 300ms linear;
+  width: 25vw;
+
+  &--collapsed {
+    width: 0;
+  }
+}
+
+.o-footer {
+  grid-area: footer;
+}
+
